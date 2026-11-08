@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portofolio Pribadi | Creative Developer & 3D Web</title>
+  <meta name="description" content="Portofolio modern interaktif dengan Three.js, CSS canggih, dan showcase proyek yang dibangun serta di-deploy di GitHub." />
+
+  <!-- Google Fonts: Syne (Headings), Plus Jakarta Sans (Body), JetBrains Mono (Tech/Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+
+  <!-- Three.js 3D Background Canvas -->
+  <div id="three-canvas-container"></div>
+
+  <!-- Cursor Light Follower -->
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notice" id="toast-notice">Email disalin ke clipboard!</div>
+
+  <div class="app-container">
+    <!-- Navbar -->
+    <header>
+      <nav class="navbar" id="navbar">
+        <a href="#hero" class="nav-brand">
+          <div class="nav-logo-icon">⚡</div>
+          <span id="nav-brand-name">Portfolio.dev</span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="#proyek" class="nav-link">Proyek</a></li>
+          <li><a href="#github-section" class="nav-link">GitHub</a></li>
+          <li><a href="#tentang" class="nav-link">Keahlian</a></li>
+          <li><a href="#kontak" class="nav-link">Kontak</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="btn-nav" id="nav-gh-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section id="hero" class="hero-section">
+        <div class="container">
+          <div class="hero-grid">
+            <div class="hero-content">
+              <div class="hero-badge">
+                <span class="status-dot"></span>
+                <span id="hero-status">Tersedia untuk proyek & kolaborasi</span>
+              </div>
+              
+              <h1 class="hero-title">
+                Membangun Karya Digital <br />
+                <span class="gradient-text">Kreatif & Interaktif</span>
+              </h1>
+
+              <p class="hero-description" id="hero-bio">
+                Selamat datang di web pribadi saya. Jelajahi kumpulan proyek open-source, eksperimen 3D WebGL, dan aplikasi web modern yang telah saya bangun dan deploy di GitHub.
+              </p>
+
+              <div class="hero-cta">
+                <a href="#proyek" class="btn btn-primary">
+                  <span>Lihat Proyek Saya</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+                <a href="#kontak" class="btn btn-secondary">Hubungi Saya</a>
+              </div>
+
+              <!-- Hero Stats -->
+              <div class="hero-stats" id="hero-stats-container">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+
+            <!-- Right side is visually occupied by the Three.js 3D Interactive Cybernetic Core -->
+            <div class="hero-3d-anchor" style="min-height: 380px;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Showcase Section -->
+      <section id="proyek" class="projects-section">
+        <div class="container">
+          <div class="section-header fade-up">
+            <span class="section-tag">Katalog Proyek</span>
+            <h2 class="section-title">Proyek yang Telah Di-Build & Deploy</h2>
+            <p class="section-subtitle">
+              Setiap proyek dilengkapi dengan link repositori GitHub untuk kode sumber dan link Live Demo yang aktif.
+            </p>
+          </div>
+
+          <!-- Category Filter Tabs -->
+          <div class="projects-filter fade-up" id="filter-buttons">
+            <button class="filter-btn active" data-category="all">Semua Proyek</button>
+            <button class="filter-btn" data-category="3d">3D & Creative</button>
+            <button class="filter-btn" data-category="web">Web App</button>
+            <button class="filter-btn" data-category="tools">Tools & CLI</button>
+          </div>
+
+          <!-- Dynamic Projects Grid -->
+          <div class="projects-grid" id="projects-grid">
+            <!-- Injected dynamically via src/main.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- GitHub Real-time Activity Banner -->
+      <section id="github-section" class="gh-section">
+        <div class="container">
+          <div class="gh-feature-box fade-up">
+            <div class="gh-info">
+              <span class="section-tag">GitHub Ecosystem</span>
+              <h3>Open Source & Kontribusi</h3>
+              <p>
+                Saya aktif mengunggah repositori, mengotomasi deployment menggunakan GitHub Actions (CI/CD), dan membagikan library gratis untuk komunitas.
+              </p>
+              <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" id="gh-profile-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                <span>Buka Profil GitHub</span>
+              </a>
+            </div>
+
+            <!-- Visual Commits Matrix -->
+            <div class="gh-commits-matrix">
+              <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; display: flex; justify-content: space-between;">
+                <span>Aktivitas Kode Terbaru</span>
+                <span style="color: var(--accent-cyan);">Active</span>
+              </div>
+              <div class="gh-commits-grid" id="commits-grid">
+                <!-- Generated by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills & Tech Stack Section -->
+      <section id="tentang" class="skills-section">
+        <div class="container">
+          <div class="section-header fade-up">
+            <span class="section-tag">Tech Stack</span>
+            <h2 class="section-title">Teknologi & Instrumen</h2>
+            <p class="section-subtitle">
+              Kombinasi alat modern yang saya gunakan untuk mendesain, memprogram, dan men-deploy produk digital.
+            </p>
+          </div>
+
+          <div class="skills-grid" id="skills-grid">
+            <!-- Injected dynamically via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact / CTA Section -->
+      <section id="kontak" class="contact-section">
+        <div class="container">
+          <div class="contact-card fade-up">
+            <span class="section-tag">Mari Terhubung</span>
+            <h2>Punya Ide atau Proyek Seru?</h2>
+            <p>
+              Saya selalu terbuka untuk berdiskusi seputar pembuatan website 3D, aplikasi web modern, atau kolaborasi open-source.
+            </p>
+
+            <div class="contact-actions">
+              <button class="btn btn-primary" id="copy-email-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span id="copy-email-text">Salin Alamat Email</span>
+              </button>
+
+              <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" id="contact-gh-link">
+                GitHub Repository
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>© <span id="current-year"></span> <span id="footer-name">Alif Dev</span>. Dibuat dengan Three.js, CSS Modern, dan dideploy dengan GitHub Pages.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
