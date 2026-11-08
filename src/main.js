@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function setupPersonalInfo() {
   const brandEl = document.getElementById('nav-brand-name');
-  if (brandEl) brandEl.textContent = `${personalInfo.name.split(' ')[0]}.dev`;
+  if (brandEl) brandEl.textContent = personalInfo.brandName || `${personalInfo.name}.dev`;
 
   const footerName = document.getElementById('footer-name');
   if (footerName) footerName.textContent = personalInfo.name;
@@ -103,7 +103,7 @@ function renderProjects(items) {
           </div>
         </div>
 
-        <span class="project-badge">${p.category.toUpperCase()}</span>
+        <span class="project-badge">${getCategoryBadge(p.category)}</span>
         <h3 class="project-title">${p.title}</h3>
         <p class="project-desc">${p.description}</p>
       </div>
@@ -114,7 +114,7 @@ function renderProjects(items) {
         </div>
 
         <div class="project-footer">
-          <span style="color: ${p.accentColor || '#38bdf8'}; font-weight: 600;">● Active Deploy</span>
+          <span style="color: ${p.accentColor || '#38bdf8'}; font-weight: 600;">● ${p.stats?.label || 'Active Repo'}</span>
           <div class="project-stat-counts">
             <span class="stat-badge" title="Stars">${icons.star} ${p.stats?.stars || 0}</span>
             <span class="stat-badge" title="Forks">${icons.gitFork} ${p.stats?.forks || 0}</span>
@@ -126,6 +126,19 @@ function renderProjects(items) {
 
   // Re-observe newly rendered cards for fade-in
   observeFadeElements();
+}
+
+function getCategoryBadge(category) {
+  switch (category) {
+    case 'school':
+      return 'EDU & TAHFIZH';
+    case 'creative':
+      return '3D & CREATIVE';
+    case 'web':
+      return 'WEB & OCR';
+    default:
+      return category.toUpperCase();
+  }
 }
 
 /**
