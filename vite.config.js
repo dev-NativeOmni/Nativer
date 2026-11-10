@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // Use relative base so deployment to GitHub Pages (subpath) works out of the box
+  plugins: [],
+  // Relative base allows seamless deployment on both GitHub Pages and Cloudflare Pages/Workers
   base: './',
   server: {
     port: 3000,
