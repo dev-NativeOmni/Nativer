@@ -1,285 +1,140 @@
 import { initThreeScene } from './three-scene.js';
-import { personalInfo, skills, projects } from './data/projects.js';
+import { personalInfo, services, projects } from './data/projects.js';
 
-// SVG Icons
-const icons = {
-  github: `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>`,
-  external: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`,
-  folder: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>`,
-  star: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
-  gitFork: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="6" r="3"></circle><path d="M18 9v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"></path><path d="M12 12v3"></path></svg>`
+// SVG Icons for services
+const serviceIcons = {
+  code: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>`,
+  mobile: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg>`,
+  rocket: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>`,
+  shield: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>`
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Initialize Three.js Scene
+  // 1. Initialize Three.js Ambient Stardust
   initThreeScene();
 
-  // 2. Populate Personal Info
-  setupPersonalInfo();
+  // 2. Render Hero Tech Strip
+  renderTechStrip();
 
-  // 3. Render Projects & Filter Logic
-  renderProjects(projects);
-  setupProjectFilters();
+  // 3. Render Services (4 Cards)
+  renderServices();
 
-  // 4. Render Skills
-  renderSkills();
+  // 4. Render Featured Projects (Matching reference 3-column cards)
+  renderProjects();
 
-  // 5. Generate Visual GitHub Activity Matrix
-  generateGitHubMatrix();
+  // 5. Header Scroll Effect
+  setupHeaderScroll();
 
-  // 6. Interactive Cursor Glow
-  setupCursorGlow();
-
-  // 7. Scroll Animation Observers
-  setupScrollObservers();
-
-  // 8. Copy Email Action
+  // 6. Copy Email Action
   setupCopyEmail();
 
-  // 9. Current Year
+  // 7. Dynamic Footer Year
   const yearEl = document.getElementById('current-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 });
 
 /**
- * Injects personal data into DOM
+ * Renders Core Tech Strip in Hero Section
  */
-function setupPersonalInfo() {
-  const brandEl = document.getElementById('nav-brand-name');
-  if (brandEl) brandEl.textContent = personalInfo.brandName || `${personalInfo.name}.dev`;
+function renderTechStrip() {
+  const container = document.getElementById('tech-strip');
+  if (!container || !personalInfo.techLogos) return;
 
-  const footerName = document.getElementById('footer-name');
-  if (footerName) footerName.textContent = personalInfo.name;
-
-  const statusEl = document.getElementById('hero-status');
-  if (statusEl) statusEl.textContent = personalInfo.status;
-
-  const bioEl = document.getElementById('hero-bio');
-  if (bioEl) bioEl.textContent = personalInfo.bio;
-
-  // GitHub Links
-  const ghProfileBtn = document.getElementById('gh-profile-btn');
-  if (ghProfileBtn) ghProfileBtn.href = personalInfo.social.github;
-
-  const navGhLink = document.getElementById('nav-gh-link');
-  if (navGhLink) navGhLink.href = personalInfo.social.github;
-
-  const contactGhLink = document.getElementById('contact-gh-link');
-  if (contactGhLink) contactGhLink.href = personalInfo.social.github;
-
-  // Stats
-  const statsContainer = document.getElementById('hero-stats-container');
-  if (statsContainer && personalInfo.stats) {
-    statsContainer.innerHTML = personalInfo.stats.map(s => `
-      <div class="stat-item">
-        <span class="stat-value">${s.value}</span>
-        <span class="stat-label">${s.label}</span>
-      </div>
-    `).join('');
-  }
-}
-
-/**
- * Renders project cards
- */
-function renderProjects(items) {
-  const grid = document.getElementById('projects-grid');
-  if (!grid) return;
-
-  grid.innerHTML = items.map(p => `
-    <article class="project-card fade-up" style="--card-accent: ${p.accentColor || '#38bdf8'};">
-      <div>
-        <div class="project-header">
-          <div class="project-folder-icon">
-            ${icons.folder}
-          </div>
-          <div class="project-links">
-            <a href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" class="icon-link" title="Source Code di GitHub" aria-label="GitHub Repository">
-              ${icons.github}
-            </a>
-            <a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="icon-link" title="Live Demo Deployment" aria-label="Live Demo">
-              ${icons.external}
-            </a>
-          </div>
-        </div>
-
-        <span class="project-badge">${getCategoryBadge(p.category)}</span>
-        <h3 class="project-title">${p.title}</h3>
-        <p class="project-desc">${p.description}</p>
-      </div>
-
-      <div>
-        <div class="project-tags">
-          ${p.tags.map(t => `<span class="tag-pill">${t}</span>`).join('')}
-        </div>
-
-        <div class="project-footer">
-          <span style="color: ${p.accentColor || '#38bdf8'}; font-weight: 600;">● ${p.stats?.label || 'Active Repo'}</span>
-          <div class="project-stat-counts">
-            <span class="stat-badge" title="Stars">${icons.star} ${p.stats?.stars || 0}</span>
-            <span class="stat-badge" title="Forks">${icons.gitFork} ${p.stats?.forks || 0}</span>
-          </div>
-        </div>
-      </div>
-    </article>
+  container.innerHTML = personalInfo.techLogos.map(t => `
+    <span class="tech-pill">
+      <span class="tech-dot" style="background-color: ${t.color};"></span>
+      <span>${t.name}</span>
+    </span>
   `).join('');
-
-  // Re-observe newly rendered cards for fade-in
-  observeFadeElements();
-}
-
-function getCategoryBadge(category) {
-  switch (category) {
-    case 'school':
-      return 'EDU & TAHFIZH';
-    case 'creative':
-      return '3D & CREATIVE';
-    case 'web':
-      return 'WEB & OCR';
-    default:
-      return category.toUpperCase();
-  }
 }
 
 /**
- * Filter projects by category
+ * Renders Services Section (What I Can Do For You)
  */
-function setupProjectFilters() {
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+function renderServices() {
+  const container = document.getElementById('services-grid');
+  if (!container) return;
 
-      const category = btn.getAttribute('data-category');
-      if (category === 'all') {
-        renderProjects(projects);
-      } else {
-        const filtered = projects.filter(p => p.category === category);
-        renderProjects(filtered);
-      }
-    });
-  });
-}
-
-/**
- * Renders skills & animated bars
- */
-function renderSkills() {
-  const grid = document.getElementById('skills-grid');
-  if (!grid) return;
-
-  grid.innerHTML = skills.map(s => `
-    <div class="skill-card fade-up">
-      <div class="skill-header">
-        <span class="skill-name">${s.name}</span>
-        <span class="skill-pct">${s.level}%</span>
+  container.innerHTML = services.map(s => `
+    <div class="service-card">
+      <div class="service-icon">
+        ${serviceIcons[s.icon] || serviceIcons.code}
       </div>
-      <div class="skill-bar-track">
-        <div class="skill-bar-fill" data-level="${s.level}"></div>
-      </div>
+      <h3 class="service-title">${s.title}</h3>
+      <p class="service-desc">${s.description}</p>
     </div>
   `).join('');
 }
 
 /**
- * Generates an aesthetic GitHub commit activity square matrix
+ * Renders Featured Projects Cards Grid
  */
-function generateGitHubMatrix() {
-  const grid = document.getElementById('commits-grid');
-  if (!grid) return;
+function renderProjects() {
+  const container = document.getElementById('projects-grid');
+  if (!container) return;
 
-  const totalSquares = 16 * 7; // 16 columns x 7 days
-  let html = '';
-  
-  for (let i = 0; i < totalSquares; i++) {
-    const rand = Math.random();
-    let levelClass = '';
-    if (rand > 0.82) levelClass = 'lvl-4';
-    else if (rand > 0.65) levelClass = 'lvl-3';
-    else if (rand > 0.45) levelClass = 'lvl-2';
-    else if (rand > 0.25) levelClass = 'lvl-1';
+  container.innerHTML = projects.map(p => `
+    <article class="project-card">
+      <div class="project-thumb-box">
+        <img src="${p.image}" alt="${p.title}" class="project-thumb" loading="lazy" />
+      </div>
+      <div class="project-body">
+        <div>
+          <h3 class="project-title">${p.title}</h3>
+          <div class="project-tech-line">${p.techSubtitle}</div>
+          <p class="project-desc">${p.description}</p>
+        </div>
 
-    html += `<div class="gh-square ${levelClass}"></div>`;
-  }
-
-  grid.innerHTML = html;
+        <div class="project-links">
+          <a href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" class="project-action-link" title="Source Code">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            <span>GitHub</span>
+          </a>
+          <a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="project-action-link" style="color: var(--accent-blue);" title="Live Demo">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            <span>Live Demo</span>
+          </a>
+        </div>
+      </div>
+    </article>
+  `).join('');
 }
 
 /**
- * Smooth cursor glow follower
+ * Header background blur on scroll
  */
-function setupCursorGlow() {
-  const glow = document.getElementById('cursor-glow');
-  if (!glow) return;
+function setupHeaderScroll() {
+  const header = document.getElementById('site-header');
+  if (!header) return;
 
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-  let glowX = mouseX;
-  let glowY = mouseY;
-
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  }, { passive: true });
-
-  const renderCursor = () => {
-    glowX += (mouseX - glowX) * 0.15;
-    glowY += (mouseY - glowY) * 0.15;
-    glow.style.left = `${glowX}px`;
-    glow.style.top = `${glowY}px`;
-    requestAnimationFrame(renderCursor);
+  const onScroll = () => {
+    if (window.scrollY > 40) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
   };
 
-  renderCursor();
+  window.addEventListener('scroll', onScroll, { passive: true });
 }
 
 /**
- * Scroll reveal animations
- */
-function setupScrollObservers() {
-  observeFadeElements();
-
-  // Skill bars fill trigger
-  const skillsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const fillBars = entry.target.querySelectorAll('.skill-bar-fill');
-        fillBars.forEach(bar => {
-          const target = bar.getAttribute('data-level');
-          bar.style.width = `${target}%`;
-        });
-      }
-    });
-  }, { threshold: 0.2 });
-
-  const skillsSection = document.getElementById('tentang');
-  if (skillsSection) skillsObserver.observe(skillsSection);
-}
-
-function observeFadeElements() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-}
-
-/**
- * Copy Email button functionality
+ * Copy email button action
  */
 function setupCopyEmail() {
-  const copyBtn = document.getElementById('copy-email-btn');
+  const btn = document.getElementById('copy-email-btn');
   const toast = document.getElementById('toast-notice');
 
-  if (copyBtn) {
-    copyBtn.addEventListener('click', async () => {
+  if (btn) {
+    btn.addEventListener('click', async () => {
       try {
-        await navigator.clipboard.writeText(personalInfo.social.email);
+        await navigator.clipboard.writeText(personalInfo.email);
         if (toast) {
           toast.classList.add('show');
           setTimeout(() => {
@@ -287,7 +142,7 @@ function setupCopyEmail() {
           }, 2500);
         }
       } catch (err) {
-        console.error('Gagal menyalin:', err);
+        console.error('Failed to copy email:', err);
       }
     });
   }

@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="mysch-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a192f" />
+      <stop offset="100%" stop-color="#020c1b" />
+    </linearGradient>
+    <linearGradient id="cyan-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="480" fill="url(#mysch-bg)" rx="12" />
+
+  <!-- Window Bar -->
+  <rect width="800" height="38" fill="#0f172a" rx="12" />
+  <circle cx="24" cy="19" r="6" fill="#ef4444" />
+  <circle cx="44" cy="19" r="6" fill="#f59e0b" />
+  <circle cx="64" cy="19" r="6" fill="#10b981" />
+  <rect x="250" y="10" width="300" height="18" rx="9" fill="#1e293b" />
+  <text x="400" y="23" fill="#64748b" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle">mysch.web.app / jurnal-guru</text>
+
+  <!-- Left: Mobile View Mockup -->
+  <g transform="translate(60, 55)">
+    <rect width="210" height="395" rx="20" fill="#020617" stroke="#334155" stroke-width="3" />
+    <!-- Notch -->
+    <rect x="65" y="8" width="80" height="12" rx="6" fill="#1e293b" />
+    
+    <!-- App Header -->
+    <text x="18" y="44" fill="#ffffff" font-size="12" font-weight="bold">Bu Rina, S.Pd</text>
+    <text x="18" y="58" fill="#38bdf8" font-size="9">SMP Harapan Bangsa</text>
+    <rect x="145" y="32" width="45" height="18" rx="4" fill="url(#cyan-grad)" />
+    <text x="167" y="44" fill="#ffffff" font-size="8" text-anchor="middle">Token OK</text>
+
+    <!-- Schedule Card -->
+    <rect x="14" y="75" width="182" height="65" rx="8" fill="#0f172a" stroke="#1e293b" />
+    <text x="24" y="93" fill="#38bdf8" font-size="10" font-weight="bold">IPA Fisika (Jam ke 3-4)</text>
+    <text x="24" y="108" fill="#94a3b8" font-size="9">Kelas VIII-A • Ruang Lab 2</text>
+    <rect x="24" y="118" width="60" height="14" rx="3" fill="#065f46" />
+    <text x="54" y="129" fill="#34d399" font-size="8" text-anchor="middle">Aktif Berjalan</text>
+
+    <!-- 3-Tap Attendance Wizard -->
+    <rect x="14" y="150" width="182" height="110" rx="8" fill="#0f172a" stroke="#1e293b" />
+    <text x="24" y="168" fill="#ffffff" font-size="10" font-weight="bold">Presensi Cepat 3-Ketukan</text>
+    <text x="24" y="182" fill="#64748b" font-size="8">Semua 32 Siswa Hadir Otomatis</text>
+    
+    <!-- Quick Pills -->
+    <g transform="translate(24, 192)">
+      <circle cx="14" cy="14" r="14" fill="#059669" />
+      <text x="14" y="18" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">H</text>
+      <text x="14" y="38" fill="#94a3b8" font-size="7" text-anchor="middle">30</text>
+    </g>
+    <g transform="translate(64, 192)">
+      <circle cx="14" cy="14" r="14" fill="#eab308" />
+      <text x="14" y="18" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">S</text>
+      <text x="14" y="38" fill="#94a3b8" font-size="7" text-anchor="middle">1</text>
+    </g>
+    <g transform="translate(104, 192)">
+      <circle cx="14" cy="14" r="14" fill="#3b82f6" />
+      <text x="14" y="18" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">I</text>
+      <text x="14" y="38" fill="#94a3b8" font-size="7" text-anchor="middle">1</text>
+    </g>
+    <g transform="translate(144, 192)">
+      <circle cx="14" cy="14" r="14" fill="#ef4444" />
+      <text x="14" y="18" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">A</text>
+      <text x="14" y="38" fill="#94a3b8" font-size="7" text-anchor="middle">0</text>
+    </g>
+
+    <!-- Save Button -->
+    <rect x="14" y="272" width="182" height="34" rx="6" fill="url(#cyan-grad)" />
+    <text x="105" y="293" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">SIMPAN JURNAL KELAS ✓</text>
+
+    <!-- Camera Compression -->
+    <rect x="14" y="318" width="182" height="42" rx="6" fill="#1e293b" />
+    <text x="24" y="335" fill="#38bdf8" font-size="8" font-weight="bold">Auto Kompres Foto Browser</text>
+    <text x="24" y="348" fill="#94a3b8" font-size="8">Foto 12MB → 180KB (Hemat Kuota)</text>
+  </g>
+
+  <!-- Right: Admin Super Dashboard View -->
+  <g transform="translate(300, 60)">
+    <rect width="450" height="385" rx="10" fill="#0f172a" stroke="#1e293b" />
+    <text x="24" y="35" fill="#ffffff" font-size="14" font-weight="bold">Panel Admin Kurikulum &amp; Jadwal Anti-Bentrok</text>
+    <text x="24" y="52" fill="#94a3b8" font-size="10">Multi-Lembaga Support • Token Switcher Yayasan</text>
+
+    <!-- Timetable Grid Mockup -->
+    <g transform="translate(24, 75)">
+      <rect width="402" height="26" fill="#1e293b" rx="4" />
+      <text x="30" y="17" fill="#64748b" font-size="9" font-weight="bold">JAM</text>
+      <text x="100" y="17" fill="#64748b" font-size="9" font-weight="bold">SENIN</text>
+      <text x="180" y="17" fill="#64748b" font-size="9" font-weight="bold">SELASA</text>
+      <text x="260" y="17" fill="#64748b" font-size="9" font-weight="bold">RABU</text>
+      <text x="340" y="17" fill="#64748b" font-size="9" font-weight="bold">KAMIS</text>
+
+      <!-- Row 1 -->
+      <rect y="35" width="402" height="42" fill="#151e33" rx="4" />
+      <text x="20" y="60" fill="#94a3b8" font-size="10">07:30</text>
+      <rect x="75" y="42" width="70" height="28" rx="4" fill="#0284c7" />
+      <text x="110" y="59" fill="#ffffff" font-size="8" text-anchor="middle">IPA VIII-A</text>
+      <rect x="155" y="42" width="70" height="28" rx="4" fill="#7c3aed" />
+      <text x="190" y="59" fill="#ffffff" font-size="8" text-anchor="middle">Matematika</text>
+      <rect x="235" y="42" width="70" height="28" rx="4" fill="#059669" />
+      <text x="270" y="59" fill="#ffffff" font-size="8" text-anchor="middle">B. Inggris</text>
+      <rect x="315" y="42" width="70" height="28" rx="4" fill="#0284c7" />
+      <text x="350" y="59" fill="#ffffff" font-size="8" text-anchor="middle">IPA VIII-B</text>
+
+      <!-- Row 2 -->
+      <rect y="85" width="402" height="42" fill="#151e33" rx="4" />
+      <text x="20" y="110" fill="#94a3b8" font-size="10">09:15</text>
+      <rect x="75" y="92" width="70" height="28" rx="4" fill="#059669" />
+      <text x="110" y="109" fill="#ffffff" font-size="8" text-anchor="middle">Tahfizh</text>
+      <rect x="155" y="92" width="70" height="28" rx="4" fill="#d97706" />
+      <text x="190" y="109" fill="#ffffff" font-size="8" text-anchor="middle">Fisika Lab</text>
+      <rect x="235" y="92" width="70" height="28" rx="4" fill="#0284c7" />
+      <text x="270" y="109" fill="#ffffff" font-size="8" text-anchor="middle">Biologi</text>
+      <rect x="315" y="92" width="70" height="28" rx="4" fill="#7c3aed" />
+      <text x="350" y="109" fill="#ffffff" font-size="8" text-anchor="middle">B. Arab</text>
+    </g>
+
+    <!-- WhatsApp Remind Button Bar -->
+    <g transform="translate(24, 250)">
+      <rect width="402" height="45" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="1" />
+      <text x="20" y="27" fill="#34d399" font-size="10" font-weight="bold">Supervisi Keterisian Jurnal: 92% Hari Ini</text>
+      <rect x="270" y="10" width="120" height="25" rx="4" fill="#10b981" />
+      <text x="330" y="26" fill="#022c22" font-size="9" font-weight="bold" text-anchor="middle">Colek Guru di WA 💬</text>
+    </g>
+  </g>
+</svg>

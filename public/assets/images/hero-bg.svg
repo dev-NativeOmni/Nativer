@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#070c1d" />
+      <stop offset="40%" stop-color="#0f1b3d" />
+      <stop offset="70%" stop-color="#1e3a70" />
+      <stop offset="100%" stop-color="#2c4d87" />
+    </linearGradient>
+    <linearGradient id="mtn-back" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2d3d63" />
+      <stop offset="100%" stop-color="#141d33" />
+    </linearGradient>
+    <linearGradient id="mtn-front" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#19284d" />
+      <stop offset="100%" stop-color="#0a1024" />
+    </linearGradient>
+    <linearGradient id="lake-water" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0c325e" />
+      <stop offset="40%" stop-color="#0a2347" />
+      <stop offset="100%" stop-color="#050814" />
+    </linearGradient>
+    <linearGradient id="fade-to-black" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="transparent" />
+      <stop offset="60%" stop-color="rgba(5, 8, 20, 0.7)" />
+      <stop offset="100%" stop-color="#050814" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1600" height="900" fill="url(#sky-grad)" />
+
+  <!-- Distant Stars / Aurora -->
+  <g opacity="0.6">
+    <circle cx="200" cy="80" r="1.5" fill="#ffffff" />
+    <circle cx="350" cy="140" r="1.2" fill="#93c5fd" />
+    <circle cx="500" cy="60" r="2" fill="#ffffff" />
+    <circle cx="750" cy="110" r="1" fill="#ffffff" />
+    <circle cx="920" cy="70" r="1.8" fill="#60a5fa" />
+    <circle cx="1150" cy="95" r="1.5" fill="#ffffff" />
+    <circle cx="1380" cy="130" r="2" fill="#ffffff" />
+  </g>
+
+  <!-- Far Mountains with Snow Peaks -->
+  <polygon points="0,450 150,280 280,380 480,220 620,340 820,180 980,310 1180,210 1350,330 1600,240 1600,600 0,600" fill="url(#mtn-back)" />
+  <!-- Snow peak highlights -->
+  <polygon points="480,220 450,260 480,255 510,265" fill="#cbd5e1" opacity="0.6" />
+  <polygon points="820,180 780,230 815,225 850,235" fill="#f8fafc" opacity="0.8" />
+  <polygon points="1180,210 1150,250 1180,245 1210,255" fill="#cbd5e1" opacity="0.6" />
+
+  <!-- Mid Pine-Covered Mountain Ridge -->
+  <polygon points="0,520 180,360 380,480 560,330 760,450 940,320 1200,440 1420,310 1600,420 1600,650 0,650" fill="url(#mtn-front)" />
+
+  <!-- Forest Pine Silhouettes -->
+  <g fill="#070c1d" opacity="0.9">
+    <polygon points="50,560 65,490 80,560" />
+    <polygon points="75,560 90,470 105,560" />
+    <polygon points="100,560 115,500 130,560" />
+    <polygon points="1450,550 1465,460 1480,550" />
+    <polygon points="1480,550 1495,480 1510,550" />
+    <polygon points="1520,550 1535,450 1550,550" />
+  </g>
+
+  <!-- Crystal Alpine Lake -->
+  <rect y="550" width="1600" height="350" fill="url(#lake-water)" />
+  
+  <!-- Subtle Water Waves / Light reflection -->
+  <path d="M 0 580 Q 400 575, 800 580 T 1600 580" stroke="#38bdf8" stroke-opacity="0.2" stroke-width="2" fill="none" />
+  <path d="M 0 630 Q 400 625, 800 630 T 1600 630" stroke="#38bdf8" stroke-opacity="0.15" stroke-width="2" fill="none" />
+  <path d="M 0 690 Q 400 685, 800 690 T 1600 690" stroke="#1d4ed8" stroke-opacity="0.25" stroke-width="3" fill="none" />
+
+  <!-- Seamless Bottom Blend to Dark Canvas -->
+  <rect width="1600" height="900" fill="url(#fade-to-black)" />
+</svg>

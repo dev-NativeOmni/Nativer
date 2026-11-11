@@ -1,136 +1,138 @@
 /**
- * DATA PORTOFOLIO & PROYEK GITHUB RESMI
- * Profil: dev-NativeOmni (Native Omni)
+ * DATA PORTOFOLIO RESMI NATIVE OMNI
+ * Sesuai Arsitektur Desain Modern Minimalist Developer
  */
 
 export const personalInfo = {
   name: "Native Omni",
-  brandName: "NativeOmni",
-  role: "Full-Stack Software Engineer & Creative Builder",
-  bio: "Software engineer berfokus pada pengembangan sistem manajemen pendidikan terpadu, aplikasi web modern berkinerja tinggi, serta eksplorasi antarmuka kreatif 3D WebGL.",
+  firstName: "Native",
+  lastName: "Omni",
+  brandTitle: "FULL STACK DEVELOPER",
+  role: "Full Stack Developer",
+  tagline: "I build exceptional digital experiences for schools, businesses, and communities in Indonesia and around the world.",
+  aboutTitle: "Building Solutions That Make an Impact",
+  aboutBio: "I'm a passionate Full Stack Developer based in Solo (SOC), Indonesia. I specialize in architecting scalable web applications, school management platforms, and robust backend ecosystems using modern technologies. With a strong eye for clean design and a love for structured, tested code, I help institutions turn complex administrative workflows into seamless digital products.",
   location: "Solo (SOC), Indonesia",
-  status: "Tersedia untuk proyek & kolaborasi rekayasa web",
+  email: "nativeomni@gmail.com",
+  phone: "+62 812-3456-7890",
+  languages: "Indonesian, English",
   githubUsername: "dev-NativeOmni",
-  avatarUrl: "https://avatars.githubusercontent.com/u/290612262?v=4",
   social: {
     github: "https://github.com/dev-NativeOmni",
     linkedin: "https://github.com/dev-NativeOmni",
-    email: "nativeomni@gmail.com"
+    email: "mailto:nativeomni@gmail.com",
+    whatsapp: "https://wa.me/6281234567890"
   },
-  stats: [
-    { label: "Repositori GitHub", value: "11+" },
-    { label: "Modul Sistem", value: "35+" },
-    { label: "Tech Stack", value: "8+" },
-    { label: "Tes Terotomasi", value: "250+" }
+  highlights: [
+    { title: "5+ Years of Experience", icon: "diamond" },
+    { title: "Available for Freelance", icon: "sparkle" },
+    { title: "11+ GitHub Repositories", icon: "check" },
+    { title: "250+ Automated Tests", icon: "globe" }
+  ],
+  techLogos: [
+    { name: "Laravel 12", color: "#FF2D20" },
+    { name: "Next.js 16", color: "#ffffff" },
+    { name: "React 19", color: "#61DAFB" },
+    { name: "Tailwind CSS v4", color: "#06B6D4" },
+    { name: "Three.js", color: "#ffffff" },
+    { name: "TypeScript", color: "#3178C6" },
+    { name: "Firebase", color: "#FFCA28" },
+    { name: "MySQL", color: "#4479A1" }
   ]
 };
 
-export const skills = [
-  { name: "Laravel 12 / PHP 8.2+", category: "Backend", level: 94, icon: "server" },
-  { name: "Next.js / React 19", category: "Frontend", level: 92, icon: "react" },
-  { name: "Tailwind CSS v4 / Modern CSS", category: "Frontend", level: 95, icon: "brush" },
-  { name: "TypeScript / JavaScript", category: "Frontend", level: 90, icon: "code" },
-  { name: "Three.js / WebGL 3D", category: "Creative", level: 86, icon: "cube" },
-  { name: "MySQL / MariaDB / SQLite", category: "Database", level: 88, icon: "database" },
-  { name: "Firebase (Firestore & Hosting)", category: "Cloud", level: 85, icon: "cloud" },
-  { name: "Vite 6 / Automated Testing (PHPUnit)", category: "DevOps", level: 89, icon: "zap" }
+export const services = [
+  {
+    id: "web-dev",
+    title: "Web Development",
+    icon: "code",
+    description: "Custom websites and web applications built with the latest enterprise-grade technologies and frameworks."
+  },
+  {
+    id: "responsive-design",
+    title: "Responsive Design",
+    icon: "mobile",
+    description: "Mobile-first designs that look stunning and perform smoothly on all devices and screen sizes."
+  },
+  {
+    id: "performance-optimization",
+    title: "Performance Optimization",
+    icon: "rocket",
+    description: "Improve website speed, asset bundling, and server architecture for better SEO and user retention."
+  },
+  {
+    id: "system-maintenance",
+    title: "Website Maintenance",
+    icon: "shield",
+    description: "Ongoing support, security patching, and continuous deployment to keep your applications running reliably."
+  }
 ];
 
 export const projects = [
   {
     id: "tad-ims",
-    title: "TAD Management System (Tahfizh, Adab, Disiplin)",
-    description: "Platform tata kelola terintegrasi skala institusi untuk memonitor capaian Tahfizh Al-Qur'an (metode reguler & Ummi), pembiasaan adab harian, poin Tanse (disiplin), serta cetak rapor dan ekspor Excel streaming.",
+    title: "TAD Management System",
     category: "school",
-    featured: true,
-    tags: ["Laravel 12", "Tailwind CSS 4", "Alpine.js", "Vite 6", "MySQL", "PHPUnit (257 Tests)"],
+    image: "/assets/images/project-tad.svg",
+    techSubtitle: "Laravel 12 / Tailwind CSS 4 / MySQL / Alpine.js",
+    description: "Platform tata kelola terintegrasi skala institusi untuk memonitor capaian Tahfizh Al-Qur'an, pembiasaan adab, poin disiplin santri, serta cetak rapor browser-native dan export streaming Excel.",
     githubUrl: "https://github.com/dev-NativeOmni/ims",
     liveUrl: "https://github.com/dev-NativeOmni/ims",
-    accentColor: "#10b981", // Emerald neon
-    stats: { stars: 0, forks: 0, label: "Enterprise Ready" }
+    badge: "Enterprise Ready"
   },
   {
     id: "deathroll-band",
-    title: "DEATHROLL — Band Profile & In-Place Lightweight CMS",
-    description: "Website band punk-rock Indonesia dengan estetika punk-zine kontras tinggi, audio player Web Audio Synthesizer bawaan, jadwal tur gigs, rilis diskografi album, dan in-place live admin CMS terintegrasi SQLite.",
+    title: "DEATHROLL Band & CMS",
     category: "creative",
-    featured: true,
-    tags: ["TypeScript", "In-Place CMS", "Web Audio Synth", "SQLite", "Tailwind"],
+    image: "/assets/images/project-deathroll.svg",
+    techSubtitle: "TypeScript / In-Place CMS / Web Audio Synth / SQLite",
+    description: "Website band punk-rock Indonesia dengan estetika punk-zine kontras tinggi, audio track synth player bawaan, jadwal gigs tur, rilis diskografi album, dan in-place admin editor langsung tersimpan ke SQLite.",
     githubUrl: "https://github.com/dev-NativeOmni/Deathroll",
     liveUrl: "https://github.com/dev-NativeOmni/Deathroll",
-    accentColor: "#f43f5e", // Crimson red / punk neon
-    stats: { stars: 0, forks: 0, label: "Live Synth CMS" }
+    badge: "Interactive Audio"
   },
   {
     id: "mysch-jurnal",
-    title: "MySch — Jurnal Harian Guru & Presensi Terpadu",
-    description: "Aplikasi web Mobile-First untuk guru sekolah dengan aturan 3-ketukan kilat, deteksi jadwal mengajar otomatis, kompresi foto presensi di sisi peramban, serta multi-tenancy sekolah berbasis Token Lembaga.",
+    title: "MySch — Jurnal Guru",
     category: "school",
-    featured: true,
-    tags: ["Next.js", "React", "Tailwind CSS v4", "Firebase Spark", "Firestore Multi-Tenant"],
+    image: "/assets/images/project-mysch.svg",
+    techSubtitle: "Next.js / React 19 / Tailwind v4 / Firebase Firestore",
+    description: "Aplikasi presensi dan jurnal harian guru mobile-first dengan aturan 3-ketukan instan, deteksi jadwal otomatis, kompresi foto presensi di peramban, serta multi-tenancy token lembaga.",
     githubUrl: "https://github.com/dev-NativeOmni/mysch",
     liveUrl: "https://github.com/dev-NativeOmni/mysch",
-    accentColor: "#38bdf8", // Sky blue neon
-    stats: { stars: 0, forks: 0, label: "Mobile-First" }
+    badge: "Mobile-First"
   },
   {
     id: "schoop-hafizplus",
-    title: "Schoop — School & Education Platform (Hafizplus 3.0)",
-    description: "Platform manajemen operasional sekolah modern generasi ketiga yang mendukung portal akademik siswa, pengelolaan kurikulum tahfizh, dan portal monitoring terpusat untuk yayasan.",
+    title: "Schoop Platform (Hafizplus 3.0)",
     category: "school",
-    featured: true,
-    tags: ["PHP", "Laravel/Blade", "CSS", "Vercel Deploy"],
+    image: "/assets/images/project-tad.svg",
+    techSubtitle: "PHP / Laravel / Blade / Vercel Deploy",
+    description: "Platform manajemen operasional sekolah generasi ketiga yang mendukung portal akademik siswa dan monitoring yayasan terpusat.",
     githubUrl: "https://github.com/dev-NativeOmni/schoop",
     liveUrl: "https://hafizplus-school-platform.vercel.app",
-    accentColor: "#a855f7", // Purple neon
-    stats: { stars: 1, forks: 0, label: "Deployed on Vercel" }
+    badge: "Deployed on Vercel"
   },
   {
     id: "cemara-doku",
-    title: "Cemara Doku — Aplikasi Keuangan Keluarga & OCR",
-    description: "Sistem pencatatan dan pelaporan keuangan rumah tangga cerdas dengan fitur pemindaian struk belanja otomatis memanfaatkan Tesseract.js OCR, Next.js 16, React 19, dan sinkronisasi cloud Firebase.",
+    title: "Cemara Doku — Smart Finance & OCR",
     category: "web",
-    featured: false,
-    tags: ["Next.js 16", "React 19", "Tesseract.js OCR", "Firebase", "Tailwind v4"],
+    image: "/assets/images/project-mysch.svg",
+    techSubtitle: "Next.js 16 / React 19 / Tesseract.js OCR / Firebase",
+    description: "Sistem pencatatan keuangan keluarga cerdas dengan pemindaian struk otomatis memanfaatkan Tesseract.js OCR client-side dan sinkronisasi cloud real-time.",
     githubUrl: "https://github.com/dev-NativeOmni/cemara-doku",
     liveUrl: "https://github.com/dev-NativeOmni/cemara-doku",
-    accentColor: "#f59e0b", // Amber neon
-    stats: { stars: 0, forks: 0, label: "Smart OCR" }
+    badge: "Smart OCR"
   },
   {
-    id: "nativer-3d",
-    title: "Nativer — 3D Cybernetic Portfolio Engine",
-    description: "Mesin web portofolio pribadi modern berbasis Three.js WebGL dan CSS Glassmorphism tingkat tinggi dengan kamera parallax interaktif, respons kursor dinamis, dan integrasi katalog proyek GitHub real-time.",
+    id: "nativer-portfolio",
+    title: "Nativer 3D Engine",
     category: "creative",
-    featured: false,
-    tags: ["Three.js", "WebGL", "Vite 6", "CSS Glassmorphism", "GitHub Actions"],
+    image: "/assets/images/project-deathroll.svg",
+    techSubtitle: "Three.js / WebGL / Vite 6 / Cloudflare Pages",
+    description: "Web portofolio arsitektur modern berkecepatan tinggi dengan integrasi Three.js WebGL stardust, layout responsif murni, dan deployment otomatis Cloudflare Pages.",
     githubUrl: "https://github.com/dev-NativeOmni/Nativer",
-    liveUrl: "https://dev-nativeomni.github.io/Nativer/",
-    accentColor: "#06b6d4", // Cyan neon
-    stats: { stars: 0, forks: 0, label: "Live on GH Pages" }
-  },
-  {
-    id: "kuttab-edu",
-    title: "Kuttab — Modul Informasi Kurikulum & Santri",
-    description: "Aplikasi antarmuka manajemen data kurikulum dan evaluasi santri kuttab berbasis Vue dan TypeScript yang ringan dan responsif.",
-    category: "school",
-    featured: false,
-    tags: ["Vue.js", "TypeScript", "Tailwind", "Shell"],
-    githubUrl: "https://github.com/dev-NativeOmni/kuttab",
-    liveUrl: "https://github.com/dev-NativeOmni/kuttab",
-    accentColor: "#22c55e", // Light green
-    stats: { stars: 0, forks: 0, label: "Vue TypeScript" }
-  },
-  {
-    id: "myra-platform",
-    title: "Myra — Web Utility & App Engine",
-    description: "Platform utilitas web fleksibel dengan arsitektur backend yang ramping ('Easy as you go') untuk automasi alur kerja web.",
-    category: "web",
-    featured: false,
-    tags: ["PHP", "Blade", "JavaScript", "CSS"],
-    githubUrl: "https://github.com/dev-NativeOmni/myra",
-    liveUrl: "https://github.com/dev-NativeOmni/myra",
-    accentColor: "#ec4899", // Pink neon
-    stats: { stars: 0, forks: 0, label: "PHP Engine" }
+    liveUrl: "https://native.web.id",
+    badge: "Live on native.web.id"
   }
 ];
