@@ -198,19 +198,18 @@ body {
 }
 
 /* ==========================================================================
-   HERO SECTION (Scenic Mountain Lake Backdrop)
+   HERO SECTION (Natural Mountain Lake Backdrop & Character)
    ========================================================================== */
 .hero-section {
   position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding-top: 100px;
-  padding-bottom: 60px;
-  background-image: url('/assets/images/hero-bg.svg');
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
+  padding-top: 110px;
+  padding-bottom: 70px;
+  background: 
+    linear-gradient(180deg, rgba(5, 8, 20, 0.3) 0%, rgba(5, 8, 20, 0.45) 45%, rgba(5, 8, 20, 0.85) 85%, #050814 100%),
+    url('/assets/images/hero-bg.jpg') no-repeat center top / cover;
 }
 
 .hero-grid {
@@ -347,21 +346,30 @@ body {
 .hero-visual {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   position: relative;
 }
 
 .avatar-wrapper {
   position: relative;
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 .avatar-img {
   width: 100%;
-  height: auto;
+  max-height: 580px;
+  object-fit: contain;
   display: block;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.7));
+  transition: transform var(--transition-smooth);
+}
+
+.avatar-wrapper:hover .avatar-img {
+  transform: translateY(-6px) scale(1.02);
 }
 
 /* ==========================================================================
