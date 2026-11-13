@@ -6,6 +6,20 @@
   <title>Native Omni | Full Stack Developer</title>
   <meta name="description" content="Portfolio of Native Omni - Full Stack Developer. Building scalable web applications, enterprise school management systems, and high-performance digital experiences." />
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+
+  <!-- Open Graph / Social Share Preview (WhatsApp, LinkedIn, X) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://native.web.id/" />
+  <meta property="og:title" content="Native Omni | Full Stack Developer" />
+  <meta property="og:description" content="Full Stack Software Engineer specializing in Laravel 12, Next.js, React, Three.js, and enterprise education platforms." />
+  <meta property="og:image" content="https://native.web.id/assets/images/hero-bg.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Native Omni | Full Stack Developer" />
+  <meta name="twitter:description" content="Portfolio & GitHub projects of Native Omni." />
+  <meta name="twitter:image" content="https://native.web.id/assets/images/hero-bg.jpg" />
+
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,36 +45,62 @@
         </a>
 
         <ul class="nav-menu">
-          <li><a href="#hero" class="nav-link active">Home</a></li>
-          <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#services" class="nav-link">Services</a></li>
-          <li><a href="#projects" class="nav-link">Projects</a></li>
-          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><a href="#hero" class="nav-link active" data-i18n="navHome">Home</a></li>
+          <li><a href="#about" class="nav-link" data-i18n="navAbout">About</a></li>
+          <li><a href="#services" class="nav-link" data-i18n="navServices">Services</a></li>
+          <li><a href="#projects" class="nav-link" data-i18n="navProjects">Projects</a></li>
+          <li><a href="#contact" class="nav-link" data-i18n="navContact">Contact</a></li>
         </ul>
 
-        <div class="nav-cta">
-          <a href="#contact" class="btn-hire">Hire Me</a>
+        <div class="nav-actions">
+          <!-- Language Switcher -->
+          <div class="lang-switcher" role="group" aria-label="Language switcher">
+            <button type="button" class="lang-btn active" data-lang="en">EN</button>
+            <button type="button" class="lang-btn" data-lang="id">ID</button>
+          </div>
+
+          <a href="#contact" class="btn-hire" data-i18n="navHire">Hire Me</a>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button type="button" class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
         </div>
+      </div>
+
+      <!-- Mobile Dropdown Drawer -->
+      <div class="mobile-drawer" id="mobile-drawer">
+        <ul class="mobile-nav-list">
+          <li><a href="#hero" class="mobile-nav-link" data-i18n="navHome">Home</a></li>
+          <li><a href="#about" class="mobile-nav-link" data-i18n="navAbout">About</a></li>
+          <li><a href="#services" class="mobile-nav-link" data-i18n="navServices">Services</a></li>
+          <li><a href="#projects" class="mobile-nav-link" data-i18n="navProjects">Projects</a></li>
+          <li><a href="#contact" class="mobile-nav-link" data-i18n="navContact">Contact</a></li>
+        </ul>
       </div>
     </header>
 
     <main>
-      <!-- Hero Section (Alpine Scenic Background) -->
-      <section id="hero" class="hero-section" style="background-image: linear-gradient(180deg, rgba(5, 8, 20, 0.3) 0%, rgba(5, 8, 20, 0.45) 45%, rgba(5, 8, 20, 0.85) 85%, #050814 100%), url('./assets/images/hero-bg.jpg');">
+      <!-- Hero Section (Alpine Scenic Background with Top & Bottom Vignettes) -->
+      <section id="hero" class="hero-section" style="background-image: linear-gradient(180deg, rgba(5, 8, 20, 0.72) 0%, rgba(5, 8, 20, 0.28) 38%, rgba(5, 8, 20, 0.62) 72%, #050814 100%), url('./assets/images/hero-bg.jpg');">
         <div class="container">
           <div class="hero-grid">
             <div class="hero-content">
-              <span class="hero-intro">Hello, I'm</span>
+              <span class="hero-intro" data-i18n="heroHello">Hello, I'm</span>
               <h1 class="hero-title">Native Omni</h1>
-              <h2 class="hero-subtitle">Full Stack Developer</h2>
+              <h2 class="hero-subtitle" data-i18n="heroRole">Full Stack Developer</h2>
 
-              <p class="hero-description">
+              <p class="hero-description" data-i18n="heroDesc">
                 I build exceptional digital experiences, enterprise school management systems, and modern web applications in Indonesia and around the world.
               </p>
 
               <div class="hero-actions">
                 <a href="#projects" class="btn btn-primary">
-                  <span>View My Work</span>
+                  <span data-i18n="heroBtnWork">View My Work</span>
                   <span style="font-size: 1.1rem; line-height: 1;">→</span>
                 </a>
                 <a href="#contact" class="btn btn-secondary">
@@ -68,20 +108,20 @@
                     <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                   </svg>
-                  <span>Contact Me</span>
+                  <span data-i18n="heroBtnContact">Contact Me</span>
                 </a>
               </div>
 
               <!-- Tech Ecosystem Strip -->
               <div class="hero-tech-strip">
-                <span class="strip-label">Core Technologies &amp; Architecture:</span>
+                <span class="strip-label" data-i18n="heroTechLabel">Core Technologies &amp; Architecture:</span>
                 <div class="strip-logos" id="tech-strip">
                   <!-- Injected via JavaScript -->
                 </div>
               </div>
             </div>
 
-            <!-- Right Visual: Developer Avatar matching Reference Photo Composition -->
+            <!-- Right Visual: User Character with Smooth Bottom Fade -->
             <div class="hero-visual">
               <div class="avatar-wrapper">
                 <img src="./assets/images/hero-avatar.png" alt="Native Omni - Full Stack Developer" class="avatar-img" />
@@ -94,67 +134,41 @@
       <!-- About Me Section -->
       <section id="about" class="section about-section">
         <div class="container">
-          <span class="section-tag">ABOUT ME</span>
-          <h2 class="section-title">Building Solutions That Make an Impact</h2>
+          <span class="section-tag reveal" data-i18n="aboutTag">ABOUT ME</span>
+          <h2 class="section-title reveal" data-i18n="aboutTitle">Building Solutions That Make an Impact</h2>
 
           <div class="about-grid">
             <!-- Left Bio & Highlights -->
-            <div class="about-left">
-              <p class="about-text" id="about-bio-text">
-                I'm a passionate Full Stack Developer based in Solo (SOC), Indonesia. I specialize in building scalable web applications using modern technologies. With a strong eye for design and a love for clean code, I help businesses and educational institutions turn their ideas into robust digital products.
+            <div class="about-left reveal">
+              <p class="about-text" id="about-bio-text" data-i18n="aboutBio">
+                I'm a passionate Full Stack Developer based in Solo (SOC), Indonesia. I specialize in building scalable web applications using modern technologies. With a strong eye for design and a love for clean, tested code, I help businesses and educational institutions turn complex workflows into intuitive digital products.
               </p>
 
               <!-- 4 Bullet Highlights with Icons -->
-              <div class="highlights-grid">
-                <div class="highlight-item">
-                  <div class="highlight-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"></path></svg>
-                  </div>
-                  <span>5+ Years of Experience</span>
-                </div>
-
-                <div class="highlight-item">
-                  <div class="highlight-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"></path></svg>
-                  </div>
-                  <span>Available for Freelance</span>
-                </div>
-
-                <div class="highlight-item">
-                  <div class="highlight-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-                  </div>
-                  <span>11+ Repositories Built</span>
-                </div>
-
-                <div class="highlight-item">
-                  <div class="highlight-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
-                  </div>
-                  <span>250+ Automated Tests</span>
-                </div>
+              <div class="highlights-grid" id="highlights-grid">
+                <!-- Injected via JavaScript -->
               </div>
 
-              <!-- Download CV Button -->
-              <a href="#contact" class="btn btn-primary" id="btn-cv-download">
-                <span>Download CV</span>
+              <!-- View / Download CV Button -->
+              <button type="button" class="btn btn-primary" id="btn-cv-download">
+                <span data-i18n="btnCv">View / Download CV</span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                   <polyline points="7 10 12 15 17 10"></polyline>
                   <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
-              </a>
+              </button>
             </div>
 
             <!-- Right Contact Card -->
-            <div class="about-right">
+            <div class="about-right reveal">
               <div class="info-card">
                 <div class="info-item">
                   <div class="info-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                   </div>
                   <div class="info-content">
-                    <span class="info-label">Location</span>
+                    <span class="info-label" data-i18n="infoLocationLabel">Location</span>
                     <span class="info-value">Solo (SOC), Indonesia</span>
                   </div>
                 </div>
@@ -164,17 +178,17 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
                   </div>
                   <div class="info-content">
-                    <span class="info-label">Email</span>
+                    <span class="info-label" data-i18n="infoEmailLabel">Email</span>
                     <a href="mailto:nativeomni@gmail.com" class="info-value">nativeomni@gmail.com</a>
                   </div>
                 </div>
 
                 <div class="info-item">
                   <div class="info-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                   </div>
                   <div class="info-content">
-                    <span class="info-label">Website &amp; GitHub</span>
+                    <span class="info-label" data-i18n="infoGithubLabel">Website &amp; GitHub</span>
                     <a href="https://github.com/dev-NativeOmni" target="_blank" rel="noopener noreferrer" class="info-value">github.com/dev-NativeOmni</a>
                   </div>
                 </div>
@@ -184,8 +198,8 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                   </div>
                   <div class="info-content">
-                    <span class="info-label">Languages</span>
-                    <span class="info-value">Indonesian, English</span>
+                    <span class="info-label" data-i18n="infoLangLabel">Languages</span>
+                    <span class="info-value" data-i18n="infoLangValue">Indonesian, English</span>
                   </div>
                 </div>
               </div>
@@ -197,9 +211,9 @@
       <!-- Services Section (What I Can Do For You) -->
       <section id="services" class="section services-section">
         <div class="container">
-          <div class="services-header">
-            <span class="section-tag">MY SERVICES</span>
-            <h2 class="section-title">What I Can Do For You</h2>
+          <div class="services-header reveal">
+            <span class="section-tag" data-i18n="servicesTag">MY SERVICES</span>
+            <h2 class="section-title" data-i18n="servicesTitle">What I Can Do For You</h2>
             <div class="accent-line"></div>
           </div>
 
@@ -212,15 +226,23 @@
       <!-- Featured Projects Section -->
       <section id="projects" class="section projects-section">
         <div class="container">
-          <div class="projects-header">
+          <div class="projects-header reveal">
             <div>
-              <span class="section-tag">PORTFOLIO</span>
-              <h2 class="section-title" style="margin-bottom: 0;">Featured Projects</h2>
+              <span class="section-tag" data-i18n="projectsTag">PORTFOLIO</span>
+              <h2 class="section-title" style="margin-bottom: 0;" data-i18n="projectsTitle">Featured Projects</h2>
             </div>
             <a href="https://github.com/dev-NativeOmni" target="_blank" rel="noopener noreferrer" class="view-all-link">
-              <span>View All Projects</span>
+              <span data-i18n="viewAllProjects">View All Projects</span>
               <span style="font-size: 1.1rem; line-height: 1;">→</span>
             </a>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="projects-filter reveal" id="project-filters">
+            <button type="button" class="filter-pill active" data-category="all" data-i18n="filterAll">All Projects</button>
+            <button type="button" class="filter-pill" data-category="school" data-i18n="filterSchool">Education Systems</button>
+            <button type="button" class="filter-pill" data-category="web" data-i18n="filterWeb">Web &amp; OCR</button>
+            <button type="button" class="filter-pill" data-category="creative" data-i18n="filterCreative">3D &amp; Creative</button>
           </div>
 
           <!-- 3-Column Project Cards Grid -->
@@ -233,21 +255,21 @@
       <!-- Call To Action (Let's Work Together) with Twilight City Skyline -->
       <section id="contact" class="cta-section" style="background-image: url('./assets/images/cta-bg.svg');">
         <div class="container">
-          <div class="cta-box">
-            <h2 class="cta-title">Let's Work Together</h2>
-            <p class="cta-subtitle">
+          <div class="cta-box reveal">
+            <h2 class="cta-title" data-i18n="ctaTitle">Let's Work Together</h2>
+            <p class="cta-subtitle" data-i18n="ctaSubtitle">
               Have a project in mind? I'd love to hear about it. Let's create something exceptional together.
             </p>
             <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-              <button class="btn btn-primary" id="copy-email-btn">
-                <span>Copy Email Address</span>
+              <button type="button" class="btn btn-primary" id="copy-email-btn">
+                <span data-i18n="btnCopyEmail">Copy Email Address</span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                 </svg>
               </button>
               <a href="mailto:nativeomni@gmail.com" class="btn btn-secondary">
-                Send Direct Email →
+                <span data-i18n="btnSendEmail">Send Direct Email</span> →
               </a>
             </div>
           </div>
@@ -264,7 +286,7 @@
         </div>
 
         <div class="footer-copy">
-          © <span id="current-year"></span> Native Omni. All rights reserved. • Deployed at <span style="color: var(--accent-cyan);">native.web.id</span>
+          © <span id="current-year"></span> Native Omni. All rights reserved. • <span data-i18n="footerDeployed">Deployed at</span> <span style="color: var(--accent-cyan);">native.web.id</span>
         </div>
 
         <div class="footer-socials">
@@ -282,6 +304,50 @@
         </div>
       </div>
     </footer>
+  </div>
+
+  <!-- Interactive CV / Resume Preview Modal -->
+  <div class="cv-modal-backdrop" id="cv-modal" aria-hidden="true">
+    <div class="cv-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title">
+      <div class="cv-modal-header">
+        <h3 id="cv-modal-title" data-i18n="cvModalTitle">Curriculum Vitae — Native Omni</h3>
+        <div class="cv-modal-actions">
+          <button type="button" class="btn btn-primary btn-sm" id="cv-print-btn" data-i18n="cvPrintBtn">Print / Save PDF</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="cv-close-btn" data-i18n="cvCloseBtn">Close</button>
+        </div>
+      </div>
+      <div class="cv-modal-body" id="cv-printable">
+        <div class="cv-head-block">
+          <div>
+            <h2>Native Omni</h2>
+            <p class="cv-role-text">Full Stack Software Engineer &amp; Creative Web Builder</p>
+          </div>
+          <div class="cv-contact-meta">
+            <span>Solo (SOC), Indonesia</span>
+            <span>nativeomni@gmail.com</span>
+            <span>github.com/dev-NativeOmni • native.web.id</span>
+          </div>
+        </div>
+        <hr class="cv-divider" />
+        <div class="cv-section-block">
+          <h4>Core Technical Stack</h4>
+          <p><strong>Backend &amp; Frameworks:</strong> Laravel 12 (PHP 8.2+), Next.js 16, React 19, Vue.js, Node.js, TypeScript</p>
+          <p><strong>Frontend &amp; Graphics:</strong> Tailwind CSS v4, Modern CSS, Three.js (WebGL), Alpine.js, Vite 6</p>
+          <p><strong>Database &amp; Cloud:</strong> MySQL / MariaDB, SQLite, Firebase (Firestore &amp; Hosting), Cloudflare Pages, GitHub Actions</p>
+          <p><strong>Testing &amp; Quality:</strong> PHPUnit (250+ Automated Test Suites), ESLint, CI/CD Pipelines</p>
+        </div>
+        <div class="cv-section-block">
+          <h4>Selected Production Systems</h4>
+          <ul>
+            <li><strong>TAD Management System (ims):</strong> Institution-scale platform for Tahfizh, Adab, &amp; Discipline tracking with 257 automated tests and streaming Excel export.</li>
+            <li><strong>MySch (mysch):</strong> Mobile-first multi-tenant teacher attendance &amp; daily journal app powered by Next.js and Firebase Firestore.</li>
+            <li><strong>Schoop / Hafizplus 3.0 (schoop):</strong> School operational &amp; academic portal deployed on Vercel.</li>
+            <li><strong>Cemara Doku (cemara-doku):</strong> Family finance tracker featuring client-side receipt OCR via Tesseract.js.</li>
+            <li><strong>DEATHROLL Band &amp; CMS (Deathroll):</strong> Lightweight SQLite in-place CMS with integrated Web Audio Synthesizer.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script type="module" src="/src/main.js"></script>

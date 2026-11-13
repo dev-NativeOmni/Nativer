@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-cemara" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14110a" />
+      <stop offset="100%" stop-color="#08090e" />
+    </linearGradient>
+    <linearGradient id="amber-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="480" fill="url(#bg-cemara)" rx="12" />
+
+  <!-- Browser Bar -->
+  <rect width="800" height="38" fill="#17140d" rx="12" />
+  <circle cx="24" cy="19" r="6" fill="#ef4444" />
+  <circle cx="44" cy="19" r="6" fill="#f59e0b" />
+  <circle cx="64" cy="19" r="6" fill="#10b981" />
+  <rect x="250" y="10" width="300" height="18" rx="9" fill="#262013" />
+  <text x="400" y="23" fill="#fbbf24" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle">cemara-doku.app / ocr-scanner</text>
+
+  <!-- Left: Smart Receipt OCR Scanner Card -->
+  <g transform="translate(36, 58)">
+    <rect width="290" height="388" rx="12" fill="#12100b" stroke="#2d2616" />
+    <text x="20" y="34" fill="#fbbf24" font-size="13" font-weight="bold" font-family="sans-serif">📷 Tesseract.js OCR Scan</text>
+    <text x="20" y="52" fill="#94a3b8" font-size="10" font-family="sans-serif">Ekstraksi Struk Belanja Otomatis</text>
+
+    <!-- Receipt Paper Mockup -->
+    <rect x="30" y="72" width="230" height="230" rx="6" fill="#1f1c14" stroke="#3f3622" />
+    <text x="145" y="98" fill="#e2e8f0" font-size="11" font-weight="bold" text-anchor="middle" font-family="monospace">SUPERMARKET CEMARA</text>
+    <line x1="48" y1="110" x2="242" y2="110" stroke="#3f3622" stroke-dasharray="4 3" />
+    <text x="48" y="132" fill="#cbd5e1" font-size="10" font-family="monospace">Beras Organik 5kg   75.000</text>
+    <text x="48" y="152" fill="#cbd5e1" font-size="10" font-family="monospace">Minyak Goreng 2L    36.500</text>
+    <text x="48" y="172" fill="#cbd5e1" font-size="10" font-family="monospace">Buah &amp; Sayur Segar  48.500</text>
+    <text x="48" y="192" fill="#cbd5e1" font-size="10" font-family="monospace">Susu UHT 12x        64.000</text>
+    <line x1="48" y1="212" x2="242" y2="212" stroke="#3f3622" stroke-dasharray="4 3" />
+    <text x="48" y="234" fill="#fbbf24" font-size="12" font-weight="bold" font-family="monospace">TOTAL         Rp 224.000</text>
+
+    <!-- Laser Scan Line -->
+    <line x1="25" y1="168" x2="265" y2="168" stroke="#f59e0b" stroke-width="2.5" />
+    <rect x="30" y="168" width="230" height="16" fill="#f59e0b" opacity="0.12" />
+
+    <!-- Confirm OCR Button -->
+    <rect x="30" y="322" width="230" height="40" rx="8" fill="url(#amber-grad)" />
+    <text x="145" y="346" fill="#14110a" font-size="11" font-weight="bold" text-anchor="middle">Simpan ke Pos Belanja ✓</text>
+  </g>
+
+  <!-- Right Top: Family Cashflow Summary -->
+  <g transform="translate(348, 58)">
+    <rect width="416" height="130" rx="12" fill="#12100b" stroke="#2d2616" />
+    <text x="22" y="32" fill="#94a3b8" font-size="11" font-family="sans-serif">Saldo Kas Keluarga Bulan Ini</text>
+    <text x="22" y="68" fill="#ffffff" font-size="28" font-weight="bold" font-family="sans-serif">Rp 14.850.000</text>
+    <rect x="22" y="84" width="115" height="24" rx="12" fill="#064e3b" />
+    <text x="79" y="100" fill="#34d399" font-size="10" font-weight="bold" text-anchor="middle">+18% Hemat</text>
+    <rect x="148" y="84" width="130" height="24" rx="12" fill="#1e293b" />
+    <text x="213" y="100" fill="#38bdf8" font-size="10" font-weight="bold" text-anchor="middle">Firebase Sync ●</text>
+  </g>
+
+  <!-- Right Bottom: Category Budget Bars -->
+  <g transform="translate(348, 206)">
+    <rect width="416" height="240" rx="12" fill="#12100b" stroke="#2d2616" />
+    <text x="22" y="34" fill="#ffffff" font-size="13" font-weight="bold" font-family="sans-serif">Alokasi Anggaran Keluarga (Next.js 16)</text>
+
+    <text x="22" y="70" fill="#cbd5e1" font-size="11">Kebutuhan Dapur &amp; Harian</text>
+    <text x="394" y="70" fill="#fbbf24" font-size="11" text-anchor="end">68%</text>
+    <rect x="22" y="80" width="372" height="10" rx="5" fill="#262013" />
+    <rect x="22" y="80" width="253" height="10" rx="5" fill="#f59e0b" />
+
+    <text x="22" y="122" fill="#cbd5e1" font-size="11">Pendidikan Anak</text>
+    <text x="394" y="122" fill="#38bdf8" font-size="11" text-anchor="end">45%</text>
+    <rect x="22" y="132" width="372" height="10" rx="5" fill="#262013" />
+    <rect x="22" y="132" width="167" height="10" rx="5" fill="#38bdf8" />
+
+    <text x="22" y="174" fill="#cbd5e1" font-size="11">Tabungan &amp; Dana Darurat</text>
+    <text x="394" y="174" fill="#10b981" font-size="11" text-anchor="end">90%</text>
+    <rect x="22" y="184" width="372" height="10" rx="5" fill="#262013" />
+    <rect x="22" y="184" width="335" height="10" rx="5" fill="#10b981" />
+  </g>
+</svg>
