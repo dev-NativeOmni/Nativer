@@ -6,7 +6,7 @@
  *   and direct GitHub Contents API publish to dev-NativeOmni/Nativer (main).
  */
 
-const DEFAULT_AUTH_HASH = '01de54f4f8dcd6bac119d5e9d52139ab933c7b74a696716ce5a28f9ce360e636';
+const DEFAULT_AUTH_HASH = '87f22caa37b311c571c47b305c711497e6b24f959e82b615319a1fa822bdd145';
 const STORAGE_DATA_KEY = 'nativer_cms_data_v1';
 const STORAGE_AUTH_KEY = 'nativer_cms_auth_hash_v1';
 const STORAGE_GH_TOKEN_KEY = 'nativer_cms_gh_pat_v1';
@@ -549,7 +549,7 @@ export function initCms({ defaults, getLiveData, setLiveData, onDataChange }) {
         <div class="cms-card-item">
           <div class="cms-card-head">Ubah Kredensial Akses Admin</div>
           <p class="cms-muted" style="margin-bottom: 12px;">
-            Kredensial disimpan sebagai hash SHA-256 di browser ini. (Default awal: <code>nativeomni</code> / <code>NativeOmni#2026</code>)
+            Kredensial disimpan sebagai hash SHA-256 di browser ini.
           </p>
           <div class="cms-grid-2">
             <div class="cms-field">
