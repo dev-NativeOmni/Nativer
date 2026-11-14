@@ -90,6 +90,10 @@
         <div class="container">
           <div class="hero-grid">
             <div class="hero-content">
+              <div class="hero-status-pill">
+                <span class="status-pulse-dot" aria-hidden="true"></span>
+                <span data-i18n="heroStatus">Available for Freelance &amp; Collaboration</span>
+              </div>
               <span class="hero-intro" data-i18n="heroHello">Hello, I'm</span>
               <h1 class="hero-title" data-info="name">Native Omni</h1>
               <h2 class="hero-subtitle" data-i18n="heroRole">Full Stack Developer</h2>
@@ -268,10 +272,38 @@
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                 </svg>
               </button>
-              <a href="mailto:nativeomni@gmail.com" class="btn btn-secondary">
+              <a href="mailto:nativeomni@gmail.com" class="btn btn-secondary" data-info="emailHref">
                 <span data-i18n="btnSendEmail">Send Direct Email</span> →
               </a>
+              <button type="button" class="btn btn-secondary" id="toggle-inquiry-btn">
+                <span data-i18n="inquiryToggleBtn">Quick Inquiry</span>
+              </button>
             </div>
+
+            <form class="quick-inquiry-form" id="quick-inquiry-form" hidden>
+              <div class="quick-inquiry-grid">
+                <input
+                  type="text"
+                  id="inquiry-name"
+                  class="inquiry-input"
+                  data-i18n-placeholder="inquiryNamePlaceholder"
+                  placeholder="Your Name / Organization"
+                  required
+                />
+                <textarea
+                  id="inquiry-message"
+                  class="inquiry-input"
+                  rows="3"
+                  data-i18n-placeholder="inquiryMsgPlaceholder"
+                  placeholder="Briefly describe your project or timeline..."
+                  required
+                ></textarea>
+              </div>
+              <div class="quick-inquiry-actions">
+                <button type="submit" class="btn btn-primary btn-sm" data-i18n="inquirySendBtn">Send via Email App</button>
+                <button type="button" class="btn btn-secondary btn-sm" id="copy-inquiry-btn" data-i18n="inquiryCopyBtn">Copy Message</button>
+              </div>
+            </form>
           </div>
         </div>
       </section>
@@ -345,6 +377,39 @@
             <li><strong>Cemara Doku (cemara-doku):</strong> Family finance tracker featuring client-side receipt OCR via Tesseract.js.</li>
             <li><strong>DEATHROLL Band &amp; CMS (Deathroll):</strong> Lightweight SQLite in-place CMS with integrated Web Audio Synthesizer.</li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Detail Modal -->
+  <div class="cv-modal-backdrop" id="project-modal" aria-hidden="true">
+    <div class="cv-modal-dialog project-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
+      <div class="cv-modal-header">
+        <div class="project-modal-head-left">
+          <span class="project-modal-badge" id="project-modal-badge"></span>
+          <h3 id="project-modal-title">Project Title</h3>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" id="project-modal-close" data-i18n="cvCloseBtn">Close</button>
+      </div>
+      <div class="project-modal-body">
+        <div class="project-modal-preview">
+          <img id="project-modal-img" src="" alt="" />
+        </div>
+        <p class="project-modal-desc" id="project-modal-desc"></p>
+        <div class="project-modal-meta">
+          <div>
+            <h4 class="project-modal-subhead" data-i18n="projectStackTitle">Technology Stack</h4>
+            <div class="project-tech-line" id="project-modal-tech"></div>
+          </div>
+          <div>
+            <h4 class="project-modal-subhead" data-i18n="projectFeaturesTitle">Key Features &amp; Highlights</h4>
+            <ul class="project-modal-features" id="project-modal-features"></ul>
+          </div>
+        </div>
+        <div class="project-modal-actions">
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" id="project-modal-github">GitHub</a>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" id="project-modal-live">Live Demo →</a>
         </div>
       </div>
     </div>

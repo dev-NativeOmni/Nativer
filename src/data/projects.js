@@ -36,6 +36,7 @@ export const translations = {
     navProjects: "Projects",
     navContact: "Contact",
     navHire: "Hire Me",
+    heroStatus: "Available for Freelance & Collaboration",
     heroHello: "Hello, I'm",
     heroRole: "Full Stack Developer",
     heroDesc: "I build exceptional digital experiences, enterprise school management systems, and modern web applications in Indonesia and around the world.",
@@ -70,6 +71,15 @@ export const translations = {
     ctaSubtitle: "Have a project in mind? I'd love to hear about it. Let's create something exceptional together.",
     btnCopyEmail: "Copy Email Address",
     btnSendEmail: "Send Direct Email",
+    inquiryToggleBtn: "Quick Inquiry",
+    inquiryNamePlaceholder: "Your Name / Organization",
+    inquiryMsgPlaceholder: "Briefly describe your project or timeline...",
+    inquirySendBtn: "Send via Email App",
+    inquiryCopyBtn: "Copy Message",
+    inquiryCopiedToast: "Inquiry message copied to clipboard!",
+    projectDetailsBtn: "Details",
+    projectFeaturesTitle: "Key Features & Highlights",
+    projectStackTitle: "Technology Stack",
     toastCopied: "Email copied to clipboard!",
     footerDeployed: "Deployed at",
     cvModalTitle: "Curriculum Vitae — Native Omni",
@@ -83,6 +93,7 @@ export const translations = {
     navProjects: "Proyek",
     navContact: "Kontak",
     navHire: "Hubungi Saya",
+    heroStatus: "Tersedia untuk Proyek & Kolaborasi",
     heroHello: "Halo, Saya",
     heroRole: "Full Stack Developer",
     heroDesc: "Saya membangun pengalaman digital modern, sistem manajemen sekolah skala institusi, serta aplikasi web berkinerja tinggi di Indonesia dan mancanegara.",
@@ -117,6 +128,15 @@ export const translations = {
     ctaSubtitle: "Punya ide proyek atau kebutuhan sistem? Saya siap mendiskusikannya dan membangun solusi terbaik bersama Anda.",
     btnCopyEmail: "Salin Alamat Email",
     btnSendEmail: "Kirim Email Langsung",
+    inquiryToggleBtn: "Pesan Cepat",
+    inquiryNamePlaceholder: "Nama Anda / Instansi",
+    inquiryMsgPlaceholder: "Ceritakan singkat kebutuhan proyek atau sistem Anda...",
+    inquirySendBtn: "Kirim via Email",
+    inquiryCopyBtn: "Salin Pesan",
+    inquiryCopiedToast: "Pesan inquiry berhasil disalin!",
+    projectDetailsBtn: "Detail",
+    projectFeaturesTitle: "Fitur Utama & Keunggulan",
+    projectStackTitle: "Stack Teknologi",
     toastCopied: "Email berhasil disalin ke clipboard!",
     footerDeployed: "Dideploy di",
     cvModalTitle: "Daftar Riwayat Hidup — Native Omni",
@@ -171,7 +191,17 @@ export const projects = [
     descId: "Platform tata kelola terintegrasi skala institusi untuk memonitor capaian Tahfizh Al-Qur'an, pembiasaan adab, poin disiplin santri, serta cetak rapor browser-native dan export streaming Excel.",
     githubUrl: "https://github.com/dev-NativeOmni/ims",
     liveUrl: "https://github.com/dev-NativeOmni/ims",
-    badge: "Enterprise Ready"
+    badge: "Enterprise Ready",
+    featuresEn: [
+      "Real-time Qur'an Tahfizh & Adab progress tracking",
+      "Automated student discipline point ledger",
+      "Browser-native report card printing & streaming Excel export"
+    ],
+    featuresId: [
+      "Pemantauan capaian Tahfizh Al-Qur'an & Adab real-time",
+      "Pencatatan poin kedisiplinan santri otomatis",
+      "Cetak rapor browser-native & export streaming Excel"
+    ]
   },
   {
     id: "deathroll-band",
@@ -183,7 +213,17 @@ export const projects = [
     descId: "Website band punk-rock Indonesia dengan estetika punk-zine kontras tinggi, audio track synth player bawaan, jadwal gigs tur, rilis diskografi album, dan in-place admin editor langsung tersimpan ke SQLite.",
     githubUrl: "https://github.com/dev-NativeOmni/Deathroll",
     liveUrl: "https://github.com/dev-NativeOmni/Deathroll",
-    badge: "Interactive Audio"
+    badge: "Interactive Audio",
+    featuresEn: [
+      "Built-in Web Audio API Synthesizer track player",
+      "In-place admin CMS backed by SQLite",
+      "Tour gig schedule & discography showcase"
+    ],
+    featuresId: [
+      "Pemutar audio Web Audio API Synthesizer bawaan",
+      "Admin CMS langsung di halaman tersimpan ke SQLite",
+      "Jadwal gigs tur & katalog diskografi band"
+    ]
   },
   {
     id: "mysch-jurnal",
@@ -195,7 +235,17 @@ export const projects = [
     descId: "Aplikasi presensi dan jurnal harian guru mobile-first dengan aturan 3-ketukan instan, deteksi jadwal otomatis, kompresi foto presensi di peramban, serta multi-tenancy token lembaga.",
     githubUrl: "https://github.com/dev-NativeOmni/mysch",
     liveUrl: "https://github.com/dev-NativeOmni/mysch",
-    badge: "Mobile-First"
+    badge: "Mobile-First",
+    featuresEn: [
+      "3-tap instant teacher attendance & daily journal flow",
+      "Automatic timetable detection & client-side photo compression",
+      "Multi-tenant institution isolation via Firebase Firestore"
+    ],
+    featuresId: [
+      "Alur presensi & jurnal harian guru instan 3 ketukan",
+      "Deteksi jadwal otomatis & kompresi foto di browser",
+      "Multi-tenancy lembaga aman berbasis Firebase Firestore"
+    ]
   },
   {
     id: "schoop-hafizplus",
@@ -207,7 +257,17 @@ export const projects = [
     descId: "Platform manajemen operasional sekolah generasi ketiga yang mendukung portal akademik siswa, pemantauan multi-unit, dan monitoring yayasan terpusat.",
     githubUrl: "https://github.com/dev-NativeOmni/schoop",
     liveUrl: "https://hafizplus-school-platform.vercel.app",
-    badge: "Deployed on Vercel"
+    badge: "Deployed on Vercel",
+    featuresEn: [
+      "Multi-unit school academic & operations portal",
+      "Centralized foundation dashboard & monitoring",
+      "Laravel Blade SSR deployed with automated pipeline"
+    ],
+    featuresId: [
+      "Portal akademik & operasional sekolah multi-unit",
+      "Dashboard pemantauan yayasan terpusat",
+      "Laravel Blade SSR dengan pipeline deployment otomatis"
+    ]
   },
   {
     id: "cemara-doku",
@@ -219,7 +279,17 @@ export const projects = [
     descId: "Sistem pencatatan keuangan keluarga cerdas dengan pemindaian struk otomatis memanfaatkan Tesseract.js OCR client-side dan sinkronisasi cloud real-time.",
     githubUrl: "https://github.com/dev-NativeOmni/cemara-doku",
     liveUrl: "https://github.com/dev-NativeOmni/cemara-doku",
-    badge: "Smart OCR"
+    badge: "Smart OCR",
+    featuresEn: [
+      "Automatic receipt scanning via client-side Tesseract.js OCR",
+      "Real-time family budget categories & cloud sync",
+      "Responsive dashboard built with Next.js 16 & React 19"
+    ],
+    featuresId: [
+      "Pemindaian struk belanja otomatis dengan Tesseract.js OCR",
+      "Kategori anggaran keluarga & sinkronisasi cloud real-time",
+      "Dashboard responsif dibangun dengan Next.js 16 & React 19"
+    ]
   },
   {
     id: "nativer-portfolio",
@@ -231,6 +301,16 @@ export const projects = [
     descId: "Web portofolio arsitektur modern berkecepatan tinggi dengan integrasi Three.js WebGL stardust, layout responsif murni, dan deployment otomatis Cloudflare Pages.",
     githubUrl: "https://github.com/dev-NativeOmni/Nativer",
     liveUrl: "https://native.web.id",
-    badge: "Live on native.web.id"
+    badge: "Live on native.web.id",
+    featuresEn: [
+      "Three.js WebGL interactive stardust backdrop",
+      "Bilingual EN/ID switcher & footer-triggered live CMS",
+      "Dual automated deployment to Cloudflare Pages & GitHub Pages"
+    ],
+    featuresId: [
+      "Latar interaktif stardust Three.js WebGL",
+      "Pengalih bahasa EN/ID & live CMS tersembunyi di footer",
+      "Deploy otomatis ganda ke Cloudflare Pages & GitHub Pages"
+    ]
   }
 ];

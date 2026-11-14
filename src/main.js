@@ -5,7 +5,9 @@ import {
   services as defaultServices,
   projects as defaultProjects
 } from './data/projects.js';
-import { loadMergedData, initCms } from './cms.js';
+
+const STORAGE_DATA_KEY = 'nativer_cms_data_v1';
+const SESSION_KEY = 'nativer_cms_session_v1';
 
 const defaultData = {
   personalInfo: defaultPersonalInfo,
@@ -13,6 +15,39 @@ const defaultData = {
   services: defaultServices,
   projects: defaultProjects
 };
+
+function loadMergedData(defaults) {
+  const merged = JSON.parse(JSON.stringify(defaults));
+  try {
+    const raw = localStorage.getItem(STORAGE_DATA_KEY);
+    if (!raw) return merged;
+    const saved = JSON.parse(raw);
+
+    if (saved.personalInfo) {
+      merged.personalInfo = {
+        ...merged.personalInfo,
+        ...saved.personalInfo,
+        social: {
+          ...merged.personalInfo.social,
+          ...(saved.personalInfo.social || {})
+        }
+      };
+    }
+    if (saved.translations) {
+      if (saved.translations.en) {
+        merged.translations.en = { ...merged.translations.en, ...saved.translations.en };
+      }
+      if (saved.translations.id) {
+        merged.translations.id = { ...merged.translations.id, ...saved.translations.id };
+      }
+    }
+    if (Array.isArray(saved.services)) merged.services = saved.services;
+    if (Array.isArray(saved.projects)) merged.projects = saved.projects;
+  } catch (err) {
+    console.warn('Failed to parse local overrides, using defaults.', err);
+  }
+  return merged;
+}
 
 let liveData = loadMergedData(defaultData);
 
@@ -33,6 +68,7 @@ const highlightIcons = [
 
 let currentLang = localStorage.getItem('nativer_lang') || 'en';
 let currentCategory = 'all';
+let cmsBooted = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   initThreeScene();
@@ -42,11 +78,24 @@ document.addEventListener('DOMContentLoaded', () => {
   applyLanguage(currentLang);
   setupProjectFilters();
   setupHeaderScroll();
+  setupScrollSpy();
+  setupHeroParallax();
   setupMobileMenu();
   setupCvModal();
+  setupProjectModal();
   setupCopyEmail();
+  setupQuickInquiry();
   setupRevealObserver();
+  setupLazyCms();
 
+  const yearEl = document.getElementById('current-year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+});
+
+async function bootCms(triggerClick = false) {
+  if (cmsBooted) return;
+  cmsBooted = true;
+  const { initCms } = await import('./cms.js');
   initCms({
     defaults: defaultData,
     getLiveData: () => liveData,
@@ -57,10 +106,26 @@ document.addEventListener('DOMContentLoaded', () => {
       applyLanguage(currentLang);
     }
   });
+  if (triggerClick) {
+    document.getElementById('cms-trigger')?.click();
+  }
+}
 
-  const yearEl = document.getElementById('current-year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-});
+function setupLazyCms() {
+  if (sessionStorage.getItem(SESSION_KEY) === '1') {
+    bootCms(false);
+    return;
+  }
+
+  const trigger = document.getElementById('cms-trigger');
+  if (!trigger) return;
+
+  const onFirstTriggerClick = () => {
+    trigger.removeEventListener('click', onFirstTriggerClick);
+    bootCms(true);
+  };
+  trigger.addEventListener('click', onFirstTriggerClick);
+}
 
 function applyPersonalInfo() {
   const pi = liveData.personalInfo;
@@ -75,6 +140,9 @@ function applyPersonalInfo() {
   });
   document.querySelectorAll('[data-info="email"]').forEach(el => {
     el.textContent = pi.email;
+    if (el.tagName === 'A') el.href = `mailto:${pi.email}`;
+  });
+  document.querySelectorAll('[data-info="emailHref"]').forEach(el => {
     if (el.tagName === 'A') el.href = `mailto:${pi.email}`;
   });
   document.querySelectorAll('[data-info="github"]').forEach(el => {
@@ -145,17 +213,19 @@ function renderProjects(category = 'all') {
     ? liveData.projects
     : liveData.projects.filter(p => p.category === category);
 
+  const detailsLabel = liveData.translations[currentLang].projectDetailsBtn || 'Details';
+
   container.innerHTML = filtered.map((p, idx) => {
     const desc = currentLang === 'id' ? p.descId : p.descEn;
     return `
-      <article class="project-card reveal" style="transition-delay: ${idx * 60}ms;">
-        <div class="project-thumb-box">
+      <article class="project-card reveal" style="transition-delay: ${idx * 60}ms;" data-project-id="${p.id}">
+        <div class="project-thumb-box project-open-trigger" role="button" tabindex="0" aria-label="View details for ${p.title}">
           <span class="project-badge-pill">${p.badge}</span>
           <img src="${p.image}" alt="${p.title}" class="project-thumb" loading="lazy" />
         </div>
         <div class="project-body">
           <div>
-            <h3 class="project-title">${p.title}</h3>
+            <h3 class="project-title project-open-trigger" role="button" tabindex="0">${p.title}</h3>
             <div class="project-tech-line">${p.techSubtitle}</div>
             <p class="project-desc">${desc}</p>
           </div>
@@ -175,11 +245,30 @@ function renderProjects(category = 'all') {
               </svg>
               <span>Live Demo</span>
             </a>
+            <button type="button" class="project-action-link project-details-btn project-open-trigger">
+              <span>${detailsLabel}</span>
+            </button>
           </div>
         </div>
       </article>
     `;
   }).join('');
+
+  container.querySelectorAll('.project-open-trigger').forEach(el => {
+    const open = () => {
+      const card = el.closest('.project-card');
+      const id = card?.getAttribute('data-project-id');
+      const proj = liveData.projects.find(item => item.id === id);
+      if (proj) openProjectModal(proj);
+    };
+    el.addEventListener('click', open);
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        open();
+      }
+    });
+  });
 
   setupRevealObserver();
 }
@@ -213,6 +302,13 @@ function applyLanguage(lang) {
     }
   });
 
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key]) {
+      el.setAttribute('placeholder', dict[key]);
+    }
+  });
+
   renderHighlights();
   renderServices();
   renderProjects(currentCategory);
@@ -240,6 +336,44 @@ function setupHeaderScroll() {
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+}
+
+function setupScrollSpy() {
+  const sections = document.querySelectorAll('main section[id]');
+  const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+  if (!sections.length || !navLinks.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          link.classList.toggle('active', href === `#${id}`);
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+
+  sections.forEach(sec => observer.observe(sec));
+}
+
+function setupHeroParallax() {
+  const frame = document.querySelector('.avatar-frame');
+  const hero = document.getElementById('hero');
+  if (!frame || !hero) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    frame.style.transform = `perspective(900px) rotateY(${(x * 7).toFixed(2)}deg) rotateX(${(-y * 5).toFixed(2)}deg) translateY(-4px)`;
+  });
+
+  hero.addEventListener('mouseleave', () => {
+    frame.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) translateY(0)';
+  });
 }
 
 function setupMobileMenu() {
@@ -291,26 +425,122 @@ function setupCvModal() {
   });
 }
 
+let openProjectModal = () => {};
+
+function setupProjectModal() {
+  const modal = document.getElementById('project-modal');
+  const closeBtn = document.getElementById('project-modal-close');
+  if (!modal) return;
+
+  const closeModal = () => {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+  };
+
+  openProjectModal = (proj) => {
+    const titleEl = document.getElementById('project-modal-title');
+    const badgeEl = document.getElementById('project-modal-badge');
+    const imgEl = document.getElementById('project-modal-img');
+    const descEl = document.getElementById('project-modal-desc');
+    const techEl = document.getElementById('project-modal-tech');
+    const featEl = document.getElementById('project-modal-features');
+    const ghEl = document.getElementById('project-modal-github');
+    const liveEl = document.getElementById('project-modal-live');
+
+    if (titleEl) titleEl.textContent = proj.title;
+    if (badgeEl) badgeEl.textContent = proj.badge;
+    if (imgEl) {
+      imgEl.src = proj.image;
+      imgEl.alt = proj.title;
+    }
+    if (descEl) descEl.textContent = currentLang === 'id' ? proj.descId : proj.descEn;
+    if (techEl) techEl.textContent = proj.techSubtitle;
+    if (ghEl) ghEl.href = proj.githubUrl;
+    if (liveEl) liveEl.href = proj.liveUrl;
+
+    if (featEl) {
+      const features = (currentLang === 'id' ? proj.featuresId : proj.featuresEn) || [
+        proj.techSubtitle,
+        proj.badge
+      ];
+      featEl.innerHTML = features.map(item => `<li>${item}</li>`).join('');
+    }
+
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+  };
+
+  closeBtn?.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast-notice');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2600);
+}
+
 function setupCopyEmail() {
   const btn = document.getElementById('copy-email-btn');
-  const toast = document.getElementById('toast-notice');
+  if (!btn) return;
 
-  if (btn) {
-    btn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(liveData.personalInfo.email);
-        if (toast) {
-          toast.textContent = liveData.translations[currentLang].toastCopied;
-          toast.classList.add('show');
-          setTimeout(() => {
-            toast.classList.remove('show');
-          }, 2500);
-        }
-      } catch (err) {
-        console.error('Failed to copy email:', err);
-      }
-    });
-  }
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(liveData.personalInfo.email);
+      showToast(liveData.translations[currentLang].toastCopied);
+    } catch (err) {
+      console.error('Failed to copy email:', err);
+    }
+  });
+}
+
+function setupQuickInquiry() {
+  const toggleBtn = document.getElementById('toggle-inquiry-btn');
+  const form = document.getElementById('quick-inquiry-form');
+  const nameInput = document.getElementById('inquiry-name');
+  const msgInput = document.getElementById('inquiry-message');
+  const copyBtn = document.getElementById('copy-inquiry-btn');
+  if (!toggleBtn || !form) return;
+
+  toggleBtn.addEventListener('click', () => {
+    const isHidden = form.hasAttribute('hidden');
+    if (isHidden) {
+      form.removeAttribute('hidden');
+      nameInput?.focus();
+    } else {
+      form.setAttribute('hidden', '');
+    }
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const sender = (nameInput?.value || '').trim();
+    const msg = (msgInput?.value || '').trim();
+    const subject = encodeURIComponent(`Project Inquiry from ${sender || 'Website Visitor'}`);
+    const body = encodeURIComponent(`Hi Native Omni,\n\nName/Org: ${sender}\n\n${msg}`);
+    window.location.href = `mailto:${liveData.personalInfo.email}?subject=${subject}&body=${body}`;
+  });
+
+  copyBtn?.addEventListener('click', async () => {
+    const sender = (nameInput?.value || '').trim();
+    const msg = (msgInput?.value || '').trim();
+    if (!sender && !msg) return;
+    try {
+      await navigator.clipboard.writeText(`From: ${sender}\n\n${msg}`);
+      showToast(liveData.translations[currentLang].inquiryCopiedToast);
+    } catch (err) {
+      console.error('Failed to copy inquiry:', err);
+    }
+  });
 }
 
 let revealObserver;
