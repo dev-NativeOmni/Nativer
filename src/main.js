@@ -1,5 +1,20 @@
 import { initThreeScene } from './three-scene.js';
-import { personalInfo, translations, services, projects } from './data/projects.js';
+import {
+  personalInfo as defaultPersonalInfo,
+  translations as defaultTranslations,
+  services as defaultServices,
+  projects as defaultProjects
+} from './data/projects.js';
+import { loadMergedData, initCms } from './cms.js';
+
+const defaultData = {
+  personalInfo: defaultPersonalInfo,
+  translations: defaultTranslations,
+  services: defaultServices,
+  projects: defaultProjects
+};
+
+let liveData = loadMergedData(defaultData);
 
 // SVG Icons for services
 const serviceIcons = {
@@ -23,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initThreeScene();
   renderTechStrip();
   setupLanguageSwitcher();
+  applyPersonalInfo();
   applyLanguage(currentLang);
   setupProjectFilters();
   setupHeaderScroll();
@@ -31,12 +47,52 @@ document.addEventListener('DOMContentLoaded', () => {
   setupCopyEmail();
   setupRevealObserver();
 
+  initCms({
+    defaults: defaultData,
+    getLiveData: () => liveData,
+    setLiveData: (next) => { liveData = next; },
+    onDataChange: () => {
+      renderTechStrip();
+      applyPersonalInfo();
+      applyLanguage(currentLang);
+    }
+  });
+
   const yearEl = document.getElementById('current-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 });
 
+function applyPersonalInfo() {
+  const pi = liveData.personalInfo;
+  document.querySelectorAll('[data-info="name"]').forEach(el => {
+    el.textContent = pi.name;
+  });
+  document.querySelectorAll('[data-info="brandTitle"]').forEach(el => {
+    el.textContent = pi.brandTitle;
+  });
+  document.querySelectorAll('[data-info="location"]').forEach(el => {
+    el.textContent = pi.location;
+  });
+  document.querySelectorAll('[data-info="email"]').forEach(el => {
+    el.textContent = pi.email;
+    if (el.tagName === 'A') el.href = `mailto:${pi.email}`;
+  });
+  document.querySelectorAll('[data-info="github"]').forEach(el => {
+    const clean = pi.social.github.replace(/^https?:\/\//, '');
+    el.textContent = clean;
+    if (el.tagName === 'A') el.href = pi.social.github;
+  });
+  document.querySelectorAll('[data-info="brandName"]').forEach(el => {
+    el.innerHTML = `${pi.firstName} <span class="brand-highlight">${pi.lastName || ''}</span>`;
+  });
+  document.querySelectorAll('[data-info="footerBrandName"]').forEach(el => {
+    el.innerHTML = `${pi.firstName} <span style="color: var(--accent-blue);">${pi.lastName || ''}</span>`;
+  });
+}
+
 function renderTechStrip() {
   const container = document.getElementById('tech-strip');
+  const { personalInfo } = liveData;
   if (!container || !personalInfo.techLogos) return;
 
   container.innerHTML = personalInfo.techLogos.map(t => `
@@ -51,7 +107,7 @@ function renderHighlights() {
   const container = document.getElementById('highlights-grid');
   if (!container) return;
 
-  const list = translations[currentLang].highlights;
+  const list = liveData.translations[currentLang].highlights;
   container.innerHTML = list.map((text, idx) => `
     <div class="highlight-item">
       <div class="highlight-icon">${highlightIcons[idx % highlightIcons.length]}</div>
@@ -64,7 +120,7 @@ function renderServices() {
   const container = document.getElementById('services-grid');
   if (!container) return;
 
-  container.innerHTML = services.map((s, idx) => {
+  container.innerHTML = liveData.services.map((s, idx) => {
     const title = currentLang === 'id' ? s.titleId : s.titleEn;
     const desc = currentLang === 'id' ? s.descId : s.descEn;
     return `
@@ -86,8 +142,8 @@ function renderProjects(category = 'all') {
   if (!container) return;
 
   const filtered = category === 'all'
-    ? projects
-    : projects.filter(p => p.category === category);
+    ? liveData.projects
+    : liveData.projects.filter(p => p.category === category);
 
   container.innerHTML = filtered.map((p, idx) => {
     const desc = currentLang === 'id' ? p.descId : p.descEn;
@@ -149,7 +205,7 @@ function applyLanguage(lang) {
     btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
   });
 
-  const dict = translations[lang];
+  const dict = liveData.translations[lang];
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (dict[key]) {
@@ -242,9 +298,9 @@ function setupCopyEmail() {
   if (btn) {
     btn.addEventListener('click', async () => {
       try {
-        await navigator.clipboard.writeText(personalInfo.email);
+        await navigator.clipboard.writeText(liveData.personalInfo.email);
         if (toast) {
-          toast.textContent = translations[currentLang].toastCopied;
+          toast.textContent = liveData.translations[currentLang].toastCopied;
           toast.classList.add('show');
           setTimeout(() => {
             toast.classList.remove('show');
