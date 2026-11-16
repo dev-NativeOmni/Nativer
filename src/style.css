@@ -35,6 +35,27 @@
   --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+[data-mode="light"] {
+  --bg-dark: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --border-subtle: #e2e8f0;
+  --border-focus: rgba(37, 99, 235, 0.45);
+
+  --accent-blue: #2563eb;
+  --accent-blue-hover: #1d4ed8;
+  --accent-blue-subtle: rgba(37, 99, 235, 0.1);
+  --accent-cyan: #0284c7;
+  --accent-emerald: #059669;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+
+  --header-bg-scrolled: rgba(248, 250, 252, 0.92);
+  --hero-bg-image: linear-gradient(180deg, rgba(248, 250, 252, 0.86) 0%, rgba(248, 250, 252, 0.68) 45%, rgba(248, 250, 252, 0.9) 78%, #f8fafc 100%), url('./assets/images/hero-bg.webp');
+}
+
 /* Base & Reset */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -1635,4 +1656,167 @@ body {
   .project-case-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ==========================================================================
+   LIGHT / DARK MODE TOGGLE & ALPINE LIGHT MODE POLISH
+   ========================================================================== */
+.mode-toggle-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mode-toggle-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--accent-cyan);
+}
+
+.mode-toggle-btn .icon-moon {
+  display: none;
+}
+
+[data-mode="light"] .mode-toggle-btn {
+  background: rgba(15, 23, 42, 0.05);
+  border-color: #cbd5e1;
+  color: #334155;
+}
+
+[data-mode="light"] .mode-toggle-btn .icon-sun {
+  display: none;
+}
+
+[data-mode="light"] .mode-toggle-btn .icon-moon {
+  display: block;
+}
+
+[data-mode="light"] #three-canvas-container {
+  opacity: 0.14;
+  filter: invert(1);
+}
+
+[data-mode="light"] .brand-title,
+[data-mode="light"] .hero-title,
+[data-mode="light"] .section-title,
+[data-mode="light"] .project-title,
+[data-mode="light"] .cta-title,
+[data-mode="light"] .footer-name,
+[data-mode="light"] .project-modal-subhead {
+  color: var(--text-primary);
+  text-shadow: none;
+}
+
+[data-mode="light"] .hero-intro,
+[data-mode="light"] .hero-subtitle {
+  text-shadow: none;
+}
+
+[data-mode="light"] .hero-subtitle {
+  color: #1e293b;
+}
+
+[data-mode="light"] .hero-status-pill {
+  background: rgba(5, 150, 105, 0.1);
+  border-color: rgba(5, 150, 105, 0.28);
+  color: #065f46;
+}
+
+[data-mode="light"] .nav-link,
+[data-mode="light"] .brand-subtitle {
+  color: var(--text-secondary);
+}
+
+[data-mode="light"] .nav-link:hover,
+[data-mode="light"] .nav-link.active {
+  color: var(--accent-blue);
+}
+
+[data-mode="light"] .lang-switcher {
+  background: rgba(15, 23, 42, 0.05);
+  border-color: #cbd5e1;
+}
+
+[data-mode="light"] .btn-secondary {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+[data-mode="light"] .btn-secondary:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+[data-mode="light"] .tech-pill,
+[data-mode="light"] .highlight-item,
+[data-mode="light"] .info-card,
+[data-mode="light"] .project-card,
+[data-mode="light"] .project-case-item {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+}
+
+[data-mode="light"] .project-details-btn {
+  border-color: #cbd5e1;
+  color: #334155;
+}
+
+[data-mode="light"] .cta-section {
+  background-color: #f1f5f9;
+}
+
+[data-mode="light"] .cta-box {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: #cbd5e1;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+[data-mode="light"] .inquiry-input {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+[data-mode="light"] .mobile-drawer,
+[data-mode="light"] .cv-modal-dialog {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #0f172a;
+}
+
+[data-mode="light"] .cv-modal-header h3,
+[data-mode="light"] .cv-head-block h2,
+[data-mode="light"] .cv-section-block h4,
+[data-mode="light"] .cv-section-block strong {
+  color: #0f172a;
+}
+
+[data-mode="light"] .project-modal-meta {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+[data-mode="light"] .site-footer {
+  background: #ffffff;
+  border-top-color: #e2e8f0;
+}
+
+[data-mode="light"] .social-icon-btn {
+  background: #f1f5f9;
+  color: #334155;
+  border-color: #e2e8f0;
+}
+
+[data-mode="light"] .toast-notice {
+  background: #0f172a;
+  color: #ffffff;
 }

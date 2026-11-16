@@ -59,10 +59,12 @@ const highlightIcons = [
 ];
 
 let currentLang = localStorage.getItem('nativer_lang') || 'en';
+let currentMode = localStorage.getItem('nativer_mode') || 'dark';
 let cmsBooted = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   initThreeScene();
+  setupModeToggle();
   renderTechStrip();
   setupLanguageSwitcher();
   applyPersonalInfo();
@@ -355,6 +357,21 @@ function renderCvContent() {
       <ul>${projectItems}</ul>
     </div>
   `;
+}
+
+function setupModeToggle() {
+  const applyMode = (mode) => {
+    document.documentElement.setAttribute('data-mode', mode);
+  };
+  applyMode(currentMode);
+
+  const btn = document.getElementById('mode-toggle');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    currentMode = currentMode === 'light' ? 'dark' : 'light';
+    localStorage.setItem('nativer_mode', currentMode);
+    applyMode(currentMode);
+  });
 }
 
 function setupLanguageSwitcher() {
