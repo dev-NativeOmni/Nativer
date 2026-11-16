@@ -2,6 +2,7 @@ import { initThreeScene } from './three-scene.js';
 import {
   personalInfo as defaultPersonalInfo,
   translations as defaultTranslations,
+  experiences as defaultExperiences,
   services as defaultServices,
   projects as defaultProjects
 } from './data/projects.js';
@@ -12,6 +13,7 @@ const SESSION_KEY = 'nativer_cms_session_v1';
 const defaultData = {
   personalInfo: defaultPersonalInfo,
   translations: defaultTranslations,
+  experiences: defaultExperiences,
   services: defaultServices,
   projects: defaultProjects
 };
@@ -310,8 +312,35 @@ function applyLanguage(lang) {
   });
 
   renderHighlights();
+  renderExperiences();
   renderServices();
   renderProjects(currentCategory);
+}
+
+function renderExperiences() {
+  const container = document.getElementById('experience-timeline');
+  if (!container || !Array.isArray(liveData.experiences)) return;
+
+  container.innerHTML = liveData.experiences.map((item, idx) => {
+    const role = currentLang === 'id' ? item.roleId : item.roleEn;
+    const org = currentLang === 'id' ? item.orgId : item.orgEn;
+    const summary = currentLang === 'id' ? item.summaryId : item.summaryEn;
+    return `
+      <article class="experience-card reveal" style="transition-delay: ${idx * 80}ms;">
+        <div class="experience-top">
+          <span class="experience-period">${item.period}</span>
+          <span class="experience-org">${org}</span>
+        </div>
+        <h3 class="experience-role">${role}</h3>
+        <p class="experience-summary">${summary}</p>
+        <div class="experience-tags">
+          ${(item.tags || []).map(tag => `<span class="experience-tag">${tag}</span>`).join('')}
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  setupRevealObserver();
 }
 
 function setupProjectFilters() {
@@ -442,6 +471,7 @@ function setupProjectModal() {
     const badgeEl = document.getElementById('project-modal-badge');
     const imgEl = document.getElementById('project-modal-img');
     const descEl = document.getElementById('project-modal-desc');
+    const caseEl = document.getElementById('project-modal-case');
     const techEl = document.getElementById('project-modal-tech');
     const featEl = document.getElementById('project-modal-features');
     const ghEl = document.getElementById('project-modal-github');
@@ -454,6 +484,28 @@ function setupProjectModal() {
       imgEl.alt = proj.title;
     }
     if (descEl) descEl.textContent = currentLang === 'id' ? proj.descId : proj.descEn;
+    if (caseEl) {
+      const cs = currentLang === 'id' ? proj.caseStudyId : proj.caseStudyEn;
+      const dict = liveData.translations[currentLang];
+      if (cs) {
+        caseEl.innerHTML = `
+          <div class="project-case-item">
+            <span class="project-case-label">${dict.caseProblemLabel || 'Challenge'}</span>
+            <p>${cs.problem}</p>
+          </div>
+          <div class="project-case-item">
+            <span class="project-case-label">${dict.caseSolutionLabel || 'Architecture'}</span>
+            <p>${cs.solution}</p>
+          </div>
+          <div class="project-case-item">
+            <span class="project-case-label">${dict.caseImpactLabel || 'Impact'}</span>
+            <p>${cs.impact}</p>
+          </div>
+        `;
+      } else {
+        caseEl.innerHTML = '';
+      }
+    }
     if (techEl) techEl.textContent = proj.techSubtitle;
     if (ghEl) ghEl.href = proj.githubUrl;
     if (liveEl) liveEl.href = proj.liveUrl;
@@ -507,6 +559,7 @@ function setupQuickInquiry() {
   const toggleBtn = document.getElementById('toggle-inquiry-btn');
   const form = document.getElementById('quick-inquiry-form');
   const nameInput = document.getElementById('inquiry-name');
+  const emailInput = document.getElementById('inquiry-email');
   const msgInput = document.getElementById('inquiry-message');
   const copyBtn = document.getElementById('copy-inquiry-btn');
   if (!toggleBtn || !form) return;
@@ -521,21 +574,62 @@ function setupQuickInquiry() {
     }
   });
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const sender = (nameInput?.value || '').trim();
+    const replyEmail = (emailInput?.value || '').trim();
     const msg = (msgInput?.value || '').trim();
-    const subject = encodeURIComponent(`Project Inquiry from ${sender || 'Website Visitor'}`);
-    const body = encodeURIComponent(`Hi Native Omni,\n\nName/Org: ${sender}\n\n${msg}`);
+    if (!sender || !msg) return;
+
+    const dict = liveData.translations[currentLang];
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalLabel = submitBtn?.textContent;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = dict.inquirySending || 'Sending...';
+    }
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: sender, email: replyEmail, message: msg })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.ok) {
+          showToast(dict.inquirySentSuccess || 'Message delivered!');
+          form.reset();
+          form.setAttribute('hidden', '');
+          return;
+        }
+      }
+    } catch {
+      // Static hosting without /api/contact falls back to mailto: below
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel || dict.inquirySendBtn;
+      }
+    }
+
+    showToast(dict.inquiryFallbackMailto || 'Opening email app...');
+    const subject = encodeURIComponent(`Project Inquiry from ${sender}`);
+    const body = encodeURIComponent(
+      `Hi Native Omni,\n\nName/Org: ${sender}${replyEmail ? `\nReply-To: ${replyEmail}` : ''}\n\n${msg}`
+    );
     window.location.href = `mailto:${liveData.personalInfo.email}?subject=${subject}&body=${body}`;
   });
 
   copyBtn?.addEventListener('click', async () => {
     const sender = (nameInput?.value || '').trim();
+    const replyEmail = (emailInput?.value || '').trim();
     const msg = (msgInput?.value || '').trim();
     if (!sender && !msg) return;
     try {
-      await navigator.clipboard.writeText(`From: ${sender}\n\n${msg}`);
+      await navigator.clipboard.writeText(
+        `From: ${sender}${replyEmail ? ` (${replyEmail})` : ''}\n\n${msg}`
+      );
       showToast(liveData.translations[currentLang].inquiryCopiedToast);
     } catch (err) {
       console.error('Failed to copy inquiry:', err);

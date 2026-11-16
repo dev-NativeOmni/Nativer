@@ -6,8 +6,30 @@
   <title>Native Omni | Full Stack Developer</title>
   <meta name="description" content="Portfolio of Native Omni - Full Stack Developer. Building scalable web applications, enterprise school management systems, and high-performance digital experiences." />
 
-  <!-- Favicon -->
+  <!-- Favicon & Manifest -->
   <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="canonical" href="https://native.web.id/" />
+  <meta name="theme-color" content="#050814" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Native Omni",
+      "url": "https://native.web.id/",
+      "jobTitle": "Full Stack Developer",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Solo",
+        "addressCountry": "ID"
+      },
+      "sameAs": [
+        "https://github.com/dev-NativeOmni"
+      ]
+    }
+  </script>
 
   <!-- Open Graph / Social Share Preview (WhatsApp, LinkedIn, X) -->
   <meta property="og:type" content="website" />
@@ -212,6 +234,19 @@
         </div>
       </section>
 
+      <!-- Experience & Track Record Timeline -->
+      <section id="experience" class="section experience-section">
+        <div class="container">
+          <div class="services-header reveal">
+            <span class="section-tag" data-i18n="experienceTag">TRACK RECORD</span>
+            <h2 class="section-title" data-i18n="experienceTitle">Experience &amp; Engineering Focus</h2>
+          </div>
+          <div class="experience-timeline" id="experience-timeline">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </section>
+
       <!-- Services Section (What I Can Do For You) -->
       <section id="services" class="section services-section">
         <div class="container">
@@ -289,6 +324,13 @@
                   data-i18n-placeholder="inquiryNamePlaceholder"
                   placeholder="Your Name / Organization"
                   required
+                />
+                <input
+                  type="email"
+                  id="inquiry-email"
+                  class="inquiry-input"
+                  data-i18n-placeholder="inquiryEmailPlaceholder"
+                  placeholder="Your Email (optional, for reply)"
                 />
                 <textarea
                   id="inquiry-message"
@@ -397,6 +439,7 @@
           <img id="project-modal-img" src="" alt="" />
         </div>
         <p class="project-modal-desc" id="project-modal-desc"></p>
+        <div class="project-case-grid" id="project-modal-case"></div>
         <div class="project-modal-meta">
           <div>
             <h4 class="project-modal-subhead" data-i18n="projectStackTitle">Technology Stack</h4>

@@ -1,0 +1,16 @@
+{
+  "name": "Native Omni — Full Stack Developer",
+  "short_name": "Native Omni",
+  "description": "Portfolio of Native Omni - Full Stack Developer specializing in enterprise school management systems and modern web applications.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#050814",
+  "theme_color": "#050814",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

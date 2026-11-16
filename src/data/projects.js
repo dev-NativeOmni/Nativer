@@ -73,10 +73,19 @@ export const translations = {
     btnSendEmail: "Send Direct Email",
     inquiryToggleBtn: "Quick Inquiry",
     inquiryNamePlaceholder: "Your Name / Organization",
+    inquiryEmailPlaceholder: "Your Email (optional, for reply)",
     inquiryMsgPlaceholder: "Briefly describe your project or timeline...",
-    inquirySendBtn: "Send via Email App",
+    inquirySendBtn: "Send Message",
+    inquirySending: "Sending...",
+    inquirySentSuccess: "Message delivered! Thank you for reaching out.",
+    inquiryFallbackMailto: "Opening your email app to complete sending...",
     inquiryCopyBtn: "Copy Message",
     inquiryCopiedToast: "Inquiry message copied to clipboard!",
+    experienceTag: "TRACK RECORD",
+    experienceTitle: "Experience & Engineering Focus",
+    caseProblemLabel: "Challenge",
+    caseSolutionLabel: "Architecture",
+    caseImpactLabel: "Impact",
     projectDetailsBtn: "Details",
     projectFeaturesTitle: "Key Features & Highlights",
     projectStackTitle: "Technology Stack",
@@ -130,10 +139,19 @@ export const translations = {
     btnSendEmail: "Kirim Email Langsung",
     inquiryToggleBtn: "Pesan Cepat",
     inquiryNamePlaceholder: "Nama Anda / Instansi",
+    inquiryEmailPlaceholder: "Email Anda (opsional, untuk balasan)",
     inquiryMsgPlaceholder: "Ceritakan singkat kebutuhan proyek atau sistem Anda...",
-    inquirySendBtn: "Kirim via Email",
+    inquirySendBtn: "Kirim Pesan",
+    inquirySending: "Mengirim...",
+    inquirySentSuccess: "Pesan terkirim! Terima kasih sudah menghubungi.",
+    inquiryFallbackMailto: "Membuka aplikasi email Anda untuk mengirim pesan...",
     inquiryCopyBtn: "Salin Pesan",
     inquiryCopiedToast: "Pesan inquiry berhasil disalin!",
+    experienceTag: "REKAM JEJAK",
+    experienceTitle: "Pengalaman & Fokus Rekayasa",
+    caseProblemLabel: "Tantangan",
+    caseSolutionLabel: "Arsitektur",
+    caseImpactLabel: "Dampak",
     projectDetailsBtn: "Detail",
     projectFeaturesTitle: "Fitur Utama & Keunggulan",
     projectStackTitle: "Stack Teknologi",
@@ -144,6 +162,31 @@ export const translations = {
     cvCloseBtn: "Tutup"
   }
 };
+
+export const experiences = [
+  {
+    id: "edu-systems-architect",
+    period: "2023 — Present",
+    roleEn: "Full Stack Architect — Institution & School Systems",
+    roleId: "Arsitek Full Stack — Sistem Institusi & Sekolah",
+    orgEn: "Education Technology & Multi-Unit Foundations",
+    orgId: "Teknologi Pendidikan & Yayasan Multi-Unit",
+    summaryEn: "Architected integrated platforms (TAD Management System, MySch, Schoop) handling Qur'an Tahfizh tracking, 3-tap teacher attendance, multi-tenant Firestore isolation, and automated report printing.",
+    summaryId: "Merancang platform terintegrasi (TAD Management System, MySch, Schoop) untuk monitoring Tahfizh Al-Qur'an, presensi guru 3 ketukan, multi-tenancy Firestore, serta cetak rapor otomatis.",
+    tags: ["Laravel 12", "Next.js", "Firebase", "250+ Tests"]
+  },
+  {
+    id: "web-ocr-interactive",
+    period: "2021 — Present",
+    roleEn: "Full Stack Web & Creative Systems Builder",
+    roleId: "Pengembang Web Full Stack & Sistem Interaktif",
+    orgEn: "Independent Product Studio & Open Source",
+    orgId: "Studio Produk Independen & Open Source",
+    summaryEn: "Built client-side OCR finance tooling (Cemara Doku with Tesseract.js), SQLite in-place CMS with Web Audio synth (DEATHROLL), and WebGL Three.js portfolio experiences deployed on Cloudflare & Vercel.",
+    summaryId: "Membangun aplikasi keuangan OCR client-side (Cemara Doku dengan Tesseract.js), CMS SQLite dengan Web Audio synth (DEATHROLL), dan portofolio WebGL Three.js di Cloudflare & Vercel.",
+    tags: ["React 19", "TypeScript", "Three.js", "Tesseract.js"]
+  }
+];
 
 export const services = [
   {
@@ -201,7 +244,17 @@ export const projects = [
       "Pemantauan capaian Tahfizh Al-Qur'an & Adab real-time",
       "Pencatatan poin kedisiplinan santri otomatis",
       "Cetak rapor browser-native & export streaming Excel"
-    ]
+    ],
+    caseStudyEn: {
+      problem: "Manual spreadsheet tracking across Tahfizh, Adab, and discipline records caused slow reporting.",
+      solution: "Built a unified Laravel 12 + MySQL platform with browser-native print layouts and streaming Excel export.",
+      impact: "Backed by 250+ automated test suites for reliable institution-wide daily operations."
+    },
+    caseStudyId: {
+      problem: "Pencatatan Tahfizh, Adab, dan poin disiplin yang terpisah di spreadsheet memperlambat penyusunan rapor.",
+      solution: "Membangun platform terintegrasi Laravel 12 + MySQL dengan cetak rapor browser-native dan export streaming Excel.",
+      impact: "Teruji dengan 250+ automated test suites sehingga operasional harian lembaga berjalan stabil."
+    }
   },
   {
     id: "deathroll-band",
@@ -223,7 +276,17 @@ export const projects = [
       "Pemutar audio Web Audio API Synthesizer bawaan",
       "Admin CMS langsung di halaman tersimpan ke SQLite",
       "Jadwal gigs tur & katalog diskografi band"
-    ]
+    ],
+    caseStudyEn: {
+      problem: "Independent bands need fast tour/release updates without bloated third-party CMS dashboards.",
+      solution: "Engineered a TypeScript in-place editor persisting directly to SQLite alongside a built-in Web Audio Synth.",
+      impact: "Zero external audio hosting dependency with instant on-page content management."
+    },
+    caseStudyId: {
+      problem: "Band independen membutuhkan pembaruan jadwal tur dan rilis secara cepat tanpa CMS yang berat.",
+      solution: "Merancang editor in-place berbasis TypeScript yang langsung tersimpan ke SQLite beserta Web Audio Synth bawaan.",
+      impact: "Tanpa ketergantungan pemutar audio eksternal dengan pengelolaan konten instan."
+    }
   },
   {
     id: "mysch-jurnal",
@@ -245,7 +308,17 @@ export const projects = [
       "Alur presensi & jurnal harian guru instan 3 ketukan",
       "Deteksi jadwal otomatis & kompresi foto di browser",
       "Multi-tenancy lembaga aman berbasis Firebase Firestore"
-    ]
+    ],
+    caseStudyEn: {
+      problem: "Teachers struggled with slow mobile forms and large photo uploads during classroom transitions.",
+      solution: "Designed a 3-tap Next.js + React 19 workflow with automatic timetable detection and client-side compression.",
+      impact: "Fast mobile-first daily journaling across multiple schools via tenant token isolation."
+    },
+    caseStudyId: {
+      problem: "Guru kesulitan mengisi form presensi yang lambat dan mengunggah foto berukuran besar di jam pergantian kelas.",
+      solution: "Merancang alur 3 ketukan dengan Next.js + React 19, deteksi jadwal otomatis, dan kompresi foto di browser.",
+      impact: "Pengisian jurnal harian mobile-first lebih cepat untuk banyak sekolah melalui isolasi token lembaga."
+    }
   },
   {
     id: "schoop-hafizplus",
@@ -267,7 +340,17 @@ export const projects = [
       "Portal akademik & operasional sekolah multi-unit",
       "Dashboard pemantauan yayasan terpusat",
       "Laravel Blade SSR dengan pipeline deployment otomatis"
-    ]
+    ],
+    caseStudyEn: {
+      problem: "Multi-unit foundations lacked centralized visibility into student academic portals and unit operations.",
+      solution: "Developed the third-generation Laravel Blade platform with unified foundation monitoring.",
+      impact: "Live production deployment serving centralized academic tracking across school units."
+    },
+    caseStudyId: {
+      problem: "Yayasan multi-unit membutuhkan visibilitas terpusat atas portal akademik dan operasional tiap sekolah.",
+      solution: "Mengembangkan platform Laravel Blade generasi ketiga dengan dashboard monitoring yayasan terpusat.",
+      impact: "Terdeploy aktif untuk pemantauan akademik lintas unit sekolah."
+    }
   },
   {
     id: "cemara-doku",
@@ -289,7 +372,17 @@ export const projects = [
       "Pemindaian struk belanja otomatis dengan Tesseract.js OCR",
       "Kategori anggaran keluarga & sinkronisasi cloud real-time",
       "Dashboard responsif dibangun dengan Next.js 16 & React 19"
-    ]
+    ],
+    caseStudyEn: {
+      problem: "Manual expense logging from paper receipts is tedious and often abandoned by families.",
+      solution: "Integrated client-side Tesseract.js OCR into Next.js 16 + Firebase for instant receipt parsing.",
+      impact: "Privacy-friendly browser OCR with real-time synchronized household budgeting."
+    },
+    caseStudyId: {
+      problem: "Pencatatan pengeluaran manual dari struk belanja kertas sering terasa merepotkan dan terlewat.",
+      solution: "Mengintegrasikan Tesseract.js OCR di sisi klien dengan Next.js 16 + Firebase untuk membaca struk otomatis.",
+      impact: "OCR ramah privasi di browser dengan sinkronisasi anggaran keluarga secara real-time."
+    }
   },
   {
     id: "nativer-portfolio",
@@ -311,6 +404,16 @@ export const projects = [
       "Latar interaktif stardust Three.js WebGL",
       "Pengalih bahasa EN/ID & live CMS tersembunyi di footer",
       "Deploy otomatis ganda ke Cloudflare Pages & GitHub Pages"
-    ]
+    ],
+    caseStudyEn: {
+      problem: "Static portfolios often require code redeploys for every minor copy or project update.",
+      solution: "Built a Vite 6 + Three.js portfolio with code-splitting, EN/ID switching, and a lazy-loaded GitHub-backed CMS.",
+      impact: "Sub-35 kB initial JS app chunk with dual auto-deployment to native.web.id and GitHub Pages."
+    },
+    caseStudyId: {
+      problem: "Portofolio statis umumnya memerlukan edit kode manual setiap kali ada pembaruan teks atau proyek.",
+      solution: "Membangun portofolio Vite 6 + Three.js dengan code-splitting, switcher EN/ID, dan CMS lazy-loaded.",
+      impact: "Chunk JS awal ringkas dengan deploy otomatis ke native.web.id dan GitHub Pages."
+    }
   }
 ];
