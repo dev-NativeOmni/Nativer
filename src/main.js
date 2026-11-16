@@ -2,7 +2,6 @@ import { initThreeScene } from './three-scene.js';
 import {
   personalInfo as defaultPersonalInfo,
   translations as defaultTranslations,
-  experiences as defaultExperiences,
   services as defaultServices,
   projects as defaultProjects
 } from './data/projects.js';
@@ -13,7 +12,6 @@ const SESSION_KEY = 'nativer_cms_session_v1';
 const defaultData = {
   personalInfo: defaultPersonalInfo,
   translations: defaultTranslations,
-  experiences: defaultExperiences,
   services: defaultServices,
   projects: defaultProjects
 };
@@ -53,14 +51,6 @@ function loadMergedData(defaults) {
 
 let liveData = loadMergedData(defaultData);
 
-// SVG Icons for services
-const serviceIcons = {
-  code: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>`,
-  mobile: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg>`,
-  rocket: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>`,
-  shield: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>`
-};
-
 const highlightIcons = [
   `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"></path></svg>`,
   `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"></path></svg>`,
@@ -69,7 +59,6 @@ const highlightIcons = [
 ];
 
 let currentLang = localStorage.getItem('nativer_lang') || 'en';
-let currentCategory = 'all';
 let cmsBooted = false;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -78,10 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
   setupLanguageSwitcher();
   applyPersonalInfo();
   applyLanguage(currentLang);
-  setupProjectFilters();
   setupHeaderScroll();
   setupScrollSpy();
-  setupHeroParallax();
   setupMobileMenu();
   setupCvModal();
   setupProjectModal();
@@ -140,7 +127,8 @@ async function syncPublicGithubRepos() {
 
     if (merged.length) {
       liveData.projects = merged;
-      renderProjects(currentCategory);
+      renderProjects();
+      renderCvContent();
     }
   };
 
@@ -261,38 +249,13 @@ function renderHighlights() {
   `).join('');
 }
 
-function renderServices() {
-  const container = document.getElementById('services-grid');
-  if (!container) return;
-
-  container.innerHTML = liveData.services.map((s, idx) => {
-    const title = currentLang === 'id' ? s.titleId : s.titleEn;
-    const desc = currentLang === 'id' ? s.descId : s.descEn;
-    return `
-      <div class="service-card reveal" style="transition-delay: ${idx * 60}ms;">
-        <div class="service-icon">
-          ${serviceIcons[s.icon] || serviceIcons.code}
-        </div>
-        <h3 class="service-title">${title}</h3>
-        <p class="service-desc">${desc}</p>
-      </div>
-    `;
-  }).join('');
-
-  setupRevealObserver();
-}
-
-function renderProjects(category = 'all') {
+function renderProjects() {
   const container = document.getElementById('projects-grid');
   if (!container) return;
 
-  const filtered = category === 'all'
-    ? liveData.projects
-    : liveData.projects.filter(p => p.category === category);
-
   const detailsLabel = liveData.translations[currentLang].projectDetailsBtn || 'Details';
 
-  container.innerHTML = filtered.map((p, idx) => {
+  container.innerHTML = liveData.projects.map((p, idx) => {
     const desc = currentLang === 'id' ? p.descId : p.descEn;
     return `
       <article class="project-card reveal" style="transition-delay: ${idx * 60}ms;" data-project-id="${p.id}">
@@ -350,6 +313,50 @@ function renderProjects(category = 'all') {
   setupRevealObserver();
 }
 
+function renderCvContent() {
+  const container = document.getElementById('cv-printable');
+  if (!container) return;
+
+  const pi = liveData.personalInfo;
+  const isId = currentLang === 'id';
+  const roleText = isId
+    ? 'Full Stack Software Engineer &amp; Arsitek Sistem Web'
+    : 'Full Stack Software Engineer &amp; Web Systems Architect';
+  const stackTitle = isId ? 'Stack Teknis Utama' : 'Core Technical Stack';
+  const projTitle = isId ? 'Proyek Publik &amp; Sistem Produksi' : 'Public Repositories &amp; Production Systems';
+
+  const projectItems = (liveData.projects || []).map(p => {
+    const desc = isId ? p.descId : p.descEn;
+    return `<li><strong>${p.title} (${p.repoName || p.id}):</strong> ${desc}</li>`;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="cv-head-block">
+      <div>
+        <h2>${pi.name}</h2>
+        <p class="cv-role-text">${roleText}</p>
+      </div>
+      <div class="cv-contact-meta">
+        <span>${pi.location}</span>
+        <span>${pi.email}</span>
+        <span>${pi.social.github.replace(/^https?:\/\//, '')} • native.web.id</span>
+      </div>
+    </div>
+    <hr class="cv-divider" />
+    <div class="cv-section-block">
+      <h4>${stackTitle}</h4>
+      <p><strong>Backend &amp; Frameworks:</strong> Laravel 12 (PHP 8.2+), Next.js 16, React 19, TypeScript, Node.js</p>
+      <p><strong>Frontend &amp; Graphics:</strong> Tailwind CSS v4, Modern CSS, Three.js (WebGL), Alpine.js, Vite 6</p>
+      <p><strong>Database &amp; Cloud:</strong> MySQL / MariaDB, SQLite, Firebase (Firestore &amp; Hosting), Cloudflare Pages, GitHub Actions</p>
+      <p><strong>${isId ? 'Pengujian &amp; Kualitas' : 'Testing &amp; Quality'}:</strong> PHPUnit (250+ Automated Test Suites), ESLint, CI/CD Pipelines</p>
+    </div>
+    <div class="cv-section-block">
+      <h4>${projTitle}</h4>
+      <ul>${projectItems}</ul>
+    </div>
+  `;
+}
+
 function setupLanguageSwitcher() {
   const buttons = document.querySelectorAll('.lang-btn');
   buttons.forEach(btn => {
@@ -387,47 +394,8 @@ function applyLanguage(lang) {
   });
 
   renderHighlights();
-  renderExperiences();
-  renderServices();
-  renderProjects(currentCategory);
-}
-
-function renderExperiences() {
-  const container = document.getElementById('experience-timeline');
-  if (!container || !Array.isArray(liveData.experiences)) return;
-
-  container.innerHTML = liveData.experiences.map((item, idx) => {
-    const role = currentLang === 'id' ? item.roleId : item.roleEn;
-    const org = currentLang === 'id' ? item.orgId : item.orgEn;
-    const summary = currentLang === 'id' ? item.summaryId : item.summaryEn;
-    return `
-      <article class="experience-card reveal" style="transition-delay: ${idx * 80}ms;">
-        <div class="experience-top">
-          <span class="experience-period">${item.period}</span>
-          <span class="experience-org">${org}</span>
-        </div>
-        <h3 class="experience-role">${role}</h3>
-        <p class="experience-summary">${summary}</p>
-        <div class="experience-tags">
-          ${(item.tags || []).map(tag => `<span class="experience-tag">${tag}</span>`).join('')}
-        </div>
-      </article>
-    `;
-  }).join('');
-
-  setupRevealObserver();
-}
-
-function setupProjectFilters() {
-  const filterButtons = document.querySelectorAll('.filter-pill');
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentCategory = btn.getAttribute('data-category') || 'all';
-      renderProjects(currentCategory);
-    });
-  });
+  renderProjects();
+  renderCvContent();
 }
 
 function setupHeaderScroll() {
@@ -462,24 +430,6 @@ function setupScrollSpy() {
   sections.forEach(sec => observer.observe(sec));
 }
 
-function setupHeroParallax() {
-  const frame = document.querySelector('.avatar-frame');
-  const hero = document.getElementById('hero');
-  if (!frame || !hero) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  hero.addEventListener('mousemove', (e) => {
-    const rect = hero.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    frame.style.transform = `perspective(900px) rotateY(${(x * 7).toFixed(2)}deg) rotateX(${(-y * 5).toFixed(2)}deg) translateY(-4px)`;
-  });
-
-  hero.addEventListener('mouseleave', () => {
-    frame.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) translateY(0)';
-  });
-}
-
 function setupMobileMenu() {
   const toggle = document.getElementById('mobile-toggle');
   const drawer = document.getElementById('mobile-drawer');
@@ -507,6 +457,7 @@ function setupCvModal() {
   if (!openBtn || !modal) return;
 
   const openModal = () => {
+    renderCvContent();
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
   };

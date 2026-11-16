@@ -36,11 +36,11 @@
   <meta property="og:url" content="https://native.web.id/" />
   <meta property="og:title" content="Native Omni | Full Stack Developer" />
   <meta property="og:description" content="Full Stack Software Engineer specializing in Laravel 12, Next.js, React, Three.js, and enterprise education platforms." />
-  <meta property="og:image" content="https://native.web.id/assets/images/hero-bg.jpg" />
+  <meta property="og:image" content="https://native.web.id/assets/images/og-preview.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Native Omni | Full Stack Developer" />
   <meta name="twitter:description" content="Portfolio & GitHub projects of Native Omni." />
-  <meta name="twitter:image" content="https://native.web.id/assets/images/hero-bg.jpg" />
+  <meta name="twitter:image" content="https://native.web.id/assets/images/og-preview.jpg" />
 
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -148,7 +148,10 @@
             <!-- Right Visual: User Character with Smooth Bottom Fade -->
             <div class="hero-visual">
               <div class="avatar-wrapper">
-                <img src="./assets/images/hero-avatar.png" alt="Native Omni - Full Stack Developer" class="avatar-img" />
+                <picture>
+                  <source srcset="./assets/images/hero-avatar.webp" type="image/webp" />
+                  <img src="./assets/images/hero-avatar.png" alt="Native Omni - Full Stack Developer" class="avatar-img" width="420" height="420" />
+                </picture>
               </div>
             </div>
           </div>
@@ -353,35 +356,7 @@
         </div>
       </div>
       <div class="cv-modal-body" id="cv-printable">
-        <div class="cv-head-block">
-          <div>
-            <h2>Native Omni</h2>
-            <p class="cv-role-text">Full Stack Software Engineer &amp; Creative Web Builder</p>
-          </div>
-          <div class="cv-contact-meta">
-            <span>Solo (SOC), Indonesia</span>
-            <span>nativeomni@gmail.com</span>
-            <span>github.com/dev-NativeOmni • native.web.id</span>
-          </div>
-        </div>
-        <hr class="cv-divider" />
-        <div class="cv-section-block">
-          <h4>Core Technical Stack</h4>
-          <p><strong>Backend &amp; Frameworks:</strong> Laravel 12 (PHP 8.2+), Next.js 16, React 19, Vue.js, Node.js, TypeScript</p>
-          <p><strong>Frontend &amp; Graphics:</strong> Tailwind CSS v4, Modern CSS, Three.js (WebGL), Alpine.js, Vite 6</p>
-          <p><strong>Database &amp; Cloud:</strong> MySQL / MariaDB, SQLite, Firebase (Firestore &amp; Hosting), Cloudflare Pages, GitHub Actions</p>
-          <p><strong>Testing &amp; Quality:</strong> PHPUnit (250+ Automated Test Suites), ESLint, CI/CD Pipelines</p>
-        </div>
-        <div class="cv-section-block">
-          <h4>Selected Production Systems</h4>
-          <ul>
-            <li><strong>TAD Management System (ims):</strong> Institution-scale platform for Tahfizh, Adab, &amp; Discipline tracking with 257 automated tests and streaming Excel export.</li>
-            <li><strong>MySch (mysch):</strong> Mobile-first multi-tenant teacher attendance &amp; daily journal app powered by Next.js and Firebase Firestore.</li>
-            <li><strong>Schoop / Hafizplus 3.0 (schoop):</strong> School operational &amp; academic portal deployed on Vercel.</li>
-            <li><strong>Cemara Doku (cemara-doku):</strong> Family finance tracker featuring client-side receipt OCR via Tesseract.js.</li>
-            <li><strong>DEATHROLL Band &amp; CMS (Deathroll):</strong> Lightweight SQLite in-place CMS with integrated Web Audio Synthesizer.</li>
-          </ul>
-        </div>
+        <!-- Rendered dynamically by renderCvContent() in src/main.js -->
       </div>
     </div>
   </div>
