@@ -89,10 +89,85 @@ document.addEventListener('DOMContentLoaded', () => {
   setupQuickInquiry();
   setupRevealObserver();
   setupLazyCms();
+  syncPublicGithubRepos();
 
   const yearEl = document.getElementById('current-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 });
+
+async function syncPublicGithubRepos() {
+  const username = liveData.personalInfo?.githubUsername || 'dev-NativeOmni';
+  const cacheKey = `nativer_gh_public_${username}`;
+  const cacheTtlMs = 10 * 60 * 1000;
+
+  const applyRepos = (repos) => {
+    if (!Array.isArray(repos) || !repos.length) return;
+    const curatedList = liveData.projects || [];
+    const merged = repos
+      .filter(r => !r.fork && !r.archived)
+      .map(repo => {
+        const lower = repo.name.toLowerCase();
+        const match = curatedList.find(p =>
+          (p.repoName && p.repoName.toLowerCase() === lower) ||
+          (p.githubUrl && p.githubUrl.toLowerCase().endsWith(`/${lower}`))
+        );
+        if (match) {
+          return {
+            ...match,
+            githubUrl: repo.html_url || match.githubUrl,
+            liveUrl: (repo.homepage && repo.homepage.trim()) ? repo.homepage : match.liveUrl,
+            badge: repo.stargazers_count > 0 ? `${match.badge} • ★ ${repo.stargazers_count}` : match.badge
+          };
+        }
+
+        const lang = repo.language || 'Web';
+        return {
+          id: `gh-${repo.id}`,
+          repoName: repo.name,
+          title: repo.name,
+          category: 'web',
+          image: './assets/images/project-nativer.svg',
+          techSubtitle: `${lang} / GitHub Public Repo`,
+          descEn: repo.description || `Public repository ${repo.name} maintained by ${username}.`,
+          descId: repo.description || `Repositori publik ${repo.name} oleh ${username} di GitHub.`,
+          githubUrl: repo.html_url,
+          liveUrl: (repo.homepage && repo.homepage.trim()) ? repo.homepage : repo.html_url,
+          badge: repo.stargazers_count > 0 ? `Public • ★ ${repo.stargazers_count}` : 'Public Repo',
+          featuresEn: [`Primary language: ${lang}`, 'Publicly available on GitHub'],
+          featuresId: [`Bahasa utama: ${lang}`, 'Tersedia publik di GitHub']
+        };
+      });
+
+    if (merged.length) {
+      liveData.projects = merged;
+      renderProjects(currentCategory);
+    }
+  };
+
+  try {
+    const cachedRaw = sessionStorage.getItem(cacheKey);
+    if (cachedRaw) {
+      const cached = JSON.parse(cachedRaw);
+      if (Date.now() - cached.ts < cacheTtlMs) {
+        applyRepos(cached.repos);
+        return;
+      }
+    }
+
+    const res = await fetch(
+      `https://api.github.com/users/${encodeURIComponent(username)}/repos?type=public&sort=updated&per_page=30`,
+      { headers: { Accept: 'application/vnd.github+json' } }
+    );
+    if (!res.ok) return;
+    const repos = await res.json();
+    if (Array.isArray(repos)) {
+      sessionStorage.setItem(cacheKey, JSON.stringify({ ts: Date.now(), repos }));
+      applyRepos(repos);
+    }
+  } catch (err) {
+    console.warn('GitHub public repo sync skipped:', err);
+  }
+}
 
 async function bootCms(triggerClick = false) {
   if (cmsBooted) return;

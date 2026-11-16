@@ -225,39 +225,8 @@ export const services = [
 
 export const projects = [
   {
-    id: "tad-ims",
-    title: "TAD Management System",
-    category: "school",
-    image: "./assets/images/project-tad.svg",
-    techSubtitle: "Laravel 12 / Tailwind CSS 4 / MySQL / Alpine.js",
-    descEn: "Institution-scale integrated platform to monitor Qur'an Tahfizh progress, daily character (Adab), student discipline points, browser-native report printing, and streaming Excel exports.",
-    descId: "Platform tata kelola terintegrasi skala institusi untuk memonitor capaian Tahfizh Al-Qur'an, pembiasaan adab, poin disiplin santri, serta cetak rapor browser-native dan export streaming Excel.",
-    githubUrl: "https://github.com/dev-NativeOmni/ims",
-    liveUrl: "https://github.com/dev-NativeOmni/ims",
-    badge: "Enterprise Ready",
-    featuresEn: [
-      "Real-time Qur'an Tahfizh & Adab progress tracking",
-      "Automated student discipline point ledger",
-      "Browser-native report card printing & streaming Excel export"
-    ],
-    featuresId: [
-      "Pemantauan capaian Tahfizh Al-Qur'an & Adab real-time",
-      "Pencatatan poin kedisiplinan santri otomatis",
-      "Cetak rapor browser-native & export streaming Excel"
-    ],
-    caseStudyEn: {
-      problem: "Manual spreadsheet tracking across Tahfizh, Adab, and discipline records caused slow reporting.",
-      solution: "Built a unified Laravel 12 + MySQL platform with browser-native print layouts and streaming Excel export.",
-      impact: "Backed by 250+ automated test suites for reliable institution-wide daily operations."
-    },
-    caseStudyId: {
-      problem: "Pencatatan Tahfizh, Adab, dan poin disiplin yang terpisah di spreadsheet memperlambat penyusunan rapor.",
-      solution: "Membangun platform terintegrasi Laravel 12 + MySQL dengan cetak rapor browser-native dan export streaming Excel.",
-      impact: "Teruji dengan 250+ automated test suites sehingga operasional harian lembaga berjalan stabil."
-    }
-  },
-  {
     id: "deathroll-band",
+    repoName: "Deathroll",
     title: "DEATHROLL Band & CMS",
     category: "creative",
     image: "./assets/images/project-deathroll.svg",
@@ -265,7 +234,7 @@ export const projects = [
     descEn: "Indonesian punk-rock band website with high-contrast zine aesthetics, built-in Web Audio Synthesizer player, tour gig schedules, discography releases, and an in-place SQLite admin editor.",
     descId: "Website band punk-rock Indonesia dengan estetika punk-zine kontras tinggi, audio track synth player bawaan, jadwal gigs tur, rilis diskografi album, dan in-place admin editor langsung tersimpan ke SQLite.",
     githubUrl: "https://github.com/dev-NativeOmni/Deathroll",
-    liveUrl: "https://github.com/dev-NativeOmni/Deathroll",
+    liveUrl: "https://deathrollofficial.web.app",
     badge: "Interactive Audio",
     featuresEn: [
       "Built-in Web Audio API Synthesizer track player",
@@ -280,20 +249,54 @@ export const projects = [
     caseStudyEn: {
       problem: "Independent bands need fast tour/release updates without bloated third-party CMS dashboards.",
       solution: "Engineered a TypeScript in-place editor persisting directly to SQLite alongside a built-in Web Audio Synth.",
-      impact: "Zero external audio hosting dependency with instant on-page content management."
+      impact: "Live at deathrollofficial.web.app with zero external audio hosting dependency."
     },
     caseStudyId: {
       problem: "Band independen membutuhkan pembaruan jadwal tur dan rilis secara cepat tanpa CMS yang berat.",
       solution: "Merancang editor in-place berbasis TypeScript yang langsung tersimpan ke SQLite beserta Web Audio Synth bawaan.",
-      impact: "Tanpa ketergantungan pemutar audio eksternal dengan pengelolaan konten instan."
+      impact: "Tayang aktif di deathrollofficial.web.app tanpa ketergantungan pemutar audio eksternal."
+    }
+  },
+  {
+    id: "nativer-portfolio",
+    repoName: "Nativer",
+    title: "Nativer 3D Engine",
+    category: "creative",
+    image: "./assets/images/project-nativer.svg",
+    techSubtitle: "Three.js / WebGL / Vite 6 / Cloudflare Pages",
+    descEn: "High-speed modern personal portfolio engine integrating Three.js WebGL stardust atmosphere, responsive glassmorphism UI, live GitHub public repo sync, and automated Cloudflare Pages deployment.",
+    descId: "Web portofolio arsitektur modern berkecepatan tinggi dengan integrasi Three.js WebGL stardust, sinkronisasi repo publik GitHub, dan deployment otomatis Cloudflare Pages.",
+    githubUrl: "https://github.com/dev-NativeOmni/Nativer",
+    liveUrl: "https://native.web.id",
+    badge: "Live on native.web.id",
+    featuresEn: [
+      "Three.js WebGL interactive stardust backdrop",
+      "Bilingual EN/ID switcher & footer-triggered live CMS",
+      "Dual automated deployment to Cloudflare Pages & GitHub Pages"
+    ],
+    featuresId: [
+      "Latar interaktif stardust Three.js WebGL",
+      "Pengalih bahasa EN/ID & live CMS tersembunyi di footer",
+      "Deploy otomatis ganda ke Cloudflare Pages & GitHub Pages"
+    ],
+    caseStudyEn: {
+      problem: "Static portfolios often require code redeploys for every minor copy or project update.",
+      solution: "Built a Vite 6 + Three.js portfolio with code-splitting, EN/ID switching, and a lazy-loaded GitHub-backed CMS.",
+      impact: "Sub-45 kB initial JS app chunk with dual auto-deployment to native.web.id and GitHub Pages."
+    },
+    caseStudyId: {
+      problem: "Portofolio statis umumnya memerlukan edit kode manual setiap kali ada pembaruan teks atau proyek.",
+      solution: "Membangun portofolio Vite 6 + Three.js dengan code-splitting, switcher EN/ID, dan CMS lazy-loaded.",
+      impact: "Chunk JS awal ringkas dengan deploy otomatis ke native.web.id dan GitHub Pages."
     }
   },
   {
     id: "mysch-jurnal",
+    repoName: "mysch",
     title: "MySch — Jurnal Guru",
     category: "school",
     image: "./assets/images/project-mysch.svg",
-    techSubtitle: "Next.js / React 19 / Tailwind v4 / Firebase Firestore",
+    techSubtitle: "TypeScript / Next.js / React 19 / Firebase Firestore",
     descEn: "Mobile-first teacher daily journal and attendance app featuring a 3-tap workflow, automatic timetable detection, client-side photo compression, and multi-tenant institution tokens.",
     descId: "Aplikasi presensi dan jurnal harian guru mobile-first dengan aturan 3-ketukan instan, deteksi jadwal otomatis, kompresi foto presensi di peramban, serta multi-tenancy token lembaga.",
     githubUrl: "https://github.com/dev-NativeOmni/mysch",
@@ -321,99 +324,36 @@ export const projects = [
     }
   },
   {
-    id: "schoop-hafizplus",
-    title: "Schoop Platform (Hafizplus 3.0)",
-    category: "school",
-    image: "./assets/images/project-schoop.svg",
-    techSubtitle: "PHP / Laravel / Blade / Vercel Deploy",
-    descEn: "Third-generation school operations management platform supporting student academic portals, multi-unit school tracking, and centralized foundation monitoring.",
-    descId: "Platform manajemen operasional sekolah generasi ketiga yang mendukung portal akademik siswa, pemantauan multi-unit, dan monitoring yayasan terpusat.",
-    githubUrl: "https://github.com/dev-NativeOmni/schoop",
-    liveUrl: "https://hafizplus-school-platform.vercel.app",
-    badge: "Deployed on Vercel",
-    featuresEn: [
-      "Multi-unit school academic & operations portal",
-      "Centralized foundation dashboard & monitoring",
-      "Laravel Blade SSR deployed with automated pipeline"
-    ],
-    featuresId: [
-      "Portal akademik & operasional sekolah multi-unit",
-      "Dashboard pemantauan yayasan terpusat",
-      "Laravel Blade SSR dengan pipeline deployment otomatis"
-    ],
-    caseStudyEn: {
-      problem: "Multi-unit foundations lacked centralized visibility into student academic portals and unit operations.",
-      solution: "Developed the third-generation Laravel Blade platform with unified foundation monitoring.",
-      impact: "Live production deployment serving centralized academic tracking across school units."
-    },
-    caseStudyId: {
-      problem: "Yayasan multi-unit membutuhkan visibilitas terpusat atas portal akademik dan operasional tiap sekolah.",
-      solution: "Mengembangkan platform Laravel Blade generasi ketiga dengan dashboard monitoring yayasan terpusat.",
-      impact: "Terdeploy aktif untuk pemantauan akademik lintas unit sekolah."
-    }
-  },
-  {
-    id: "cemara-doku",
-    title: "Cemara Doku — Smart Finance & OCR",
+    id: "myra-web",
+    repoName: "myra",
+    title: "Myra — Easy As You Go",
     category: "web",
-    image: "./assets/images/project-cemara.svg",
-    techSubtitle: "Next.js 16 / React 19 / Tesseract.js OCR / Firebase",
-    descEn: "Smart family finance and budgeting system featuring automatic shopping receipt scanning powered by client-side Tesseract.js OCR and real-time Firebase cloud sync.",
-    descId: "Sistem pencatatan keuangan keluarga cerdas dengan pemindaian struk otomatis memanfaatkan Tesseract.js OCR client-side dan sinkronisasi cloud real-time.",
-    githubUrl: "https://github.com/dev-NativeOmni/cemara-doku",
-    liveUrl: "https://github.com/dev-NativeOmni/cemara-doku",
-    badge: "Smart OCR",
+    image: "./assets/images/project-schoop.svg",
+    techSubtitle: "Laravel / Blade / PHP / Tailwind CSS",
+    descEn: "Clean, lightweight web application built with Laravel Blade templates focused on fast server-rendered workflows and straightforward user ergonomics.",
+    descId: "Aplikasi web ringan berbasis Laravel Blade yang berfokus pada alur kerja server-rendered yang cepat, rapi, dan mudah digunakan.",
+    githubUrl: "https://github.com/dev-NativeOmni/myra",
+    liveUrl: "https://github.com/dev-NativeOmni/myra",
+    badge: "Laravel Blade",
     featuresEn: [
-      "Automatic receipt scanning via client-side Tesseract.js OCR",
-      "Real-time family budget categories & cloud sync",
-      "Responsive dashboard built with Next.js 16 & React 19"
+      "Server-rendered Blade architecture for fast initial loads",
+      "Clean, modular routing and controller structure",
+      "Public open-source repository on GitHub"
     ],
     featuresId: [
-      "Pemindaian struk belanja otomatis dengan Tesseract.js OCR",
-      "Kategori anggaran keluarga & sinkronisasi cloud real-time",
-      "Dashboard responsif dibangun dengan Next.js 16 & React 19"
+      "Arsitektur Blade server-rendered untuk loading awal cepat",
+      "Struktur routing dan controller yang rapi serta modular",
+      "Repositori open-source publik di GitHub"
     ],
     caseStudyEn: {
-      problem: "Manual expense logging from paper receipts is tedious and often abandoned by families.",
-      solution: "Integrated client-side Tesseract.js OCR into Next.js 16 + Firebase for instant receipt parsing.",
-      impact: "Privacy-friendly browser OCR with real-time synchronized household budgeting."
+      problem: "Many small web tools suffer from unnecessary SPA complexity for straightforward CRUD workflows.",
+      solution: "Structured a clean Laravel Blade codebase prioritizing simplicity, speed, and maintainability.",
+      impact: "Easy-to-deploy foundation aligned with its 'Easy as you go' philosophy."
     },
     caseStudyId: {
-      problem: "Pencatatan pengeluaran manual dari struk belanja kertas sering terasa merepotkan dan terlewat.",
-      solution: "Mengintegrasikan Tesseract.js OCR di sisi klien dengan Next.js 16 + Firebase untuk membaca struk otomatis.",
-      impact: "OCR ramah privasi di browser dengan sinkronisasi anggaran keluarga secara real-time."
-    }
-  },
-  {
-    id: "nativer-portfolio",
-    title: "Nativer 3D Engine",
-    category: "creative",
-    image: "./assets/images/project-nativer.svg",
-    techSubtitle: "Three.js / WebGL / Vite 6 / Cloudflare Pages",
-    descEn: "High-speed modern personal portfolio engine integrating Three.js WebGL stardust atmosphere, responsive glassmorphism UI, and automated Cloudflare Pages deployment.",
-    descId: "Web portofolio arsitektur modern berkecepatan tinggi dengan integrasi Three.js WebGL stardust, layout responsif murni, dan deployment otomatis Cloudflare Pages.",
-    githubUrl: "https://github.com/dev-NativeOmni/Nativer",
-    liveUrl: "https://native.web.id",
-    badge: "Live on native.web.id",
-    featuresEn: [
-      "Three.js WebGL interactive stardust backdrop",
-      "Bilingual EN/ID switcher & footer-triggered live CMS",
-      "Dual automated deployment to Cloudflare Pages & GitHub Pages"
-    ],
-    featuresId: [
-      "Latar interaktif stardust Three.js WebGL",
-      "Pengalih bahasa EN/ID & live CMS tersembunyi di footer",
-      "Deploy otomatis ganda ke Cloudflare Pages & GitHub Pages"
-    ],
-    caseStudyEn: {
-      problem: "Static portfolios often require code redeploys for every minor copy or project update.",
-      solution: "Built a Vite 6 + Three.js portfolio with code-splitting, EN/ID switching, and a lazy-loaded GitHub-backed CMS.",
-      impact: "Sub-35 kB initial JS app chunk with dual auto-deployment to native.web.id and GitHub Pages."
-    },
-    caseStudyId: {
-      problem: "Portofolio statis umumnya memerlukan edit kode manual setiap kali ada pembaruan teks atau proyek.",
-      solution: "Membangun portofolio Vite 6 + Three.js dengan code-splitting, switcher EN/ID, dan CMS lazy-loaded.",
-      impact: "Chunk JS awal ringkas dengan deploy otomatis ke native.web.id dan GitHub Pages."
+      problem: "Banyak aplikasi web sederhana terbebani kompleksitas SPA yang tidak perlu untuk alur kerja standar.",
+      solution: "Menyusun basis kode Laravel Blade yang bersih, cepat, dan mudah dipelihara.",
+      impact: "Fondasi aplikasi yang ringkas dan siap pakai sesuai prinsip 'Easy as you go'."
     }
   }
 ];
