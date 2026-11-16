@@ -67,11 +67,13 @@ const highlightIcons = [
 ];
 
 let currentLang = localStorage.getItem('nativer_lang') || 'en';
+let currentTheme = localStorage.getItem('nativer_theme') || 'obsidian';
 let currentCategory = 'all';
 let cmsBooted = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   initThreeScene();
+  setupThemeSwitcher();
   renderTechStrip();
   setupLanguageSwitcher();
   applyPersonalInfo();
@@ -271,6 +273,27 @@ function renderProjects(category = 'all') {
   });
 
   setupRevealObserver();
+}
+
+function setupThemeSwitcher() {
+  applyTheme(currentTheme);
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nextTheme = btn.getAttribute('data-theme-target');
+      if (nextTheme && nextTheme !== currentTheme) {
+        currentTheme = nextTheme;
+        localStorage.setItem('nativer_theme', nextTheme);
+        applyTheme(nextTheme);
+      }
+    });
+  });
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-theme-target') === theme);
+  });
 }
 
 function setupLanguageSwitcher() {

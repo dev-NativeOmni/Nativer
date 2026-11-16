@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="obsidian">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -53,6 +53,13 @@
         </ul>
 
         <div class="nav-actions">
+          <!-- Theme Switcher -->
+          <div class="theme-switcher" role="group" aria-label="Theme switcher">
+            <button type="button" class="theme-btn active" data-theme-target="obsidian" title="Executive Dark (Obsidian)">Obsidian</button>
+            <button type="button" class="theme-btn" data-theme-target="editorial" title="Clean Daylight (Light)">Daylight</button>
+            <button type="button" class="theme-btn" data-theme-target="alpine" title="Alpine Midnight">Alpine</button>
+          </div>
+
           <!-- Language Switcher -->
           <div class="lang-switcher" role="group" aria-label="Language switcher">
             <button type="button" class="lang-btn active" data-lang="en">EN</button>
@@ -81,12 +88,19 @@
           <li><a href="#projects" class="mobile-nav-link" data-i18n="navProjects">Projects</a></li>
           <li><a href="#contact" class="mobile-nav-link" data-i18n="navContact">Contact</a></li>
         </ul>
+        <div class="mobile-theme-row">
+          <div class="theme-switcher" role="group" aria-label="Mobile theme switcher">
+            <button type="button" class="theme-btn active" data-theme-target="obsidian">Obsidian</button>
+            <button type="button" class="theme-btn" data-theme-target="editorial">Daylight</button>
+            <button type="button" class="theme-btn" data-theme-target="alpine">Alpine</button>
+          </div>
+        </div>
       </div>
     </header>
 
     <main>
-      <!-- Hero Section (Alpine Scenic Background with Top & Bottom Vignettes) -->
-      <section id="hero" class="hero-section" style="background-image: linear-gradient(180deg, rgba(5, 8, 20, 0.72) 0%, rgba(5, 8, 20, 0.28) 38%, rgba(5, 8, 20, 0.62) 72%, #050814 100%), url('./assets/images/hero-bg.jpg');">
+      <!-- Hero Section (Theme-Aware Backdrop) -->
+      <section id="hero" class="hero-section">
         <div class="container">
           <div class="hero-grid">
             <div class="hero-content">
