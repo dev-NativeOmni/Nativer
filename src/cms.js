@@ -245,9 +245,14 @@ export function initCms({ defaults, getLiveData, setLiveData, onDataChange }) {
     if (activeTab === 'hero') {
       const val = (id) => editorBody.querySelector(`#${id}`)?.value ?? '';
       draftData.personalInfo.name = val('cms-pi-name').trim() || draftData.personalInfo.name;
-      const parts = draftData.personalInfo.name.split(' ');
-      draftData.personalInfo.firstName = parts[0] || draftData.personalInfo.name;
-      draftData.personalInfo.lastName = parts.slice(1).join(' ');
+      const parts = draftData.personalInfo.name.split(/\s+/).filter(Boolean);
+      if (parts.length > 1) {
+        draftData.personalInfo.firstName = parts.slice(0, -1).join(' ');
+        draftData.personalInfo.lastName = parts[parts.length - 1];
+      } else {
+        draftData.personalInfo.firstName = draftData.personalInfo.name;
+        draftData.personalInfo.lastName = '';
+      }
       draftData.personalInfo.brandTitle = val('cms-pi-brand').trim();
       draftData.personalInfo.location = val('cms-pi-location').trim();
       draftData.personalInfo.email = val('cms-pi-email').trim();

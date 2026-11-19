@@ -196,8 +196,14 @@ function setupLazyCms() {
 
 function applyPersonalInfo() {
   const pi = liveData.personalInfo;
+  const roleLabel = liveData.translations?.[currentLang]?.heroRole || 'Full Stack Developer';
+  document.title = `${pi.name} | ${roleLabel}`;
+
   document.querySelectorAll('[data-info="name"]').forEach(el => {
     el.textContent = pi.name;
+  });
+  document.querySelectorAll('.avatar-img').forEach(el => {
+    el.alt = `${pi.name} - ${roleLabel}`;
   });
   document.querySelectorAll('[data-info="brandTitle"]').forEach(el => {
     el.textContent = pi.brandTitle;
@@ -218,10 +224,14 @@ function applyPersonalInfo() {
     if (el.tagName === 'A') el.href = pi.social.github;
   });
   document.querySelectorAll('[data-info="brandName"]').forEach(el => {
-    el.innerHTML = `${pi.firstName} <span class="brand-highlight">${pi.lastName || ''}</span>`;
+    el.innerHTML = pi.lastName
+      ? `${pi.firstName} <span class="brand-highlight">${pi.lastName}</span>`
+      : pi.firstName;
   });
   document.querySelectorAll('[data-info="footerBrandName"]').forEach(el => {
-    el.innerHTML = `${pi.firstName} <span style="color: var(--accent-blue);">${pi.lastName || ''}</span>`;
+    el.innerHTML = pi.lastName
+      ? `${pi.firstName} <span style="color: var(--accent-blue);">${pi.lastName}</span>`
+      : pi.firstName;
   });
 }
 
@@ -409,6 +419,13 @@ function applyLanguage(lang) {
       el.setAttribute('placeholder', dict[key]);
     }
   });
+
+  const cvTitleEl = document.getElementById('cv-modal-title');
+  if (cvTitleEl) {
+    cvTitleEl.textContent = lang === 'id'
+      ? `Daftar Riwayat Hidup — ${liveData.personalInfo.name}`
+      : `Curriculum Vitae — ${liveData.personalInfo.name}`;
+  }
 
   renderHighlights();
   renderProjects();
@@ -659,7 +676,7 @@ function setupQuickInquiry() {
     showToast(dict.inquiryFallbackMailto || 'Opening email app...');
     const subject = encodeURIComponent(`Project Inquiry from ${sender}`);
     const body = encodeURIComponent(
-      `Hi Native Omni,\n\nName/Org: ${sender}${replyEmail ? `\nReply-To: ${replyEmail}` : ''}\n\n${msg}`
+      `Hi ${liveData.personalInfo.name},\n\nName/Org: ${sender}${replyEmail ? `\nReply-To: ${replyEmail}` : ''}\n\n${msg}`
     );
     window.location.href = `mailto:${liveData.personalInfo.email}?subject=${subject}&body=${body}`;
   });
