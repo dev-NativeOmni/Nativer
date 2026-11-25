@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
   applyPersonalInfo();
   applyLanguage(currentLang);
   setupHeaderScroll();
+  setupScrollEnhancements();
   setupScrollSpy();
   setupMobileMenu();
   setupCvModal();
@@ -78,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupQuickInquiry();
   setupRevealObserver();
   setupLazyCms();
+  renderGithubStats();
   syncPublicGithubRepos();
 
   const yearEl = document.getElementById('current-year');
@@ -131,6 +133,7 @@ async function syncPublicGithubRepos() {
       liveData.projects = merged;
       renderProjects();
       renderCvContent();
+      renderGithubStats(repos.filter(r => !r.fork && !r.archived));
     }
   };
 
@@ -261,6 +264,61 @@ function renderHighlights() {
   `).join('');
 }
 
+let latestGithubRepos = null;
+
+function renderGithubStats(repos = latestGithubRepos) {
+  const container = document.getElementById('gh-live-stats');
+  if (!container) return;
+
+  if (Array.isArray(repos)) latestGithubRepos = repos;
+  const isId = currentLang === 'id';
+  const repoCount = Array.isArray(latestGithubRepos)
+    ? latestGithubRepos.length
+    : (liveData.projects?.length || 0);
+  const starCount = Array.isArray(latestGithubRepos)
+    ? latestGithubRepos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0)
+    : 1;
+
+  let updatedText = isId ? 'Aktif' : 'Active';
+  if (Array.isArray(latestGithubRepos) && latestGithubRepos.length) {
+    const latestTs = latestGithubRepos
+      .map(r => Date.parse(r.updated_at || ''))
+      .filter(n => !Number.isNaN(n))
+      .sort((a, b) => b - a)[0];
+    if (latestTs) {
+      updatedText = new Date(latestTs).toLocaleDateString(isId ? 'id-ID' : 'en-US', {
+        month: 'short',
+        year: 'numeric'
+      });
+    }
+  }
+
+  container.innerHTML = `
+    <div class="gh-stat-cell">
+      <span class="gh-stat-value">${repoCount}</span>
+      <span class="gh-stat-label">${isId ? 'Repo Publik' : 'Public Repos'}</span>
+    </div>
+    <div class="gh-stat-cell">
+      <span class="gh-stat-value">${starCount}</span>
+      <span class="gh-stat-label">${isId ? 'Total Bintang' : 'GitHub Stars'}</span>
+    </div>
+    <div class="gh-stat-cell">
+      <span class="gh-stat-value">${updatedText}</span>
+      <span class="gh-stat-label">${isId ? 'Update Terakhir' : 'Last Active'}</span>
+    </div>
+  `;
+}
+
+function getLangDotColor(techSubtitle = '') {
+  const s = techSubtitle.toLowerCase();
+  if (s.includes('typescript')) return '#3178C6';
+  if (s.includes('laravel') || s.includes('blade')) return '#FF2D20';
+  if (s.includes('three.js') || s.includes('webgl')) return '#38BDF8';
+  if (s.includes('javascript')) return '#F7DF1E';
+  if (s.includes('php')) return '#777BB4';
+  return '#10B981';
+}
+
 function renderProjects() {
   const container = document.getElementById('projects-grid');
   if (!container) return;
@@ -269,6 +327,7 @@ function renderProjects() {
 
   container.innerHTML = liveData.projects.map((p, idx) => {
     const desc = currentLang === 'id' ? p.descId : p.descEn;
+    const dotColor = getLangDotColor(p.techSubtitle);
     return `
       <article class="project-card reveal" style="transition-delay: ${idx * 60}ms;" data-project-id="${p.id}">
         <div class="project-thumb-box project-open-trigger" role="button" tabindex="0" aria-label="View details for ${p.title}">
@@ -278,7 +337,10 @@ function renderProjects() {
         <div class="project-body">
           <div>
             <h3 class="project-title project-open-trigger" role="button" tabindex="0">${p.title}</h3>
-            <div class="project-tech-line">${p.techSubtitle}</div>
+            <div class="project-tech-line">
+              <span class="lang-dot" style="background-color: ${dotColor};" aria-hidden="true"></span>
+              <span>${p.techSubtitle}</span>
+            </div>
             <p class="project-desc">${desc}</p>
           </div>
 
@@ -305,6 +367,14 @@ function renderProjects() {
       </article>
     `;
   }).join('');
+
+  container.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+    });
+  });
 
   container.querySelectorAll('.project-open-trigger').forEach(el => {
     const open = () => {
@@ -430,6 +500,26 @@ function applyLanguage(lang) {
   renderHighlights();
   renderProjects();
   renderCvContent();
+  renderGithubStats();
+}
+
+function setupScrollEnhancements() {
+  const progressBar = document.getElementById('scroll-progress');
+  const backTopBtn = document.getElementById('back-to-top');
+
+  const onScroll = () => {
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? Math.min(100, Math.max(0, (window.scrollY / docHeight) * 100)) : 0;
+    if (progressBar) progressBar.style.width = `${pct}%`;
+    if (backTopBtn) backTopBtn.classList.toggle('visible', window.scrollY > 420);
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  backTopBtn?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 }
 
 function setupHeaderScroll() {

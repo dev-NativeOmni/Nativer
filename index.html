@@ -51,11 +51,21 @@
 </head>
 <body>
 
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress-bar" id="scroll-progress" aria-hidden="true"></div>
+
   <!-- Three.js Ambient Stardust Canvas -->
   <div id="three-canvas-container"></div>
 
   <!-- Toast Notification -->
   <div class="toast-notice" id="toast-notice">Email copied to clipboard!</div>
+
+  <!-- Back to Top Button -->
+  <button type="button" class="back-to-top-btn" id="back-to-top" aria-label="Back to top" title="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m18 15-6-6-6 6"></path>
+    </svg>
+  </button>
 
   <div class="app-wrapper">
     <!-- Navigation Header -->
@@ -243,6 +253,9 @@
                     <span class="info-value" data-i18n="infoLangValue">Indonesian, English</span>
                   </div>
                 </div>
+
+                <!-- Live GitHub Stats Mini-Bar -->
+                <div class="gh-live-stats" id="gh-live-stats" aria-label="GitHub Public Stats"></div>
               </div>
             </div>
           </div>
