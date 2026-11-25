@@ -2105,3 +2105,285 @@ body,
 [data-mode="light"] .gh-stat-label {
   color: #64748b;
 }
+
+/* ==========================================================================
+   GCORE-INSPIRED CINEMATIC ANIMATION SYSTEM
+   1. Intro Preloader  2. Floating Pill Nav  3. Hero Light Beam
+   4. Blur-to-Sharp Word Reveal  5. Tech Marquee  6. Depth Card Reveal & Orbital CTA
+   ========================================================================== */
+
+/* 1. Brand Intro Preloader */
+.intro-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #050814;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.intro-preloader.exit {
+  opacity: 0;
+  transform: translateY(-24px) scale(1.03);
+  pointer-events: none;
+}
+
+.intro-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.intro-logo-mark {
+  opacity: 0;
+  transform: scale(0.7) rotate(-14deg);
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  filter: drop-shadow(0 0 24px rgba(0, 132, 255, 0.45));
+}
+
+.intro-preloader.animate .intro-logo-mark {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.intro-wordmark {
+  display: inline-flex;
+  align-items: center;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #f8fafc;
+}
+
+.intro-char-space {
+  width: 0.55em;
+}
+
+.intro-char {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(12px);
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.45s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(160ms + var(--ci, 0) * 38ms);
+}
+
+.intro-preloader.animate .intro-char {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* 2. Floating Pill Navbar on Scroll (Desktop) */
+@media (min-width: 900px) {
+  .site-header {
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .site-header.scrolled {
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(980px, calc(100% - 2rem));
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+    padding: 0.55rem 0.6rem;
+  }
+
+  .site-header.scrolled .nav-container {
+    padding: 0 0.85rem;
+  }
+
+  [data-mode="light"] .site-header.scrolled {
+    border-color: #cbd5e1;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
+  }
+}
+
+/* 3. Hero Diagonal Light Beam */
+.hero-section {
+  overflow: hidden;
+}
+
+.hero-light-beam {
+  position: absolute;
+  top: -25%;
+  right: -10%;
+  width: 65%;
+  height: 140%;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(
+    125deg,
+    transparent 20%,
+    rgba(0, 132, 255, 0.16) 46%,
+    rgba(56, 189, 248, 0.24) 50%,
+    rgba(0, 132, 255, 0.1) 54%,
+    transparent 78%
+  );
+  filter: blur(36px);
+  transform: rotate(-12deg);
+  animation: heroBeamSweep 9s ease-in-out infinite alternate;
+}
+
+[data-mode="light"] .hero-light-beam {
+  opacity: 0.35;
+}
+
+@keyframes heroBeamSweep {
+  0% {
+    transform: translate3d(-4%, -3%, 0) rotate(-12deg) scale(1);
+    opacity: 0.65;
+  }
+  100% {
+    transform: translate3d(5%, 4%, 0) rotate(-8deg) scale(1.08);
+    opacity: 0.95;
+  }
+}
+
+/* Hero Staggered Entrance after Intro */
+.hero-content > * {
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(4px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), filter 0.65s ease;
+}
+
+body.hero-ready .hero-content > * {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+body.hero-ready .hero-content > *:nth-child(1) { transition-delay: 0.04s; }
+body.hero-ready .hero-content > *:nth-child(2) { transition-delay: 0.1s; }
+body.hero-ready .hero-content > *:nth-child(3) { transition-delay: 0.16s; }
+body.hero-ready .hero-content > *:nth-child(4) { transition-delay: 0.22s; }
+body.hero-ready .hero-content > *:nth-child(5) { transition-delay: 0.28s; }
+body.hero-ready .hero-content > *:nth-child(6) { transition-delay: 0.34s; }
+body.hero-ready .hero-content > *:nth-child(7) { transition-delay: 0.4s; }
+
+/* 4. Word-by-Word Blur-to-Sharp Reveal */
+.word-token {
+  display: inline-block;
+  opacity: 0.16;
+  filter: blur(6px);
+  transform: translateY(14px);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), filter 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--wi, 0) * 55ms);
+}
+
+.word-reveal-heading.words-visible .word-token {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* 5. Smooth Infinite Marquee for Tech Strip */
+.strip-marquee-viewport {
+  display: block !important;
+  overflow: hidden;
+  width: 100%;
+  max-width: 560px;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.strip-marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: max-content;
+  animation: techMarquee 22s linear infinite;
+}
+
+.strip-marquee-viewport:hover .strip-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes techMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* 6. Upgraded Depth-Scale-Blur Card Reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(34px) scale(0.965);
+  filter: blur(4px);
+  transition: opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1), transform 0.72s cubic-bezier(0.22, 1, 0.36, 1), filter 0.72s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* 7. Luminous Orbital Horizon Glow behind CTA */
+.cta-section {
+  overflow: hidden;
+}
+
+.cta-orbital-glow {
+  position: absolute;
+  left: 50%;
+  bottom: -240px;
+  width: min(860px, 130vw);
+  height: 460px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    rgba(56, 189, 248, 0.28) 0%,
+    rgba(0, 132, 255, 0.16) 38%,
+    transparent 70%
+  );
+  box-shadow: 0 -2px 45px rgba(56, 189, 248, 0.25);
+  border-top: 1px solid rgba(56, 189, 248, 0.35);
+  animation: orbitalPulse 7s ease-in-out infinite alternate;
+}
+
+.cta-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+[data-mode="light"] .cta-orbital-glow {
+  opacity: 0.45;
+}
+
+@keyframes orbitalPulse {
+  0% {
+    transform: translateX(-50%) scale(0.97);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.04);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-preloader { display: none !important; }
+  .hero-light-beam,
+  .strip-marquee-track,
+  .cta-orbital-glow { animation: none !important; }
+  .hero-content > *,
+  .word-token,
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}

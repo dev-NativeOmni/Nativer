@@ -63,6 +63,7 @@ let currentMode = localStorage.getItem('nativer_mode') || 'dark';
 let cmsBooted = false;
 
 document.addEventListener('DOMContentLoaded', () => {
+  runIntroPreloader();
   initThreeScene();
   setupModeToggle();
   renderTechStrip();
@@ -85,6 +86,42 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById('current-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 });
+
+function runIntroPreloader() {
+  const preloader = document.getElementById('intro-preloader');
+  const wordmark = document.getElementById('intro-wordmark');
+  if (!preloader) return;
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const alreadySeen = sessionStorage.getItem('nativer_intro_seen') === '1';
+
+  if (prefersReduced || alreadySeen) {
+    preloader.remove();
+    document.body.classList.add('hero-ready');
+    return;
+  }
+
+  sessionStorage.setItem('nativer_intro_seen', '1');
+  const label = (liveData.personalInfo?.name || 'NATIVE OMNI').toUpperCase();
+  if (wordmark) {
+    wordmark.innerHTML = Array.from(label).map((ch, idx) => (
+      ch === ' '
+        ? '<span class="intro-char-space"></span>'
+        : `<span class="intro-char" style="--ci:${idx}">${ch}</span>`
+    )).join('');
+  }
+
+  requestAnimationFrame(() => preloader.classList.add('animate'));
+
+  setTimeout(() => {
+    preloader.classList.add('exit');
+    document.body.classList.add('hero-ready');
+  }, 1150);
+
+  setTimeout(() => {
+    preloader.remove();
+  }, 1750);
+}
 
 async function syncPublicGithubRepos() {
   const username = liveData.personalInfo?.githubUsername || 'dev-NativeOmni';
@@ -243,12 +280,20 @@ function renderTechStrip() {
   const { personalInfo } = liveData;
   if (!container || !personalInfo.techLogos) return;
 
-  container.innerHTML = personalInfo.techLogos.map(t => `
+  const pillsHtml = personalInfo.techLogos.map(t => `
     <span class="tech-pill">
       <span class="tech-dot" style="background-color: ${t.color};"></span>
       <span>${t.name}</span>
     </span>
   `).join('');
+
+  container.classList.add('strip-marquee-viewport');
+  container.innerHTML = `
+    <div class="strip-marquee-track">
+      ${pillsHtml}
+      ${pillsHtml}
+    </div>
+  `;
 }
 
 function renderHighlights() {
@@ -501,6 +546,36 @@ function applyLanguage(lang) {
   renderProjects();
   renderCvContent();
   renderGithubStats();
+  setupWordReveal();
+}
+
+let wordRevealObserver;
+function setupWordReveal() {
+  const targets = document.querySelectorAll('.section-title, .cta-title, .hero-subtitle');
+  if (!targets.length) return;
+
+  if (!wordRevealObserver) {
+    wordRevealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('words-visible');
+          wordRevealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+  }
+
+  targets.forEach(el => {
+    const text = (el.textContent || '').trim();
+    if (!text) return;
+    el.classList.remove('words-visible');
+    el.classList.add('word-reveal-heading');
+    const words = text.split(/\s+/);
+    el.innerHTML = words
+      .map((w, i) => `<span class="word-token" style="--wi:${i}">${w}</span>`)
+      .join(' ');
+    wordRevealObserver.observe(el);
+  });
 }
 
 function setupScrollEnhancements() {
