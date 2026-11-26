@@ -111,16 +111,18 @@ function runIntroPreloader() {
     )).join('');
   }
 
-  requestAnimationFrame(() => preloader.classList.add('animate'));
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => preloader.classList.add('animate'));
+  });
 
   setTimeout(() => {
     preloader.classList.add('exit');
     document.body.classList.add('hero-ready');
-  }, 1150);
+  }, 2250);
 
   setTimeout(() => {
     preloader.remove();
-  }, 1750);
+  }, 3150);
 }
 
 async function syncPublicGithubRepos() {

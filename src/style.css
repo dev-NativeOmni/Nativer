@@ -2117,30 +2117,31 @@ body,
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #050814;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 132, 255, 0.14) 0%, #050814 55%);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), filter 0.85s ease;
 }
 
 .intro-preloader.exit {
   opacity: 0;
-  transform: translateY(-24px) scale(1.03);
+  transform: translateY(-28px) scale(1.04);
+  filter: blur(6px);
   pointer-events: none;
 }
 
 .intro-brand-lockup {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.15rem;
 }
 
 .intro-logo-mark {
   opacity: 0;
-  transform: scale(0.7) rotate(-14deg);
-  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  filter: drop-shadow(0 0 24px rgba(0, 132, 255, 0.45));
+  transform: scale(0.65) rotate(-10deg);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 0 28px rgba(0, 132, 255, 0.5));
 }
 
 .intro-preloader.animate .intro-logo-mark {
@@ -2151,9 +2152,9 @@ body,
 .intro-wordmark {
   display: inline-flex;
   align-items: center;
-  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-size: clamp(1.45rem, 3.2vw, 2.15rem);
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   color: #f8fafc;
 }
 
@@ -2164,10 +2165,10 @@ body,
 .intro-char {
   display: inline-block;
   opacity: 0;
-  filter: blur(8px);
-  transform: translateY(12px);
-  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.45s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: calc(160ms + var(--ci, 0) * 38ms);
+  filter: blur(10px);
+  transform: translateY(16px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(340ms + var(--ci, 0) * 75ms);
 }
 
 .intro-preloader.animate .intro-char {
