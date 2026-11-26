@@ -93,16 +93,14 @@ function runIntroPreloader() {
   if (!preloader) return;
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const alreadySeen = sessionStorage.getItem('nativer_intro_seen') === '1';
 
-  if (prefersReduced || alreadySeen) {
+  if (prefersReduced) {
     preloader.remove();
     document.body.classList.add('hero-ready');
     return;
   }
 
-  sessionStorage.setItem('nativer_intro_seen', '1');
-  const label = (liveData.personalInfo?.name || 'NATIVE OMNI').toUpperCase();
+  const label = (liveData.personalInfo?.name || 'GHAZEEF').toUpperCase();
   if (wordmark) {
     wordmark.innerHTML = Array.from(label).map((ch, idx) => (
       ch === ' '
