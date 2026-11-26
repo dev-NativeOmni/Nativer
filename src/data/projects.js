@@ -4,10 +4,10 @@
  */
 
 export const personalInfo = {
-  name: "Native Omni",
-  firstName: "Native",
-  lastName: "Omni",
-  brandTitle: "FULL STACK DEVELOPER",
+  name: "Ghazeef",
+  firstName: "Ghazeef",
+  lastName: "",
+  brandTitle: "SOFTWARE ENGINEER",
   location: "Solo (SOC), Indonesia",
   email: "nativeomni@gmail.com",
   githubUsername: "dev-NativeOmni",
@@ -38,14 +38,14 @@ export const translations = {
     navHire: "Hire Me",
     heroStatus: "Available for Freelance & Collaboration",
     heroHello: "Hello, I'm",
-    heroRole: "Full Stack Developer",
+    heroRole: "Junior Software Engineer",
     heroDesc: "I build exceptional digital experiences, enterprise school management systems, and modern web applications in Indonesia and around the world.",
     heroBtnWork: "View My Work",
     heroBtnContact: "Contact Me",
     heroTechLabel: "Core Technologies & Architecture:",
     aboutTag: "ABOUT ME",
     aboutTitle: "Building Solutions That Make an Impact",
-    aboutBio: "I'm a passionate Full Stack Developer based in Solo (SOC), Indonesia. I specialize in building scalable web applications using modern technologies. With a strong eye for design and a love for clean, tested code, I help businesses and educational institutions turn complex workflows into intuitive digital products.",
+    aboutBio: "I'm a passionate Junior Software Engineer based in Solo (SOC), Indonesia. I specialize in building scalable web applications using modern technologies. With a strong eye for design and a love for clean, tested code, I help businesses and educational institutions turn complex workflows into intuitive digital products.",
     highlights: [
       "5+ Years of Experience",
       "Available for Freelance",
@@ -91,7 +91,7 @@ export const translations = {
     projectStackTitle: "Technology Stack",
     toastCopied: "Email copied to clipboard!",
     footerDeployed: "Deployed at",
-    cvModalTitle: "Curriculum Vitae — Native Omni",
+    cvModalTitle: "Curriculum Vitae — Ghazeef",
     cvPrintBtn: "Print / Save PDF",
     cvCloseBtn: "Close"
   },
@@ -104,14 +104,14 @@ export const translations = {
     navHire: "Hubungi Saya",
     heroStatus: "Tersedia untuk Proyek & Kolaborasi",
     heroHello: "Halo, Saya",
-    heroRole: "Full Stack Developer",
+    heroRole: "Junior Software Engineer",
     heroDesc: "Saya membangun pengalaman digital modern, sistem manajemen sekolah skala institusi, serta aplikasi web berkinerja tinggi di Indonesia dan mancanegara.",
     heroBtnWork: "Lihat Karya Saya",
     heroBtnContact: "Kontak Saya",
     heroTechLabel: "Teknologi Inti & Arsitektur:",
     aboutTag: "TENTANG SAYA",
     aboutTitle: "Membangun Solusi yang Berdampak Nyata",
-    aboutBio: "Saya adalah Full Stack Developer yang berdomisili di Solo (SOC), Indonesia. Saya berfokus pada arsitektur aplikasi web skalabel dengan teknologi mutakhir. Dengan perhatian tinggi pada desain antarmuka dan kode yang teruji otomatis, saya membantu bisnis serta lembaga pendidikan mengubah alur kerja kompleks menjadi produk digital yang nyaman digunakan.",
+    aboutBio: "Saya adalah Junior Software Engineer yang berdomisili di Solo (SOC), Indonesia. Saya berfokus pada arsitektur aplikasi web skalabel dengan teknologi mutakhir. Dengan perhatian tinggi pada desain antarmuka dan kode yang teruji otomatis, saya membantu bisnis serta lembaga pendidikan mengubah alur kerja kompleks menjadi produk digital yang nyaman digunakan.",
     highlights: [
       "5+ Tahun Pengalaman",
       "Siap Proyek Freelance",
@@ -157,7 +157,7 @@ export const translations = {
     projectStackTitle: "Stack Teknologi",
     toastCopied: "Email berhasil disalin ke clipboard!",
     footerDeployed: "Dideploy di",
-    cvModalTitle: "Daftar Riwayat Hidup — Native Omni",
+    cvModalTitle: "Daftar Riwayat Hidup — Ghazeef",
     cvPrintBtn: "Cetak / Simpan PDF",
     cvCloseBtn: "Tutup"
   }

@@ -447,8 +447,8 @@ function renderCvContent() {
   const pi = liveData.personalInfo;
   const isId = currentLang === 'id';
   const roleText = isId
-    ? 'Full Stack Software Engineer &amp; Arsitek Sistem Web'
-    : 'Full Stack Software Engineer &amp; Web Systems Architect';
+    ? 'Junior Software Engineer &amp; Arsitek Sistem Web'
+    : 'Junior Software Engineer &amp; Web Systems Builder';
   const stackTitle = isId ? 'Stack Teknis Utama' : 'Core Technical Stack';
   const projTitle = isId ? 'Proyek Publik &amp; Sistem Produksi' : 'Public Repositories &amp; Production Systems';
 
