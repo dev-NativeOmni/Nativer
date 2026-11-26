@@ -1726,6 +1726,12 @@ body {
   text-shadow: none;
 }
 
+[data-mode="light"] .avatar-img {
+  filter: drop-shadow(0 10px 22px rgba(15, 23, 42, 0.12));
+  -webkit-mask-image: linear-gradient(to bottom, #000000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000000 78%, transparent 100%);
+}
+
 [data-mode="light"] .hero-description,
 [data-mode="light"] .about-text,
 [data-mode="light"] .project-desc,
