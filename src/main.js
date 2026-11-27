@@ -89,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function runIntroPreloader() {
   const preloader = document.getElementById('intro-preloader');
-  const wordmark = document.getElementById('intro-wordmark');
   if (!preloader) return;
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -98,15 +97,6 @@ function runIntroPreloader() {
     preloader.remove();
     document.body.classList.add('hero-ready');
     return;
-  }
-
-  const label = (liveData.personalInfo?.name || 'GHAZEEF').toUpperCase();
-  if (wordmark) {
-    wordmark.innerHTML = Array.from(label).map((ch, idx) => (
-      ch === ' '
-        ? '<span class="intro-char-space"></span>'
-        : `<span class="intro-char" style="--ci:${idx}">${ch}</span>`
-    )).join('');
   }
 
   requestAnimationFrame(() => {

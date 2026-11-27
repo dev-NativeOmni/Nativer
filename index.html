@@ -55,18 +55,11 @@
   <div class="intro-preloader" id="intro-preloader" aria-hidden="true">
     <div class="intro-brand-lockup">
       <div class="intro-logo-mark">
-        <svg viewBox="0 0 64 64" width="44" height="44" fill="none">
-          <defs>
-            <linearGradient id="introGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#38bdf8" />
-              <stop offset="100%" stop-color="#0084ff" />
-            </linearGradient>
-          </defs>
-          <rect x="4" y="4" width="56" height="56" rx="16" stroke="url(#introGrad)" stroke-width="2.5" fill="rgba(0,132,255,0.12)" />
-          <path d="M21 44V20H27.2L37.4 34.4V20H43V44H37.1L26.6 29.1V44H21Z" fill="#ffffff" />
-        </svg>
+        <img src="./assets/images/logo-n.png" alt="Native Logo" class="intro-logo-img" />
       </div>
-      <div class="intro-wordmark" id="intro-wordmark"></div>
+      <div class="intro-wordmark" id="intro-wordmark">
+        <img src="./assets/images/logo-native.png" alt="Native" class="intro-wordmark-img" />
+      </div>
     </div>
   </div>
 
@@ -90,8 +83,11 @@
     <!-- Navigation Header -->
     <header class="site-header" id="site-header">
       <div class="container nav-container">
-        <a href="#hero" class="nav-brand">
-          <span class="brand-title" data-info="brandName">Ghazeef</span>
+        <a href="#hero" class="nav-brand" aria-label="Native">
+          <div class="brand-logo-row">
+            <img src="./assets/images/logo-n.png" alt="N" class="brand-logo-n" />
+            <img src="./assets/images/logo-native.png" alt="Native" class="brand-logo-word" />
+          </div>
           <span class="brand-subtitle" data-info="brandTitle">SOFTWARE ENGINEER</span>
         </a>
 
@@ -368,7 +364,10 @@
     <footer class="site-footer">
       <div class="container footer-content">
         <div class="footer-left">
-          <span class="footer-name" data-info="footerBrandName">Ghazeef</span>
+          <div class="brand-logo-row footer-logo-row">
+            <img src="./assets/images/logo-n.png" alt="N" class="brand-logo-n" />
+            <img src="./assets/images/logo-native.png" alt="Native" class="brand-logo-word" />
+          </div>
           <span class="footer-role" id="cms-trigger" data-info="brandTitle" title="Klik untuk akses editor konten">SOFTWARE ENGINEER</span>
         </div>
 

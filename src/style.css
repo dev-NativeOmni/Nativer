@@ -2150,6 +2150,12 @@ body,
   filter: drop-shadow(0 0 28px rgba(0, 132, 255, 0.5));
 }
 
+.intro-logo-img {
+  height: 52px;
+  width: auto;
+  display: block;
+}
+
 .intro-preloader.animate .intro-logo-mark {
   opacity: 1;
   transform: scale(1) rotate(0deg);
@@ -2158,29 +2164,57 @@ body,
 .intro-wordmark {
   display: inline-flex;
   align-items: center;
-  font-size: clamp(1.45rem, 3.2vw, 2.15rem);
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  color: #f8fafc;
-}
-
-.intro-char-space {
-  width: 0.55em;
-}
-
-.intro-char {
-  display: inline-block;
   opacity: 0;
-  filter: blur(10px);
-  transform: translateY(16px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: calc(340ms + var(--ci, 0) * 75ms);
+  filter: blur(12px);
+  transform: translateX(-14px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.42s, filter 0.85s ease 0.42s, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.42s;
 }
 
-.intro-preloader.animate .intro-char {
+.intro-wordmark-img {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+
+.intro-preloader.animate .intro-wordmark {
   opacity: 1;
   filter: blur(0);
-  transform: translateY(0);
+  transform: translateX(0);
+}
+
+/* Custom Brand Logo Lockup (Navbar & Footer) */
+.brand-logo-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.22rem;
+}
+
+.brand-logo-n {
+  height: 26px;
+  width: auto;
+  display: block;
+  transition: filter 0.25s ease;
+}
+
+.brand-logo-word {
+  height: 14px;
+  width: auto;
+  display: block;
+  transition: filter 0.25s ease;
+}
+
+.footer-logo-row .brand-logo-n {
+  height: 22px;
+}
+
+.footer-logo-row .brand-logo-word {
+  height: 12px;
+}
+
+[data-mode="light"] .brand-logo-n,
+[data-mode="light"] .brand-logo-word {
+  filter: brightness(0);
 }
 
 /* 2. Floating Pill Navbar on Scroll (Desktop) — Symmetrical & Jitter-Free */
