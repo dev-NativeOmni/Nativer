@@ -372,15 +372,50 @@ body {
 [data-mode="dark"] .ed-mode-btn .icon-sun { display: block; }
 
 /* ==========================================================================
-   3. HOMEPAGE HERO + DOTTED LEADER EXPERIENCE LIST
+   3. HOMEPAGE HERO + EDITORIAL PORTRAIT + DOTTED LEADER EXPERIENCE LIST
    ========================================================================== */
 .ed-hero {
-  padding-top: 5.5rem;
-  padding-bottom: 5rem;
+  padding-top: 4.25rem;
+  padding-bottom: 4.5rem;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 3.5rem;
+}
+
+.ed-hero-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.35rem;
+}
+
+.ed-hero-avatar-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0.85rem 0.3rem 0.35rem;
+  border-radius: var(--radius-pill);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-stone);
+}
+
+.ed-hero-avatar-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  background: var(--bg-hover);
+}
+
+.ed-hero-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-smoke);
 }
 
 .ed-hero-title {
@@ -389,7 +424,41 @@ body {
   line-height: 1.09;
   letter-spacing: -0.025em;
   color: var(--text-ink);
-  max-width: 620px;
+  max-width: 600px;
+}
+
+.ed-hero-right {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ed-hero-portrait-card {
+  width: 168px;
+  height: 196px;
+  align-self: flex-end;
+  border-radius: var(--radius-card);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-stone);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.ed-hero-portrait-img {
+  height: 95%;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .ed-hero-portrait-card {
+    align-self: flex-start;
+  }
 }
 
 .ed-exp-list {

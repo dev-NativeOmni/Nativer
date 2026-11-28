@@ -128,12 +128,23 @@
       <!-- VIEW 1: WORK (HOMEPAGE) -->
       <div id="view-work" class="ed-view active">
         <section class="ed-hero ed-container">
-          <h1 class="ed-hero-title" id="ed-hero-headline">
-            I'm Ghazeef, I build what<br />you click<br />and everything behind it.
-          </h1>
+          <div class="ed-hero-left">
+            <div class="ed-hero-avatar-pill">
+              <img src="./assets/images/hero-avatar.png" alt="Ghazeef" class="ed-hero-avatar-thumb" />
+              <span class="ed-hero-status"><span class="motion-dot-spark"></span> Available for projects</span>
+            </div>
+            <h1 class="ed-hero-title" id="ed-hero-headline">
+              I'm Ghazeef, I build what<br />you click<br />and everything behind it.
+            </h1>
+          </div>
 
-          <div class="ed-exp-list" id="ed-exp-list">
-            <!-- Populated dynamically with dotted leaders -->
+          <div class="ed-hero-right">
+            <figure class="ed-hero-portrait-card">
+              <img src="./assets/images/hero-avatar.png" alt="Ghazeef" class="ed-hero-portrait-img" />
+            </figure>
+            <div class="ed-exp-list" id="ed-exp-list">
+              <!-- Populated dynamically with dotted leaders -->
+            </div>
           </div>
         </section>
 
@@ -201,10 +212,7 @@
           <div class="ed-about-media-col">
             <div class="ed-photo-pair">
               <figure class="ed-photo-card ed-portrait-card">
-                <picture>
-                  <source srcset="./assets/images/hero-avatar.webp" type="image/webp" />
-                  <img src="./assets/images/hero-avatar.png" alt="Ghazeef" class="ed-portrait-img" />
-                </picture>
+                <img src="./assets/images/hero-avatar.png" alt="Ghazeef" class="ed-portrait-img" loading="lazy" />
               </figure>
               <figure class="ed-photo-card ed-scenic-card">
                 <img src="./assets/images/hero-bg.webp" alt="Solo, Indonesia" class="ed-scenic-img" loading="lazy" />
