@@ -359,76 +359,17 @@ function renderExperienceRows() {
   `).join('');
 }
 
-/* 6. Bespoke Live Looping Motion Graphics inside 3:2 Cards */
+/* 6. Real Live Project Previews inside 3:2 Cards (hasbii.online style) */
 function buildMotionStageHtml(proj) {
   const key = (proj.repoName || proj.id || '').toLowerCase();
+  const hasRealImage = proj.image && !proj.image.endsWith('project-nativer.svg');
 
-  if (key.includes('deathroll')) {
+  if (hasRealImage) {
+    const isMobileFrame = key.includes('mysch');
     return `
-      <div class="ed-work-stage">
-        <div class="motion-window">
-          <div class="motion-top-bar">
-            <span class="motion-live-pill"><span class="motion-dot-ember"></span> web-audio-synth</span>
-            <span>SQLite CMS</span>
-          </div>
-          <div class="synth-bars" aria-hidden="true">
-            <span class="synth-bar"></span><span class="synth-bar"></span><span class="synth-bar"></span>
-            <span class="synth-bar"></span><span class="synth-bar"></span><span class="synth-bar"></span>
-            <span class="synth-bar"></span><span class="synth-bar"></span><span class="synth-bar"></span>
-            <span class="synth-bar"></span><span class="synth-bar"></span><span class="synth-bar"></span>
-          </div>
-          <div class="motion-footer-row">
-            <span>deathrollofficial.web.app</span>
-            <span class="motion-Action-chip">▶ Playing</span>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  if (key.includes('mysch')) {
-    return `
-      <div class="ed-work-stage">
-        <div class="motion-window">
-          <div class="motion-top-bar">
-            <span class="motion-live-pill"><span class="motion-dot-spark"></span> mysch · jurnal-guru</span>
-            <span>3-Tap Flow</span>
-          </div>
-          <div class="mysch-steps" aria-hidden="true">
-            <div class="mysch-step-row">
-              <span>01 · Auto-detect class schedule</span>
-              <span class="mysch-check">✓ 07:15</span>
-            </div>
-            <div class="mysch-step-row">
-              <span>02 · Client photo compression</span>
-              <span class="mysch-check">✓ 68 KB</span>
-            </div>
-            <div class="mysch-step-row">
-              <span>03 · Sync tenant Firestore</span>
-              <span class="mysch-check">✓ Saved</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  if (key.includes('nativer')) {
-    return `
-      <div class="ed-work-stage bg-drafting-grid">
-        <div class="motion-window">
-          <div class="motion-top-bar">
-            <span class="motion-live-pill"><span class="motion-dot-spark"></span> native.web.id</span>
-            <span>Vite 6 · CMS</span>
-          </div>
-          <div class="builder-lines" aria-hidden="true">
-            <div class="builder-bar" style="width: 68%;"></div>
-            <div class="builder-bar" style="width: 90%;"></div>
-            <div class="builder-grid-2">
-              <div class="builder-box">GitHub Sync</div>
-              <div class="builder-box">SHA-256 CMS</div>
-            </div>
-          </div>
+      <div class="ed-work-stage ${isMobileFrame ? 'ed-stage-mobile' : 'ed-stage-browser'}">
+        <div class="${isMobileFrame ? 'ed-shot-mobile-frame' : 'ed-shot-browser-frame'}">
+          <img src="${proj.image}" alt="${proj.title}" class="ed-live-shot-img" loading="lazy" />
         </div>
       </div>
     `;
@@ -439,18 +380,18 @@ function buildMotionStageHtml(proj) {
       <div class="motion-window">
         <div class="motion-top-bar">
           <span class="motion-live-pill"><span class="motion-dot-ember"></span> ${proj.repoName || proj.title}</span>
-          <span>SSR Pipeline</span>
+          <span>Public Repo</span>
         </div>
         <div class="pipe-diagram" aria-hidden="true">
-          <div class="pipe-node">Request</div>
+          <div class="pipe-node">Source</div>
           <div class="pipe-track"><span class="pipe-packet"></span></div>
-          <div class="pipe-node">Blade / Core</div>
+          <div class="pipe-node">Build</div>
           <div class="pipe-track"><span class="pipe-packet"></span></div>
-          <div class="pipe-node">View</div>
+          <div class="pipe-node">Deploy</div>
         </div>
         <div class="motion-footer-row">
           <span>${proj.techSubtitle}</span>
-          <span>200 OK</span>
+          <span>GitHub</span>
         </div>
       </div>
     </div>
@@ -527,6 +468,16 @@ function renderCaseStudyView(proj) {
     </div>
 
     <figure class="ed-case-figure">
+      <div class="ed-case-shot-stage">
+        <img src="${proj.image}" alt="${proj.title}" class="ed-case-shot-img" />
+      </div>
+      <figcaption class="ed-fig-caption">
+        <span>${isId ? 'Tangkapan layar antarmuka asli proyek' : 'Live interface & repository capture'}</span>
+        <span>fig. 01</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ed-case-figure">
       <div class="ed-diagram-canvas bg-drafting-grid">
         <div class="ed-arch-flow">
           <div class="ed-arch-box">
@@ -547,7 +498,7 @@ function renderCaseStudyView(proj) {
       </div>
       <figcaption class="ed-fig-caption">
         <span>${isId ? 'Alur arsitektur sistem utama' : 'High-level system architecture flow'}</span>
-        <span>fig. 01</span>
+        <span>fig. 02</span>
       </figcaption>
     </figure>
 

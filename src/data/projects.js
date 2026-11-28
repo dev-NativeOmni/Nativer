@@ -234,7 +234,7 @@ export const projects = [
     clientEn: "Interactive Media",
     clientId: "Media Interaktif",
     category: "creative",
-    image: "./assets/images/project-deathroll.svg",
+    image: "./assets/images/live-deathroll.jpg",
     techSubtitle: "TypeScript / In-Place CMS / Web Audio Synth / SQLite",
     descEn: "Indonesian punk-rock band website with high-contrast zine aesthetics, built-in Web Audio Synthesizer player, tour gig schedules, discography releases, and an in-place SQLite admin editor.",
     descId: "Website band punk-rock Indonesia dengan estetika punk-zine kontras tinggi, audio track synth player bawaan, jadwal gigs tur, rilis diskografi album, dan in-place admin editor langsung tersimpan ke SQLite.",
@@ -270,8 +270,8 @@ export const projects = [
     clientEn: "Personal Architecture",
     clientId: "Arsitektur Pribadi",
     category: "creative",
-    image: "./assets/images/project-nativer.svg",
-    techSubtitle: "Three.js / WebGL / Vite 6 / Cloudflare Pages",
+    image: "./assets/images/live-nativer.jpg",
+    techSubtitle: "Vite 6 / View Transitions / GitHub Sync / Cloudflare Pages",
     descEn: "High-speed modern personal portfolio engine integrating Three.js WebGL stardust atmosphere, responsive glassmorphism UI, live GitHub public repo sync, and automated Cloudflare Pages deployment.",
     descId: "Web portofolio arsitektur modern berkecepatan tinggi dengan integrasi Three.js WebGL stardust, sinkronisasi repo publik GitHub, dan deployment otomatis Cloudflare Pages.",
     githubUrl: "https://github.com/dev-NativeOmni/Nativer",
@@ -301,18 +301,18 @@ export const projects = [
   {
     id: "mysch-jurnal",
     repoName: "mysch",
-    title: "MySch — Teacher Journal",
+    title: "My School ID (MySch)",
     year: "2025–2026",
     clientEn: "EdTech Platform",
     clientId: "Platform EdTech",
     category: "school",
-    image: "./assets/images/project-mysch.svg",
+    image: "./assets/images/live-mysch.jpg",
     techSubtitle: "TypeScript / Next.js / React 19 / Firebase Firestore",
     descEn: "Mobile-first teacher daily journal and attendance app featuring a 3-tap workflow, automatic timetable detection, client-side photo compression, and multi-tenant institution tokens.",
     descId: "Aplikasi presensi dan jurnal harian guru mobile-first dengan aturan 3-ketukan instan, deteksi jadwal otomatis, kompresi foto presensi di peramban, serta multi-tenancy token lembaga.",
     githubUrl: "https://github.com/dev-NativeOmni/mysch",
-    liveUrl: "https://github.com/dev-NativeOmni/mysch",
-    badge: "Mobile-First",
+    liveUrl: "https://mysch-app.web.app",
+    badge: "Live on Firebase",
     featuresEn: [
       "3-tap instant teacher attendance & daily journal flow",
       "Automatic timetable detection & client-side photo compression",
@@ -337,37 +337,37 @@ export const projects = [
   {
     id: "myra-web",
     repoName: "myra",
-    title: "Myra — Easy As You Go",
-    year: "2025",
-    clientEn: "Open Source",
-    clientId: "Open Source",
-    category: "web",
-    image: "./assets/images/project-schoop.svg",
-    techSubtitle: "Laravel / Blade / PHP / Tailwind CSS",
-    descEn: "Clean, lightweight web application built with Laravel Blade templates focused on fast server-rendered workflows and straightforward user ergonomics.",
-    descId: "Aplikasi web ringan berbasis Laravel Blade yang berfokus pada alur kerja server-rendered yang cepat, rapi, dan mudah digunakan.",
+    title: "Myra — Santri Monthly Report",
+    year: "2025–2026",
+    clientEn: "EdTech · Open Source",
+    clientId: "EdTech · Open Source",
+    category: "school",
+    image: "./assets/images/live-myra.jpg",
+    techSubtitle: "Laravel 13 / PHP 8.5 / Tailwind v4 / Chart.js / Supabase",
+    descEn: "Monthly boarding school (santri) reporting system covering Tahfidz journals, multi-aspect grading modules (Tahfidz, character, academics, administration), PDF report cards via dompdf, guardian portal, and progress analytics.",
+    descId: "Sistem laporan bulanan santri yang mencakup jurnal tahfidz, modul penilaian (tahfidz, kesantrian, akademik, administrasi), cetak rapor PDF via dompdf, portal wali murid, dan analitik perkembangan.",
     githubUrl: "https://github.com/dev-NativeOmni/myra",
     liveUrl: "https://github.com/dev-NativeOmni/myra",
-    badge: "Laravel Blade",
+    badge: "Laravel 13",
     featuresEn: [
-      "Server-rendered Blade architecture for fast initial loads",
-      "Clean, modular routing and controller structure",
-      "Public open-source repository on GitHub"
+      "Tahfidz journal & multi-aspect santri assessment modules",
+      "Automated PDF report card generation (dompdf) & Chart.js analytics",
+      "Dedicated guardian portal with role-scoped class access"
     ],
     featuresId: [
-      "Arsitektur Blade server-rendered untuk loading awal cepat",
-      "Struktur routing dan controller yang rapi serta modular",
-      "Repositori open-source publik di GitHub"
+      "Jurnal tahfidz & modul penilaian terpadu (kesantrian, akademik, TU)",
+      "Cetak rapor PDF otomatis (dompdf) & grafik analitik Chart.js",
+      "Portal wali murid khusus dengan hak akses berbasis kelas"
     ],
     caseStudyEn: {
-      problem: "Many small web tools suffer from unnecessary SPA complexity for straightforward CRUD workflows.",
-      solution: "Structured a clean Laravel Blade codebase prioritizing simplicity, speed, and maintainability.",
-      impact: "Easy-to-deploy foundation aligned with its 'Easy as you go' philosophy."
+      problem: "Islamic boarding schools struggled to consolidate Tahfidz, dorm character, and academic progress into timely monthly reports for parents.",
+      solution: "Engineered a Laravel 13 (PHP 8.5) + Supabase Postgres platform with Alpine.js, Chart.js analytics, and dompdf report generation.",
+      impact: "Unified multi-role grading workflows with instant PDF report cards and guardian portal access."
     },
     caseStudyId: {
-      problem: "Banyak aplikasi web sederhana terbebani kompleksitas SPA yang tidak perlu untuk alur kerja standar.",
-      solution: "Menyusun basis kode Laravel Blade yang bersih, cepat, dan mudah dipelihara.",
-      impact: "Fondasi aplikasi yang ringkas dan siap pakai sesuai prinsip 'Easy as you go'."
+      problem: "Pesantren kesulitan menggabungkan rekap tahfidz, kesantrian, dan akademik menjadi laporan bulanan yang rapi bagi wali santri.",
+      solution: "Membangun platform Laravel 13 (PHP 8.5) + Supabase Postgres dengan Alpine.js, grafik Chart.js, dan generator rapor dompdf.",
+      impact: "Menyatukan input penilaian lintas peran menjadi rapor PDF siap unduh dan portal wali murid."
     }
   }
 ];
