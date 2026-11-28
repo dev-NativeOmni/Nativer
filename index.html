@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-mode="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ghazeef | Junior Software Engineer</title>
-  <meta name="description" content="Portfolio of Ghazeef - Junior Software Engineer. Building scalable web applications, enterprise school management systems, and high-performance digital experiences." />
+  <meta name="description" content="Portfolio of Ghazeef - Junior Software Engineer. I build what you click and everything behind it." />
 
   <!-- Favicon & Manifest -->
   <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="canonical" href="https://native.web.id/" />
-  <meta name="theme-color" content="#050814" />
+  <meta name="theme-color" content="#fdfcfc" />
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -31,27 +31,27 @@
     }
   </script>
 
-  <!-- Open Graph / Social Share Preview (WhatsApp, LinkedIn, X) -->
+  <!-- Open Graph / Social Share Preview -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://native.web.id/" />
   <meta property="og:title" content="Ghazeef | Junior Software Engineer" />
-  <meta property="og:description" content="Junior Software Engineer specializing in Laravel 12, Next.js, React, Three.js, and modern web applications." />
+  <meta property="og:description" content="Junior Software Engineer specializing in Laravel 12, Next.js, React, TypeScript, and modern web systems." />
   <meta property="og:image" content="https://native.web.id/assets/images/og-preview.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Ghazeef | Junior Software Engineer" />
   <meta name="twitter:description" content="Portfolio & GitHub projects of Ghazeef." />
   <meta name="twitter:image" content="https://native.web.id/assets/images/og-preview.jpg" />
 
-  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <!-- Google Fonts: Inter (300–600) & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/src/style.css" />
 </head>
 <body>
 
-  <!-- Cinematic Brand Intro Preloader (Gcore-Inspired) -->
+  <!-- Brand Intro Preloader (N + Native) -->
   <div class="intro-preloader" id="intro-preloader" aria-hidden="true">
     <div class="intro-brand-lockup">
       <div class="intro-logo-mark">
@@ -63,330 +63,215 @@
     </div>
   </div>
 
-  <!-- Scroll Progress Bar -->
-  <div class="scroll-progress-bar" id="scroll-progress" aria-hidden="true"></div>
-
-  <!-- Three.js Ambient Stardust Canvas -->
-  <div id="three-canvas-container"></div>
-
   <!-- Toast Notification -->
-  <div class="toast-notice" id="toast-notice">Email copied to clipboard!</div>
+  <div class="toast-notice" id="toast-notice">Copied to clipboard!</div>
 
-  <!-- Back to Top Button -->
-  <button type="button" class="back-to-top-btn" id="back-to-top" aria-label="Back to top" title="Back to top">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="m18 15-6-6-6 6"></path>
-    </svg>
-  </button>
-
-  <div class="app-wrapper">
-    <!-- Navigation Header -->
-    <header class="site-header" id="site-header">
-      <div class="container nav-container">
-        <a href="#hero" class="nav-brand" aria-label="Native">
-          <div class="brand-logo-row">
-            <img src="./assets/images/logo-n.png" alt="N" class="brand-logo-n" />
-            <img src="./assets/images/logo-native.png" alt="Native" class="brand-logo-word" />
-          </div>
-          <span class="brand-subtitle" data-info="brandTitle">SOFTWARE ENGINEER</span>
+  <div class="editorial-shell">
+    <!-- Non-Sticky Editorial Header -->
+    <header class="ed-header" id="site-header">
+      <div class="ed-container ed-header-inner">
+        <a href="#/" class="ed-brand" data-route="/">
+          <img src="./assets/images/logo-n.png" alt="N" class="ed-brand-mark" />
+          <span class="ed-brand-name" data-info="name">Ghazeef</span>
+          <span class="ed-brand-role" data-i18n="heroRole">Junior Software Engineer</span>
         </a>
 
-        <ul class="nav-menu">
-          <li><a href="#hero" class="nav-link active" data-i18n="navHome">Home</a></li>
-          <li><a href="#about" class="nav-link" data-i18n="navAbout">About</a></li>
-          <li><a href="#projects" class="nav-link" data-i18n="navProjects">Projects</a></li>
-          <li><a href="#contact" class="nav-link" data-i18n="navContact">Contact</a></li>
-        </ul>
+        <nav class="ed-nav" aria-label="Primary navigation">
+          <a href="#/" class="ed-nav-pill active" data-route="/" data-i18n="navHome">Work</a>
+          <a href="#/about" class="ed-nav-pill" data-route="/about" data-i18n="navAbout">About</a>
 
-        <div class="nav-actions">
-          <!-- Light/Dark Mode Toggle -->
-          <button type="button" class="mode-toggle-btn" id="mode-toggle" aria-label="Toggle light or dark mode" title="Switch Light / Dark Mode">
-            <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- CV Dropdown (English & Bahasa Indonesia) -->
+          <div class="ed-cv-dropdown" id="cv-dropdown">
+            <button type="button" class="ed-nav-pill ed-cv-trigger" id="cv-dropdown-btn" aria-expanded="false" aria-haspopup="menu">
+              <span>CV</span>
+              <svg class="ed-chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m6 9 6 6 6-6"></path>
+              </svg>
+            </button>
+            <div class="ed-cv-menu" id="cv-dropdown-menu" role="menu">
+              <button type="button" class="ed-cv-item" data-cv-lang="en" role="menuitem">
+                <span>English</span>
+                <span class="ed-arrow">↗</span>
+              </button>
+              <button type="button" class="ed-cv-item" data-cv-lang="id" role="menuitem">
+                <span>Bahasa Indonesia</span>
+                <span class="ed-arrow">↗</span>
+              </button>
+            </div>
+          </div>
+
+          <span class="ed-nav-divider" aria-hidden="true"></span>
+
+          <div class="ed-lang-group" role="group" aria-label="Language switcher">
+            <button type="button" class="ed-lang-btn active" data-lang="en">EN</button>
+            <button type="button" class="ed-lang-btn" data-lang="id">ID</button>
+          </div>
+
+          <button type="button" class="ed-mode-btn" id="mode-toggle" aria-label="Toggle color theme" title="Switch Light / Dark">
+            <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+            </svg>
+            <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="4"></circle>
               <path d="M12 2v2"></path><path d="M12 20v2"></path>
               <path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path>
               <path d="M2 12h2"></path><path d="M20 12h2"></path>
               <path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
             </svg>
-            <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-            </svg>
           </button>
-
-          <!-- Language Switcher -->
-          <div class="lang-switcher" role="group" aria-label="Language switcher">
-            <button type="button" class="lang-btn active" data-lang="en">EN</button>
-            <button type="button" class="lang-btn" data-lang="id">ID</button>
-          </div>
-
-          <a href="#contact" class="btn-hire" data-i18n="navHire">Hire Me</a>
-
-          <!-- Mobile Hamburger Toggle -->
-          <button type="button" class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Mobile Dropdown Drawer -->
-      <div class="mobile-drawer" id="mobile-drawer">
-        <ul class="mobile-nav-list">
-          <li><a href="#hero" class="mobile-nav-link" data-i18n="navHome">Home</a></li>
-          <li><a href="#about" class="mobile-nav-link" data-i18n="navAbout">About</a></li>
-          <li><a href="#projects" class="mobile-nav-link" data-i18n="navProjects">Projects</a></li>
-          <li><a href="#contact" class="mobile-nav-link" data-i18n="navContact">Contact</a></li>
-        </ul>
+        </nav>
       </div>
     </header>
 
-    <main>
-      <!-- Hero Section (Theme-Aware Backdrop) -->
-      <section id="hero" class="hero-section">
-        <div class="hero-light-beam" aria-hidden="true"></div>
-        <div class="container">
-          <div class="hero-grid">
-            <div class="hero-content">
-              <div class="hero-status-pill">
-                <span class="status-pulse-dot" aria-hidden="true"></span>
-                <span data-i18n="heroStatus">Available for Freelance &amp; Collaboration</span>
-              </div>
-              <span class="hero-intro" data-i18n="heroHello">Hello, I'm</span>
-              <h1 class="hero-title" data-info="name">Ghazeef</h1>
-              <h2 class="hero-subtitle" data-i18n="heroRole">Junior Software Engineer</h2>
+    <!-- Main View Container (View Transitions API) -->
+    <main class="ed-main view-transition-page" id="app-view">
+      <!-- VIEW 1: WORK (HOMEPAGE) -->
+      <div id="view-work" class="ed-view active">
+        <section class="ed-hero ed-container">
+          <h1 class="ed-hero-title" id="ed-hero-headline">
+            I'm Ghazeef, I build what<br />you click<br />and everything behind it.
+          </h1>
 
-              <p class="hero-description" data-i18n="heroDesc">
-                I build exceptional digital experiences, enterprise school management systems, and modern web applications in Indonesia and around the world.
-              </p>
-
-              <div class="hero-actions">
-                <a href="#projects" class="btn btn-primary">
-                  <span data-i18n="heroBtnWork">View My Work</span>
-                  <span style="font-size: 1.1rem; line-height: 1;">→</span>
-                </a>
-                <a href="#contact" class="btn btn-secondary">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                  </svg>
-                  <span data-i18n="heroBtnContact">Contact Me</span>
-                </a>
-              </div>
-
-              <!-- Tech Ecosystem Strip -->
-              <div class="hero-tech-strip">
-                <span class="strip-label" data-i18n="heroTechLabel">Core Technologies &amp; Architecture:</span>
-                <div class="strip-logos" id="tech-strip">
-                  <!-- Injected via JavaScript -->
-                </div>
-              </div>
-            </div>
-
-            <!-- Right Visual: User Character with Smooth Bottom Fade -->
-            <div class="hero-visual">
-              <div class="avatar-wrapper">
-                <picture>
-                  <source srcset="./assets/images/hero-avatar.webp" type="image/webp" />
-                  <img src="./assets/images/hero-avatar.png" alt="Native Omni - Full Stack Developer" class="avatar-img" width="420" height="420" />
-                </picture>
-              </div>
-            </div>
+          <div class="ed-exp-list" id="ed-exp-list">
+            <!-- Populated dynamically with dotted leaders -->
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- About Me Section -->
-      <section id="about" class="section about-section">
-        <div class="container">
-          <span class="section-tag reveal" data-i18n="aboutTag">ABOUT ME</span>
-          <h2 class="section-title reveal" data-i18n="aboutTitle">Building Solutions That Make an Impact</h2>
-
-          <div class="about-grid">
-            <!-- Left Bio & Highlights -->
-            <div class="about-left reveal">
-              <p class="about-text" id="about-bio-text" data-i18n="aboutBio">
-                I'm a passionate Full Stack Developer based in Solo (SOC), Indonesia. I specialize in building scalable web applications using modern technologies. With a strong eye for design and a love for clean, tested code, I help businesses and educational institutions turn complex workflows into intuitive digital products.
-              </p>
-
-              <!-- 4 Bullet Highlights with Icons -->
-              <div class="highlights-grid" id="highlights-grid">
-                <!-- Injected via JavaScript -->
-              </div>
-
-              <!-- View / Download CV Button -->
-              <button type="button" class="btn btn-primary" id="btn-cv-download">
-                <span data-i18n="btnCv">View / Download CV</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-              </button>
-            </div>
-
-            <!-- Right Contact Card -->
-            <div class="about-right reveal">
-              <div class="info-card">
-                <div class="info-item">
-                  <div class="info-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                  </div>
-                  <div class="info-content">
-                    <span class="info-label" data-i18n="infoLocationLabel">Location</span>
-                    <span class="info-value" data-info="location">Solo (SOC), Indonesia</span>
-                  </div>
-                </div>
-
-                <div class="info-item">
-                  <div class="info-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                  </div>
-                  <div class="info-content">
-                    <span class="info-label" data-i18n="infoEmailLabel">Email</span>
-                    <a href="mailto:nativeomni@gmail.com" class="info-value" data-info="email">nativeomni@gmail.com</a>
-                  </div>
-                </div>
-
-                <div class="info-item">
-                  <div class="info-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                  </div>
-                  <div class="info-content">
-                    <span class="info-label" data-i18n="infoGithubLabel">Website &amp; GitHub</span>
-                    <a href="https://github.com/dev-NativeOmni" target="_blank" rel="noopener noreferrer" class="info-value" data-info="github">github.com/dev-NativeOmni</a>
-                  </div>
-                </div>
-
-                <div class="info-item">
-                  <div class="info-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                  </div>
-                  <div class="info-content">
-                    <span class="info-label" data-i18n="infoLangLabel">Languages</span>
-                    <span class="info-value" data-i18n="infoLangValue">Indonesian, English</span>
-                  </div>
-                </div>
-
-                <!-- Live GitHub Stats Mini-Bar -->
-                <div class="gh-live-stats" id="gh-live-stats" aria-label="GitHub Public Stats"></div>
-              </div>
-            </div>
+        <section class="ed-work-section ed-container" aria-label="Selected Work">
+          <div class="ed-work-grid" id="projects-grid">
+            <!-- 2-Column 3:2 Motion Cards Rendered by JS -->
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      <!-- Featured Projects Section -->
-      <section id="projects" class="section projects-section">
-        <div class="container">
-          <div class="projects-header reveal">
-            <div>
-              <span class="section-tag" data-i18n="projectsTag">PORTFOLIO</span>
-              <h2 class="section-title" style="margin-bottom: 0;" data-i18n="projectsTitle">Featured Projects</h2>
-            </div>
-            <a href="https://github.com/dev-NativeOmni" target="_blank" rel="noopener noreferrer" class="view-all-link">
-              <span data-i18n="viewAllProjects">View All Projects</span>
-              <span style="font-size: 1.1rem; line-height: 1;">→</span>
-            </a>
-          </div>
-
-          <!-- 2-Column Project Cards Grid -->
-          <div class="projects-grid" id="projects-grid">
-            <!-- Injected dynamically via JavaScript -->
-          </div>
-        </div>
-      </section>
-
-      <!-- Call To Action (Let's Work Together) with Orbital Horizon Glow -->
-      <section id="contact" class="cta-section" style="background-image: url('./assets/images/cta-bg.svg');">
-        <div class="cta-orbital-glow" aria-hidden="true"></div>
-        <div class="container">
-          <div class="cta-box reveal">
-            <h2 class="cta-title" data-i18n="ctaTitle">Let's Work Together</h2>
-            <p class="cta-subtitle" data-i18n="ctaSubtitle">
-              Have a project in mind? I'd love to hear about it. Let's create something exceptional together.
+      <!-- VIEW 2: ABOUT -->
+      <div id="view-about" class="ed-view" hidden>
+        <section class="ed-about-top ed-container">
+          <div class="ed-about-prose">
+            <span class="ed-mono-eyebrow" data-i18n="aboutTag">ABOUT ME</span>
+            <h1 class="ed-page-title" data-i18n="aboutTitle">Building Solutions That Make an Impact</h1>
+            <p class="ed-body-copy" data-i18n="aboutBio">
+              I'm a passionate Junior Software Engineer based in Solo (SOC), Indonesia. I specialize in building scalable web applications using modern technologies.
             </p>
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-              <button type="button" class="btn btn-primary" id="copy-email-btn">
+            <p class="ed-body-copy" id="ed-about-extra"></p>
+
+            <div class="ed-stack-tags" id="tech-strip"></div>
+
+            <div class="ed-about-actions">
+              <button type="button" class="ed-pill-btn ed-pill-solid" id="copy-email-btn">
                 <span data-i18n="btnCopyEmail">Copy Email Address</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
               </button>
-              <a href="mailto:nativeomni@gmail.com" class="btn btn-secondary" data-info="emailHref">
-                <span data-i18n="btnSendEmail">Send Direct Email</span> →
-              </a>
-              <button type="button" class="btn btn-secondary" id="toggle-inquiry-btn">
+              <button type="button" class="ed-pill-btn ed-pill-outline" id="toggle-inquiry-btn">
                 <span data-i18n="inquiryToggleBtn">Quick Inquiry</span>
+                <span>↗</span>
               </button>
             </div>
 
-            <form class="quick-inquiry-form" id="quick-inquiry-form" hidden>
-              <div class="quick-inquiry-grid">
-                <input
-                  type="text"
-                  id="inquiry-name"
-                  class="inquiry-input"
-                  data-i18n-placeholder="inquiryNamePlaceholder"
-                  placeholder="Your Name / Organization"
-                  required
-                />
-                <input
-                  type="email"
-                  id="inquiry-email"
-                  class="inquiry-input"
-                  data-i18n-placeholder="inquiryEmailPlaceholder"
-                  placeholder="Your Email (optional, for reply)"
-                />
-                <textarea
-                  id="inquiry-message"
-                  class="inquiry-input"
-                  rows="3"
-                  data-i18n-placeholder="inquiryMsgPlaceholder"
-                  placeholder="Briefly describe your project or timeline..."
-                  required
-                ></textarea>
-              </div>
-              <div class="quick-inquiry-actions">
-                <button type="submit" class="btn btn-primary btn-sm" data-i18n="inquirySendBtn">Send via Email App</button>
-                <button type="button" class="btn btn-secondary btn-sm" id="copy-inquiry-btn" data-i18n="inquiryCopyBtn">Copy Message</button>
+            <form class="ed-inquiry-form" id="quick-inquiry-form" hidden>
+              <input
+                type="text"
+                id="inquiry-name"
+                class="ed-input"
+                data-i18n-placeholder="inquiryNamePlaceholder"
+                placeholder="Your Name / Organization"
+                required
+              />
+              <input
+                type="email"
+                id="inquiry-email"
+                class="ed-input"
+                data-i18n-placeholder="inquiryEmailPlaceholder"
+                placeholder="Your Email (optional, for reply)"
+              />
+              <textarea
+                id="inquiry-message"
+                class="ed-input"
+                rows="3"
+                data-i18n-placeholder="inquiryMsgPlaceholder"
+                placeholder="Briefly describe your project or timeline..."
+                required
+              ></textarea>
+              <div class="ed-inquiry-btns">
+                <button type="submit" class="ed-pill-btn ed-pill-solid" data-i18n="inquirySendBtn">Send Message</button>
+                <button type="button" class="ed-pill-btn ed-pill-outline" id="copy-inquiry-btn" data-i18n="inquiryCopyBtn">Copy Message</button>
               </div>
             </form>
           </div>
-        </div>
-      </section>
+
+          <div class="ed-about-media-col">
+            <div class="ed-photo-pair">
+              <figure class="ed-photo-card ed-portrait-card">
+                <picture>
+                  <source srcset="./assets/images/hero-avatar.webp" type="image/webp" />
+                  <img src="./assets/images/hero-avatar.png" alt="Ghazeef" class="ed-portrait-img" />
+                </picture>
+              </figure>
+              <figure class="ed-photo-card ed-scenic-card">
+                <img src="./assets/images/hero-bg.webp" alt="Solo, Indonesia" class="ed-scenic-img" loading="lazy" />
+              </figure>
+            </div>
+
+            <div class="ed-meta-rows">
+              <div class="ed-leader-row">
+                <span class="ed-leader-left" data-i18n="infoLocationLabel">Location</span>
+                <span class="ed-leader-dots"></span>
+                <span class="ed-leader-right" data-info="location">Solo (SOC), Indonesia</span>
+              </div>
+              <div class="ed-leader-row">
+                <span class="ed-leader-left" data-i18n="infoEmailLabel">Email</span>
+                <span class="ed-leader-dots"></span>
+                <a href="mailto:nativeomni@gmail.com" class="ed-leader-right ed-link" data-info="email">nativeomni@gmail.com</a>
+              </div>
+              <div class="ed-leader-row">
+                <span class="ed-leader-left">GitHub</span>
+                <span class="ed-leader-dots"></span>
+                <a href="https://github.com/dev-NativeOmni" target="_blank" rel="noopener noreferrer" class="ed-leader-right ed-link" data-info="github">github.com/dev-NativeOmni</a>
+              </div>
+              <div class="ed-leader-row">
+                <span class="ed-leader-left" data-i18n="infoLangLabel">Languages</span>
+                <span class="ed-leader-dots"></span>
+                <span class="ed-leader-right" data-i18n="infoLangValue">Indonesian, English</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Proportional Highlights / Principles Strip -->
+        <section class="ed-principles-section ed-container">
+          <div class="ed-principles-grid" id="highlights-grid"></div>
+        </section>
+      </div>
+
+      <!-- VIEW 3: PROJECT CASE STUDY -->
+      <div id="view-case" class="ed-view" hidden>
+        <article class="ed-case-article ed-container" id="case-study-container">
+          <!-- Dynamically populated when clicking a project card -->
+        </article>
+      </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-      <div class="container footer-content">
-        <div class="footer-left">
-          <div class="brand-logo-row footer-logo-row">
-            <img src="./assets/images/logo-n.png" alt="N" class="brand-logo-n" />
-            <img src="./assets/images/logo-native.png" alt="Native" class="brand-logo-word" />
-          </div>
-          <span class="footer-role" id="cms-trigger" data-info="brandTitle" title="Klik untuk akses editor konten">SOFTWARE ENGINEER</span>
+    <!-- Clean Editorial Footer -->
+    <footer class="ed-footer">
+      <div class="ed-container ed-footer-inner">
+        <div class="ed-footer-left">
+          <span>© <span id="current-year"></span> <span data-info="name">Ghazeef</span></span>
+          <span class="ed-dot">·</span>
+          <span class="ed-cms-trigger" id="cms-trigger" data-info="brandTitle" title="Admin Content Access">SOFTWARE ENGINEER</span>
         </div>
 
-        <div class="footer-copy">
-          © <span id="current-year"></span> <span data-info="name">Ghazeef</span>. All rights reserved. • <span data-i18n="footerDeployed">Deployed at</span> <span style="color: var(--accent-cyan);">native.web.id</span>
-        </div>
-
-        <div class="footer-socials">
-          <a href="https://github.com/dev-NativeOmni" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="GitHub">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-            </svg>
+        <div class="ed-footer-links">
+          <a href="https://github.com/dev-NativeOmni" target="_blank" rel="noopener noreferrer" class="ed-footer-link" data-info="githubHref">
+            <span>GitHub</span>
+            <span class="ed-arrow">↗</span>
           </a>
-          <a href="mailto:nativeomni@gmail.com" class="social-icon-btn" title="Email">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-            </svg>
+          <a href="mailto:nativeomni@gmail.com" class="ed-footer-link" data-info="emailHref">
+            <span>Email</span>
+            <span class="ed-arrow">↗</span>
           </a>
+          <button type="button" class="ed-footer-link ed-footer-btn" id="footer-cv-btn">
+            <span>CV</span>
+            <span class="ed-arrow">↗</span>
+          </button>
         </div>
       </div>
     </footer>
@@ -398,47 +283,11 @@
       <div class="cv-modal-header">
         <h3 id="cv-modal-title" data-i18n="cvModalTitle">Curriculum Vitae — Ghazeef</h3>
         <div class="cv-modal-actions">
-          <button type="button" class="btn btn-primary btn-sm" id="cv-print-btn" data-i18n="cvPrintBtn">Print / Save PDF</button>
-          <button type="button" class="btn btn-secondary btn-sm" id="cv-close-btn" data-i18n="cvCloseBtn">Close</button>
+          <button type="button" class="ed-pill-btn ed-pill-solid btn-sm" id="cv-print-btn" data-i18n="cvPrintBtn">Print / Save PDF</button>
+          <button type="button" class="ed-pill-btn ed-pill-outline btn-sm" id="cv-close-btn" data-i18n="cvCloseBtn">Close</button>
         </div>
       </div>
-      <div class="cv-modal-body" id="cv-printable">
-        <!-- Rendered dynamically by renderCvContent() in src/main.js -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Project Detail Modal -->
-  <div class="cv-modal-backdrop" id="project-modal" aria-hidden="true">
-    <div class="cv-modal-dialog project-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
-      <div class="cv-modal-header">
-        <div class="project-modal-head-left">
-          <span class="project-modal-badge" id="project-modal-badge"></span>
-          <h3 id="project-modal-title">Project Title</h3>
-        </div>
-        <button type="button" class="btn btn-secondary btn-sm" id="project-modal-close" data-i18n="cvCloseBtn">Close</button>
-      </div>
-      <div class="project-modal-body">
-        <div class="project-modal-preview">
-          <img id="project-modal-img" src="" alt="" />
-        </div>
-        <p class="project-modal-desc" id="project-modal-desc"></p>
-        <div class="project-case-grid" id="project-modal-case"></div>
-        <div class="project-modal-meta">
-          <div>
-            <h4 class="project-modal-subhead" data-i18n="projectStackTitle">Technology Stack</h4>
-            <div class="project-tech-line" id="project-modal-tech"></div>
-          </div>
-          <div>
-            <h4 class="project-modal-subhead" data-i18n="projectFeaturesTitle">Key Features &amp; Highlights</h4>
-            <ul class="project-modal-features" id="project-modal-features"></ul>
-          </div>
-        </div>
-        <div class="project-modal-actions">
-          <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" id="project-modal-github">GitHub</a>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" id="project-modal-live">Live Demo →</a>
-        </div>
-      </div>
+      <div class="cv-modal-body" id="cv-printable"></div>
     </div>
   </div>
 

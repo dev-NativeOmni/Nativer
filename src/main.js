@@ -1,7 +1,7 @@
-import { initThreeScene } from './three-scene.js';
 import {
   personalInfo as defaultPersonalInfo,
   translations as defaultTranslations,
+  experiences as defaultExperiences,
   services as defaultServices,
   projects as defaultProjects
 } from './data/projects.js';
@@ -12,6 +12,7 @@ const SESSION_KEY = 'nativer_cms_session_v1';
 const defaultData = {
   personalInfo: defaultPersonalInfo,
   translations: defaultTranslations,
+  experiences: defaultExperiences,
   services: defaultServices,
   projects: defaultProjects
 };
@@ -50,52 +51,35 @@ function loadMergedData(defaults) {
 }
 
 let liveData = loadMergedData(defaultData);
-
-const highlightIcons = [
-  `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"></path></svg>`,
-  `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"></path></svg>`,
-  `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>`,
-  `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>`
-];
-
 let currentLang = localStorage.getItem('nativer_lang') || 'en';
-let currentMode = localStorage.getItem('nativer_mode') || 'dark';
+let currentMode = localStorage.getItem('nativer_mode_ed') || 'light';
+let latestGithubRepos = null;
 let cmsBooted = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   runIntroPreloader();
-  initThreeScene();
   setupModeToggle();
-  renderTechStrip();
   setupLanguageSwitcher();
+  setupCvDropdownAndModal();
+  setupRouting();
   applyPersonalInfo();
   applyLanguage(currentLang);
-  setupHeaderScroll();
-  setupScrollEnhancements();
-  setupScrollSpy();
-  setupMobileMenu();
-  setupCvModal();
-  setupProjectModal();
   setupCopyEmail();
   setupQuickInquiry();
-  setupRevealObserver();
   setupLazyCms();
-  renderGithubStats();
   syncPublicGithubRepos();
 
   const yearEl = document.getElementById('current-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 });
 
+/* 1. Intro Preloader (N + Native) */
 function runIntroPreloader() {
   const preloader = document.getElementById('intro-preloader');
   if (!preloader) return;
 
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (prefersReduced) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     preloader.remove();
-    document.body.classList.add('hero-ready');
     return;
   }
 
@@ -105,14 +89,75 @@ function runIntroPreloader() {
 
   setTimeout(() => {
     preloader.classList.add('exit');
-    document.body.classList.add('hero-ready');
-  }, 2250);
+  }, 2150);
 
   setTimeout(() => {
     preloader.remove();
-  }, 3150);
+  }, 3000);
 }
 
+/* 2. View Transitions Router (#/, #/about, #/projects/<id>) */
+function setupRouting() {
+  const handleHash = () => {
+    const rawHash = window.location.hash || '#/';
+    const path = rawHash.replace(/^#/, '') || '/';
+
+    const switchDom = () => {
+      const viewWork = document.getElementById('view-work');
+      const viewAbout = document.getElementById('view-about');
+      const viewCase = document.getElementById('view-case');
+
+      [viewWork, viewAbout, viewCase].forEach(v => {
+        if (!v) return;
+        v.hidden = true;
+        v.classList.remove('active');
+      });
+
+      document.querySelectorAll('[data-route]').forEach(link => {
+        const r = link.getAttribute('data-route');
+        if (link.classList.contains('ed-nav-pill')) {
+          link.classList.toggle('active', (r === '/' && (path === '/' || path.startsWith('/projects/'))) || r === path);
+        }
+      });
+
+      if (path === '/about') {
+        if (viewAbout) {
+          viewAbout.hidden = false;
+          viewAbout.classList.add('active');
+        }
+      } else if (path.startsWith('/projects/')) {
+        const slug = decodeURIComponent(path.replace('/projects/', ''));
+        const proj = (liveData.projects || []).find(
+          p => p.id === slug || (p.repoName && p.repoName.toLowerCase() === slug.toLowerCase())
+        );
+        if (proj && viewCase) {
+          renderCaseStudyView(proj);
+          viewCase.hidden = false;
+          viewCase.classList.add('active');
+        } else if (viewWork) {
+          viewWork.hidden = false;
+          viewWork.classList.add('active');
+        }
+      } else if (viewWork) {
+        viewWork.hidden = false;
+        viewWork.classList.add('active');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    };
+
+    if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.startViewTransition(switchDom);
+    } else {
+      switchDom();
+    }
+  };
+
+  window.addEventListener('hashchange', handleHash);
+  handleHash();
+}
+
+/* 3. GitHub Public Repositories Sync */
 async function syncPublicGithubRepos() {
   const username = liveData.personalInfo?.githubUsername || 'dev-NativeOmni';
   const cacheKey = `nativer_gh_public_${username}`;
@@ -120,47 +165,54 @@ async function syncPublicGithubRepos() {
 
   const applyRepos = (repos) => {
     if (!Array.isArray(repos) || !repos.length) return;
-    const curatedList = liveData.projects || [];
-    const merged = repos
-      .filter(r => !r.fork && !r.archived)
-      .map(repo => {
-        const lower = repo.name.toLowerCase();
-        const match = curatedList.find(p =>
-          (p.repoName && p.repoName.toLowerCase() === lower) ||
-          (p.githubUrl && p.githubUrl.toLowerCase().endsWith(`/${lower}`))
-        );
-        if (match) {
-          return {
-            ...match,
-            githubUrl: repo.html_url || match.githubUrl,
-            liveUrl: (repo.homepage && repo.homepage.trim()) ? repo.homepage : match.liveUrl,
-            badge: repo.stargazers_count > 0 ? `${match.badge} • ★ ${repo.stargazers_count}` : match.badge
-          };
-        }
+    const activeRepos = repos.filter(r => !r.fork && !r.archived);
+    latestGithubRepos = activeRepos;
 
-        const lang = repo.language || 'Web';
+    const curatedList = liveData.projects || [];
+    const merged = activeRepos.map(repo => {
+      const lower = repo.name.toLowerCase();
+      const match = curatedList.find(p =>
+        (p.repoName && p.repoName.toLowerCase() === lower) ||
+        (p.githubUrl && p.githubUrl.toLowerCase().endsWith(`/${lower}`))
+      );
+      const updatedYear = repo.updated_at ? new Date(repo.updated_at).getFullYear() : new Date().getFullYear();
+
+      if (match) {
         return {
-          id: `gh-${repo.id}`,
-          repoName: repo.name,
-          title: repo.name,
-          category: 'web',
-          image: './assets/images/project-nativer.svg',
-          techSubtitle: `${lang} / GitHub Public Repo`,
-          descEn: repo.description || `Public repository ${repo.name} maintained by ${username}.`,
-          descId: repo.description || `Repositori publik ${repo.name} oleh ${username} di GitHub.`,
-          githubUrl: repo.html_url,
-          liveUrl: (repo.homepage && repo.homepage.trim()) ? repo.homepage : repo.html_url,
-          badge: repo.stargazers_count > 0 ? `Public • ★ ${repo.stargazers_count}` : 'Public Repo',
-          featuresEn: [`Primary language: ${lang}`, 'Publicly available on GitHub'],
-          featuresId: [`Bahasa utama: ${lang}`, 'Tersedia publik di GitHub']
+          ...match,
+          githubUrl: repo.html_url || match.githubUrl,
+          liveUrl: (repo.homepage && repo.homepage.trim()) ? repo.homepage : match.liveUrl,
+          year: match.year || String(updatedYear),
+          stars: repo.stargazers_count || 0
         };
-      });
+      }
+
+      const lang = repo.language || 'Web';
+      return {
+        id: repo.name.toLowerCase(),
+        repoName: repo.name,
+        title: repo.name,
+        year: String(updatedYear),
+        clientEn: 'Open Source',
+        clientId: 'Open Source',
+        category: 'web',
+        image: './assets/images/project-nativer.svg',
+        techSubtitle: `${lang} / GitHub Public Repo`,
+        descEn: repo.description || `Public repository ${repo.name} maintained by ${username}.`,
+        descId: repo.description || `Repositori publik ${repo.name} oleh ${username} di GitHub.`,
+        githubUrl: repo.html_url,
+        liveUrl: (repo.homepage && repo.homepage.trim()) ? repo.homepage : repo.html_url,
+        badge: 'Public Repo',
+        featuresEn: [`Primary language: ${lang}`, 'Publicly available on GitHub'],
+        featuresId: [`Bahasa utama: ${lang}`, 'Tersedia publik di GitHub']
+      };
+    });
 
     if (merged.length) {
       liveData.projects = merged;
+      renderExperienceRows();
       renderProjects();
       renderCvContent();
-      renderGithubStats(repos.filter(r => !r.fork && !r.archived));
     }
   };
 
@@ -189,6 +241,7 @@ async function syncPublicGithubRepos() {
   }
 }
 
+/* 4. Lazy CMS Loader */
 async function bootCms(triggerClick = false) {
   if (cmsBooted) return;
   cmsBooted = true;
@@ -198,7 +251,6 @@ async function bootCms(triggerClick = false) {
     getLiveData: () => liveData,
     setLiveData: (next) => { liveData = next; },
     onDataChange: () => {
-      renderTechStrip();
       applyPersonalInfo();
       applyLanguage(currentLang);
     }
@@ -213,27 +265,23 @@ function setupLazyCms() {
     bootCms(false);
     return;
   }
-
   const trigger = document.getElementById('cms-trigger');
   if (!trigger) return;
-
-  const onFirstTriggerClick = () => {
-    trigger.removeEventListener('click', onFirstTriggerClick);
+  const onFirst = () => {
+    trigger.removeEventListener('click', onFirst);
     bootCms(true);
   };
-  trigger.addEventListener('click', onFirstTriggerClick);
+  trigger.addEventListener('click', onFirst);
 }
 
+/* 5. Personal Info & Editorial Hero Copy */
 function applyPersonalInfo() {
   const pi = liveData.personalInfo;
-  const roleLabel = liveData.translations?.[currentLang]?.heroRole || 'Full Stack Developer';
+  const roleLabel = liveData.translations?.[currentLang]?.heroRole || 'Junior Software Engineer';
   document.title = `${pi.name} | ${roleLabel}`;
 
   document.querySelectorAll('[data-info="name"]').forEach(el => {
     el.textContent = pi.name;
-  });
-  document.querySelectorAll('.avatar-img').forEach(el => {
-    el.alt = `${pi.name} - ${roleLabel}`;
   });
   document.querySelectorAll('[data-info="brandTitle"]').forEach(el => {
     el.textContent = pi.brandTitle;
@@ -253,194 +301,345 @@ function applyPersonalInfo() {
     el.textContent = clean;
     if (el.tagName === 'A') el.href = pi.social.github;
   });
-  document.querySelectorAll('[data-info="brandName"]').forEach(el => {
-    el.innerHTML = pi.lastName
-      ? `${pi.firstName} <span class="brand-highlight">${pi.lastName}</span>`
-      : pi.firstName;
-  });
-  document.querySelectorAll('[data-info="footerBrandName"]').forEach(el => {
-    el.innerHTML = pi.lastName
-      ? `${pi.firstName} <span style="color: var(--accent-blue);">${pi.lastName}</span>`
-      : pi.firstName;
+  document.querySelectorAll('[data-info="githubHref"]').forEach(el => {
+    if (el.tagName === 'A') el.href = pi.social.github;
   });
 }
 
-function renderTechStrip() {
-  const container = document.getElementById('tech-strip');
-  const { personalInfo } = liveData;
-  if (!container || !personalInfo.techLogos) return;
-
-  const pillsHtml = personalInfo.techLogos.map(t => `
-    <span class="tech-pill">
-      <span class="tech-dot" style="background-color: ${t.color};"></span>
-      <span>${t.name}</span>
-    </span>
-  `).join('');
-
-  container.classList.add('strip-marquee-viewport');
-  container.innerHTML = `
-    <div class="strip-marquee-track">
-      ${pillsHtml}
-      ${pillsHtml}
-    </div>
-  `;
+function renderHeroHeadline() {
+  const el = document.getElementById('ed-hero-headline');
+  if (!el) return;
+  const name = liveData.personalInfo.name || 'Ghazeef';
+  if (currentLang === 'id') {
+    el.innerHTML = `Saya ${name}, membangun<br />apa yang Anda klik dan<br />seluruh sistem di baliknya.`;
+  } else {
+    el.innerHTML = `I'm ${name}, I build what<br />you click<br />and everything behind it.`;
+  }
 }
 
-function renderHighlights() {
-  const container = document.getElementById('highlights-grid');
+function renderExperienceRows() {
+  const container = document.getElementById('ed-exp-list');
   if (!container) return;
 
-  const list = liveData.translations[currentLang].highlights;
-  container.innerHTML = list.map((text, idx) => `
-    <div class="highlight-item">
-      <div class="highlight-icon">${highlightIcons[idx % highlightIcons.length]}</div>
-      <span>${text}</span>
-    </div>
-  `).join('');
-}
-
-let latestGithubRepos = null;
-
-function renderGithubStats(repos = latestGithubRepos) {
-  const container = document.getElementById('gh-live-stats');
-  if (!container) return;
-
-  if (Array.isArray(repos)) latestGithubRepos = repos;
   const isId = currentLang === 'id';
   const repoCount = Array.isArray(latestGithubRepos)
     ? latestGithubRepos.length
-    : (liveData.projects?.length || 0);
-  const starCount = Array.isArray(latestGithubRepos)
-    ? latestGithubRepos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0)
-    : 1;
+    : (liveData.projects?.length || 4);
 
-  let updatedText = isId ? 'Aktif' : 'Active';
-  if (Array.isArray(latestGithubRepos) && latestGithubRepos.length) {
-    const latestTs = latestGithubRepos
-      .map(r => Date.parse(r.updated_at || ''))
-      .filter(n => !Number.isNaN(n))
-      .sort((a, b) => b - a)[0];
-    if (latestTs) {
-      updatedText = new Date(latestTs).toLocaleDateString(isId ? 'id-ID' : 'en-US', {
-        month: 'short',
-        year: 'numeric'
-      });
+  const rows = [
+    {
+      org: isId ? 'Sistem Sekolah & Web' : 'School & Web Systems',
+      role: liveData.translations?.[currentLang]?.heroRole || 'Junior Software Engineer',
+      country: 'Indonesia',
+      year: '2024–2026'
+    },
+    {
+      org: 'Independent & Open Source',
+      role: isId ? 'Pengembang Full-Stack' : 'Full-Stack Builder',
+      country: 'Solo (SOC)',
+      year: '2023–2026'
+    },
+    {
+      org: `github.com/${liveData.personalInfo.githubUsername || 'dev-NativeOmni'}`,
+      role: isId ? 'Repositori Publik' : 'Public Repositories',
+      country: '',
+      year: `${repoCount} Live`
     }
-  }
+  ];
 
-  container.innerHTML = `
-    <div class="gh-stat-cell">
-      <span class="gh-stat-value">${repoCount}</span>
-      <span class="gh-stat-label">${isId ? 'Repo Publik' : 'Public Repos'}</span>
+  container.innerHTML = rows.map(r => `
+    <div class="ed-leader-row">
+      <span class="ed-leader-org">${r.org}</span>
+      <span>·</span>
+      <span class="ed-leader-role">${r.role}</span>
+      <span class="ed-leader-dots"></span>
+      ${r.country ? `<span class="ed-leader-meta ed-leader-country">${r.country}</span>` : ''}
+      <span class="ed-leader-meta">${r.year}</span>
     </div>
-    <div class="gh-stat-cell">
-      <span class="gh-stat-value">${starCount}</span>
-      <span class="gh-stat-label">${isId ? 'Total Bintang' : 'GitHub Stars'}</span>
-    </div>
-    <div class="gh-stat-cell">
-      <span class="gh-stat-value">${updatedText}</span>
-      <span class="gh-stat-label">${isId ? 'Update Terakhir' : 'Last Active'}</span>
-    </div>
-  `;
+  `).join('');
 }
 
-function getLangDotColor(techSubtitle = '') {
-  const s = techSubtitle.toLowerCase();
-  if (s.includes('typescript')) return '#3178C6';
-  if (s.includes('laravel') || s.includes('blade')) return '#FF2D20';
-  if (s.includes('three.js') || s.includes('webgl')) return '#38BDF8';
-  if (s.includes('javascript')) return '#F7DF1E';
-  if (s.includes('php')) return '#777BB4';
-  return '#10B981';
+/* 6. Bespoke Live Looping Motion Graphics inside 3:2 Cards */
+function buildMotionStageHtml(proj) {
+  const key = (proj.repoName || proj.id || '').toLowerCase();
+
+  if (key.includes('deathroll')) {
+    return `
+      <div class="ed-work-stage">
+        <div class="motion-window">
+          <div class="motion-top-bar">
+            <span class="motion-live-pill"><span class="motion-dot-ember"></span> web-audio-synth</span>
+            <span>SQLite CMS</span>
+          </div>
+          <div class="synth-bars" aria-hidden="true">
+            <span class="synth-bar"></span><span class="synth-bar"></span><span class="synth-bar"></span>
+            <span class="synth-bar"></span><span class="synth-bar"></span><span class="synth-bar"></span>
+            <span class="synth-bar"></span><span class="synth-bar"></span><span class="synth-bar"></span>
+            <span class="synth-bar"></span><span class="synth-bar"></span><span class="synth-bar"></span>
+          </div>
+          <div class="motion-footer-row">
+            <span>deathrollofficial.web.app</span>
+            <span class="motion-Action-chip">▶ Playing</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (key.includes('mysch')) {
+    return `
+      <div class="ed-work-stage">
+        <div class="motion-window">
+          <div class="motion-top-bar">
+            <span class="motion-live-pill"><span class="motion-dot-spark"></span> mysch · jurnal-guru</span>
+            <span>3-Tap Flow</span>
+          </div>
+          <div class="mysch-steps" aria-hidden="true">
+            <div class="mysch-step-row">
+              <span>01 · Auto-detect class schedule</span>
+              <span class="mysch-check">✓ 07:15</span>
+            </div>
+            <div class="mysch-step-row">
+              <span>02 · Client photo compression</span>
+              <span class="mysch-check">✓ 68 KB</span>
+            </div>
+            <div class="mysch-step-row">
+              <span>03 · Sync tenant Firestore</span>
+              <span class="mysch-check">✓ Saved</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (key.includes('nativer')) {
+    return `
+      <div class="ed-work-stage bg-drafting-grid">
+        <div class="motion-window">
+          <div class="motion-top-bar">
+            <span class="motion-live-pill"><span class="motion-dot-spark"></span> native.web.id</span>
+            <span>Vite 6 · CMS</span>
+          </div>
+          <div class="builder-lines" aria-hidden="true">
+            <div class="builder-bar" style="width: 68%;"></div>
+            <div class="builder-bar" style="width: 90%;"></div>
+            <div class="builder-grid-2">
+              <div class="builder-box">GitHub Sync</div>
+              <div class="builder-box">SHA-256 CMS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="ed-work-stage bg-drafting-grid">
+      <div class="motion-window">
+        <div class="motion-top-bar">
+          <span class="motion-live-pill"><span class="motion-dot-ember"></span> ${proj.repoName || proj.title}</span>
+          <span>SSR Pipeline</span>
+        </div>
+        <div class="pipe-diagram" aria-hidden="true">
+          <div class="pipe-node">Request</div>
+          <div class="pipe-track"><span class="pipe-packet"></span></div>
+          <div class="pipe-node">Blade / Core</div>
+          <div class="pipe-track"><span class="pipe-packet"></span></div>
+          <div class="pipe-node">View</div>
+        </div>
+        <div class="motion-footer-row">
+          <span>${proj.techSubtitle}</span>
+          <span>200 OK</span>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function renderProjects() {
   const container = document.getElementById('projects-grid');
   if (!container) return;
 
-  const detailsLabel = liveData.translations[currentLang].projectDetailsBtn || 'Details';
+  const isId = currentLang === 'id';
+  container.innerHTML = (liveData.projects || []).map(p => {
+    const client = isId ? (p.clientId || p.badge) : (p.clientEn || p.badge);
+    const year = p.year || '2026';
+    const slug = encodeURIComponent(p.repoName || p.id);
 
-  container.innerHTML = liveData.projects.map((p, idx) => {
-    const desc = currentLang === 'id' ? p.descId : p.descEn;
-    const dotColor = getLangDotColor(p.techSubtitle);
     return `
-      <article class="project-card reveal" style="transition-delay: ${idx * 60}ms;" data-project-id="${p.id}">
-        <div class="project-thumb-box project-open-trigger" role="button" tabindex="0" aria-label="View details for ${p.title}">
-          <span class="project-badge-pill">${p.badge}</span>
-          <img src="${p.image}" alt="${p.title}" class="project-thumb" loading="lazy" />
+      <a href="#/projects/${slug}" class="ed-work-card">
+        ${buildMotionStageHtml(p)}
+        <div class="ed-work-caption">
+          <h2 class="ed-work-title">${p.title}</h2>
+          <span class="ed-work-meta">${client} · ${year}</span>
         </div>
-        <div class="project-body">
-          <div>
-            <h3 class="project-title project-open-trigger" role="button" tabindex="0">${p.title}</h3>
-            <div class="project-tech-line">
-              <span class="lang-dot" style="background-color: ${dotColor};" aria-hidden="true"></span>
-              <span>${p.techSubtitle}</span>
-            </div>
-            <p class="project-desc">${desc}</p>
-          </div>
-
-          <div class="project-links">
-            <a href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" class="project-action-link" title="Source Code">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-              </svg>
-              <span>GitHub</span>
-            </a>
-            <a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="project-action-link" style="color: var(--accent-blue);" title="Live Demo">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-              <span>Live Demo</span>
-            </a>
-            <button type="button" class="project-action-link project-details-btn project-open-trigger">
-              <span>${detailsLabel}</span>
-            </button>
-          </div>
-        </div>
-      </article>
+      </a>
     `;
   }).join('');
-
-  container.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
-      card.style.setProperty('--my', `${e.clientY - rect.top}px`);
-    });
-  });
-
-  container.querySelectorAll('.project-open-trigger').forEach(el => {
-    const open = () => {
-      const card = el.closest('.project-card');
-      const id = card?.getAttribute('data-project-id');
-      const proj = liveData.projects.find(item => item.id === id);
-      if (proj) openProjectModal(proj);
-    };
-    el.addEventListener('click', open);
-    el.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        open();
-      }
-    });
-  });
-
-  setupRevealObserver();
 }
 
-function renderCvContent() {
+/* 7. Full Case Study View (#/projects/<slug>) */
+function renderCaseStudyView(proj) {
+  const container = document.getElementById('case-study-container');
+  if (!container) return;
+
+  const isId = currentLang === 'id';
+  const desc = isId ? proj.descId : proj.descEn;
+  const cs = isId ? proj.caseStudyId : proj.caseStudyEn;
+  const features = (isId ? proj.featuresId : proj.featuresEn) || [];
+  const client = isId ? (proj.clientId || 'Open Source') : (proj.clientEn || 'Open Source');
+  const stackParts = (proj.techSubtitle || 'Web / Cloud').split('/').map(s => s.trim());
+
+  const nodeA = stackParts[0] || 'Client UI';
+  const nodeB = stackParts[1] || 'Application Core';
+  const nodeC = stackParts[2] || stackParts[1] || 'Persistence & Deploy';
+
+  container.innerHTML = `
+    <div class="ed-case-top">
+      <div>
+        <span class="ed-mono-eyebrow">Case study</span>
+        <h1 class="ed-case-title">${proj.title}</h1>
+      </div>
+
+      <dl class="ed-case-dl">
+        <div class="ed-case-dl-row">
+          <dt>${isId ? 'Tipe' : 'Scope'}</dt>
+          <dd>${client}</dd>
+        </div>
+        <div class="ed-case-dl-row">
+          <dt>${isId ? 'Tahun' : 'Year'}</dt>
+          <dd>${proj.year || '2026'}</dd>
+        </div>
+        <div class="ed-case-dl-row">
+          <dt>Stack</dt>
+          <dd>${proj.techSubtitle}</dd>
+        </div>
+        <div class="ed-case-dl-row">
+          <dt>Repository</dt>
+          <dd>${proj.repoName || proj.id}</dd>
+        </div>
+        <div class="ed-case-dl-row">
+          <dt>Status</dt>
+          <dd><span class="motion-live-pill"><span class="motion-dot-spark"></span> Public</span></dd>
+        </div>
+      </dl>
+    </div>
+
+    <figure class="ed-case-figure">
+      <div class="ed-diagram-canvas bg-drafting-grid">
+        <div class="ed-arch-flow">
+          <div class="ed-arch-box">
+            <span class="ed-arch-tag">01 · Interface</span>
+            <span class="ed-arch-name">${nodeA}</span>
+          </div>
+          <span class="ed-arch-connector">───▶</span>
+          <div class="ed-arch-box">
+            <span class="ed-arch-tag">02 · Runtime</span>
+            <span class="ed-arch-name">${nodeB}</span>
+          </div>
+          <span class="ed-arch-connector">───▶</span>
+          <div class="ed-arch-box">
+            <span class="ed-arch-tag">03 · Storage / Edge</span>
+            <span class="ed-arch-name">${nodeC}</span>
+          </div>
+        </div>
+      </div>
+      <figcaption class="ed-fig-caption">
+        <span>${isId ? 'Alur arsitektur sistem utama' : 'High-level system architecture flow'}</span>
+        <span>fig. 01</span>
+      </figcaption>
+    </figure>
+
+    <div class="ed-case-sections">
+      <div class="ed-case-row">
+        <h2 class="ed-case-h2">${isId ? 'Ringkasan' : 'Overview'}</h2>
+        <div class="ed-case-prose">
+          <p>${desc}</p>
+          ${features.length ? `<ul class="ed-case-list">${features.map(f => `<li>${f}</li>`).join('')}</ul>` : ''}
+        </div>
+      </div>
+
+      ${cs ? `
+        <div class="ed-case-row">
+          <h2 class="ed-case-h2">${isId ? 'Tantangan' : 'Challenge'}</h2>
+          <div class="ed-case-prose"><p>${cs.problem}</p></div>
+        </div>
+        <div class="ed-case-row">
+          <h2 class="ed-case-h2">${isId ? 'Arsitektur' : 'Architecture'}</h2>
+          <div class="ed-case-prose"><p>${cs.solution}</p></div>
+        </div>
+        <div class="ed-case-row">
+          <h2 class="ed-case-h2">${isId ? 'Hasil & Dampak' : 'Outcome'}</h2>
+          <div class="ed-case-prose"><p>${cs.impact}</p></div>
+        </div>
+      ` : ''}
+    </div>
+
+    <div class="ed-case-ctas">
+      <a href="#/" class="ed-pill-btn ed-pill-solid">← ${isId ? 'Kembali ke Karya' : 'Back to Work'}</a>
+      <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="ed-pill-btn ed-pill-outline">
+        <span>GitHub Repository</span>
+        <span>↗</span>
+      </a>
+      ${proj.liveUrl && proj.liveUrl !== proj.githubUrl ? `
+        <a href="${proj.liveUrl}" target="_blank" rel="noopener noreferrer" class="ed-pill-btn ed-pill-outline">
+          <span>Live Demo</span>
+          <span>↗</span>
+        </a>
+      ` : ''}
+      <a href="mailto:${liveData.personalInfo.email}?subject=${encodeURIComponent(`Inquiry about ${proj.title}`)}" class="ed-pill-btn ed-pill-outline">
+        <span>${isId ? 'Diskusikan proyek serupa' : 'Email me about it'}</span>
+        <span>↗</span>
+      </a>
+    </div>
+  `;
+}
+
+/* 8. About Page Helpers & CV Modal */
+function renderAboutDetails() {
+  const extraEl = document.getElementById('ed-about-extra');
+  if (extraEl) {
+    extraEl.textContent = currentLang === 'id'
+      ? 'Dari antarmuka pengguna yang bersih hingga arsitektur database, pengujian otomatis, dan pipeline CI/CD di belakangnya — saya senang membangun perangkat lunak yang cepat, tenang, dan mudah dirawat.'
+      : 'From clean interfaces down to database schemas, automated tests, and CI/CD pipelines behind the scenes — I enjoy building software that feels calm, fast, and dependable.';
+  }
+
+  const stackContainer = document.getElementById('tech-strip');
+  if (stackContainer && liveData.personalInfo.techLogos) {
+    stackContainer.innerHTML = liveData.personalInfo.techLogos
+      .map(t => `<span class="ed-stack-chip">${t.name}</span>`)
+      .join('');
+  }
+
+  const highlightsContainer = document.getElementById('highlights-grid');
+  if (highlightsContainer) {
+    const list = liveData.translations[currentLang].highlights || [];
+    highlightsContainer.innerHTML = list.map((text, idx) => `
+      <div class="ed-principle-card">
+        <span class="ed-principle-num">0${idx + 1}</span>
+        <span class="ed-principle-text">${text}</span>
+      </div>
+    `).join('');
+  }
+}
+
+function renderCvContent(langOverride = currentLang) {
   const container = document.getElementById('cv-printable');
   if (!container) return;
 
   const pi = liveData.personalInfo;
-  const isId = currentLang === 'id';
-  const roleText = isId
-    ? 'Junior Software Engineer &amp; Arsitek Sistem Web'
-    : 'Junior Software Engineer &amp; Web Systems Builder';
+  const isId = langOverride === 'id';
+  const roleText = liveData.translations?.[langOverride]?.heroRole || 'Junior Software Engineer';
   const stackTitle = isId ? 'Stack Teknis Utama' : 'Core Technical Stack';
-  const projTitle = isId ? 'Proyek Publik &amp; Sistem Produksi' : 'Public Repositories &amp; Production Systems';
+  const projTitle = isId ? 'Repositori Publik & Karya Pilihan' : 'Selected Public Repositories';
+
+  const cvTitleEl = document.getElementById('cv-modal-title');
+  if (cvTitleEl) {
+    cvTitleEl.textContent = isId
+      ? `Daftar Riwayat Hidup — ${pi.name}`
+      : `Curriculum Vitae — ${pi.name}`;
+  }
 
   const projectItems = (liveData.projects || []).map(p => {
     const desc = isId ? p.descId : p.descEn;
@@ -463,9 +662,9 @@ function renderCvContent() {
     <div class="cv-section-block">
       <h4>${stackTitle}</h4>
       <p><strong>Backend &amp; Frameworks:</strong> Laravel 12 (PHP 8.2+), Next.js 16, React 19, TypeScript, Node.js</p>
-      <p><strong>Frontend &amp; Graphics:</strong> Tailwind CSS v4, Modern CSS, Three.js (WebGL), Alpine.js, Vite 6</p>
-      <p><strong>Database &amp; Cloud:</strong> MySQL / MariaDB, SQLite, Firebase (Firestore &amp; Hosting), Cloudflare Pages, GitHub Actions</p>
-      <p><strong>${isId ? 'Pengujian &amp; Kualitas' : 'Testing &amp; Quality'}:</strong> PHPUnit (250+ Automated Test Suites), ESLint, CI/CD Pipelines</p>
+      <p><strong>Frontend &amp; UI:</strong> Tailwind CSS v4, Modern CSS, Alpine.js, Vite 6</p>
+      <p><strong>Database &amp; Cloud:</strong> MySQL / MariaDB, SQLite, Firebase Firestore, Cloudflare Pages, GitHub Actions</p>
+      <p><strong>${isId ? 'Pengujian &amp; Kualitas' : 'Testing &amp; Quality'}:</strong> PHPUnit (250+ Automated Test Suites), ESLint, CI/CD</p>
     </div>
     <div class="cv-section-block">
       <h4>${projTitle}</h4>
@@ -474,24 +673,22 @@ function renderCvContent() {
   `;
 }
 
+/* 9. Mode, Language, CV Dropdown & Contact Handlers */
 function setupModeToggle() {
   const applyMode = (mode) => {
     document.documentElement.setAttribute('data-mode', mode);
   };
   applyMode(currentMode);
 
-  const btn = document.getElementById('mode-toggle');
-  if (!btn) return;
-  btn.addEventListener('click', () => {
+  document.getElementById('mode-toggle')?.addEventListener('click', () => {
     currentMode = currentMode === 'light' ? 'dark' : 'light';
-    localStorage.setItem('nativer_mode', currentMode);
+    localStorage.setItem('nativer_mode_ed', currentMode);
     applyMode(currentMode);
   });
 }
 
 function setupLanguageSwitcher() {
-  const buttons = document.querySelectorAll('.lang-btn');
-  buttons.forEach(btn => {
+  document.querySelectorAll('.ed-lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const lang = btn.getAttribute('data-lang');
       if (lang && lang !== currentLang) {
@@ -506,243 +703,89 @@ function setupLanguageSwitcher() {
 function applyLanguage(lang) {
   document.documentElement.lang = lang;
 
-  document.querySelectorAll('.lang-btn').forEach(btn => {
+  document.querySelectorAll('.ed-lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
   });
 
   const dict = liveData.translations[lang];
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (dict[key]) {
-      el.textContent = dict[key];
-    }
+    if (dict[key]) el.textContent = dict[key];
   });
 
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
-    if (dict[key]) {
-      el.setAttribute('placeholder', dict[key]);
-    }
+    if (dict[key]) el.setAttribute('placeholder', dict[key]);
   });
 
-  const cvTitleEl = document.getElementById('cv-modal-title');
-  if (cvTitleEl) {
-    cvTitleEl.textContent = lang === 'id'
-      ? `Daftar Riwayat Hidup — ${liveData.personalInfo.name}`
-      : `Curriculum Vitae — ${liveData.personalInfo.name}`;
-  }
-
-  renderHighlights();
+  renderHeroHeadline();
+  renderExperienceRows();
   renderProjects();
-  renderCvContent();
-  renderGithubStats();
-  setupWordReveal();
-}
+  renderAboutDetails();
+  renderCvContent(lang);
 
-let wordRevealObserver;
-function setupWordReveal() {
-  const targets = document.querySelectorAll('.section-title, .cta-title, .hero-subtitle');
-  if (!targets.length) return;
-
-  if (!wordRevealObserver) {
-    wordRevealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('words-visible');
-          wordRevealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
+  // If currently viewing a case study, re-render it in the selected language
+  const rawHash = window.location.hash || '#/';
+  if (rawHash.startsWith('#/projects/')) {
+    const slug = decodeURIComponent(rawHash.replace('#/projects/', ''));
+    const proj = (liveData.projects || []).find(
+      p => p.id === slug || (p.repoName && p.repoName.toLowerCase() === slug.toLowerCase())
+    );
+    if (proj) renderCaseStudyView(proj);
   }
-
-  targets.forEach(el => {
-    const text = (el.textContent || '').trim();
-    if (!text) return;
-    el.classList.remove('words-visible');
-    el.classList.add('word-reveal-heading');
-    const words = text.split(/\s+/);
-    el.innerHTML = words
-      .map((w, i) => `<span class="word-token" style="--wi:${i}">${w}</span>`)
-      .join(' ');
-    wordRevealObserver.observe(el);
-  });
 }
 
-function setupScrollEnhancements() {
-  const progressBar = document.getElementById('scroll-progress');
-  const backTopBtn = document.getElementById('back-to-top');
-
-  const onScroll = () => {
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = docHeight > 0 ? Math.min(100, Math.max(0, (window.scrollY / docHeight) * 100)) : 0;
-    if (progressBar) progressBar.style.width = `${pct}%`;
-    if (backTopBtn) backTopBtn.classList.toggle('visible', window.scrollY > 420);
-  };
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  backTopBtn?.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
-
-function setupHeaderScroll() {
-  const header = document.getElementById('site-header');
-  if (!header) return;
-
-  const onScroll = () => {
-    header.classList.toggle('scrolled', window.scrollY > 40);
-  };
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-}
-
-function setupScrollSpy() {
-  const sections = document.querySelectorAll('main section[id]');
-  const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
-  if (!sections.length || !navLinks.length) return;
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
-        navLinks.forEach(link => {
-          const href = link.getAttribute('href');
-          link.classList.toggle('active', href === `#${id}`);
-        });
-      }
-    });
-  }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
-
-  sections.forEach(sec => observer.observe(sec));
-}
-
-function setupMobileMenu() {
-  const toggle = document.getElementById('mobile-toggle');
-  const drawer = document.getElementById('mobile-drawer');
-  if (!toggle || !drawer) return;
-
-  toggle.addEventListener('click', () => {
-    const isOpen = drawer.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(isOpen));
-  });
-
-  drawer.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      drawer.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-    });
-  });
-}
-
-function setupCvModal() {
-  const openBtn = document.getElementById('btn-cv-download');
+function setupCvDropdownAndModal() {
+  const dropdown = document.getElementById('cv-dropdown');
+  const triggerBtn = document.getElementById('cv-dropdown-btn');
   const modal = document.getElementById('cv-modal');
   const closeBtn = document.getElementById('cv-close-btn');
   const printBtn = document.getElementById('cv-print-btn');
+  const footerCvBtn = document.getElementById('footer-cv-btn');
 
-  if (!openBtn || !modal) return;
-
-  const openModal = () => {
-    renderCvContent();
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden', 'false');
+  const openCvModal = (lang = currentLang) => {
+    renderCvContent(lang);
+    modal?.classList.add('open');
+    modal?.setAttribute('aria-hidden', 'false');
+    dropdown?.classList.remove('open');
+    triggerBtn?.setAttribute('aria-expanded', 'false');
   };
 
-  const closeModal = () => {
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden', 'true');
+  const closeCvModal = () => {
+    modal?.classList.remove('open');
+    modal?.setAttribute('aria-hidden', 'true');
   };
 
-  openBtn.addEventListener('click', openModal);
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
-  if (printBtn) printBtn.addEventListener('click', () => window.print());
+  triggerBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = dropdown?.classList.toggle('open');
+    triggerBtn.setAttribute('aria-expanded', String(Boolean(isOpen)));
+  });
 
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
+  document.querySelectorAll('[data-cv-lang]').forEach(item => {
+    item.addEventListener('click', () => {
+      const cvLang = item.getAttribute('data-cv-lang') || currentLang;
+      openCvModal(cvLang);
+    });
+  });
+
+  footerCvBtn?.addEventListener('click', () => openCvModal(currentLang));
+  closeBtn?.addEventListener('click', closeCvModal);
+  printBtn?.addEventListener('click', () => window.print());
+
+  document.addEventListener('click', (e) => {
+    if (dropdown && !dropdown.contains(e.target)) {
+      dropdown.classList.remove('open');
+      triggerBtn?.setAttribute('aria-expanded', 'false');
+    }
+    if (e.target === modal) closeCvModal();
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-  });
-}
-
-let openProjectModal = () => {};
-
-function setupProjectModal() {
-  const modal = document.getElementById('project-modal');
-  const closeBtn = document.getElementById('project-modal-close');
-  if (!modal) return;
-
-  const closeModal = () => {
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden', 'true');
-  };
-
-  openProjectModal = (proj) => {
-    const titleEl = document.getElementById('project-modal-title');
-    const badgeEl = document.getElementById('project-modal-badge');
-    const imgEl = document.getElementById('project-modal-img');
-    const descEl = document.getElementById('project-modal-desc');
-    const caseEl = document.getElementById('project-modal-case');
-    const techEl = document.getElementById('project-modal-tech');
-    const featEl = document.getElementById('project-modal-features');
-    const ghEl = document.getElementById('project-modal-github');
-    const liveEl = document.getElementById('project-modal-live');
-
-    if (titleEl) titleEl.textContent = proj.title;
-    if (badgeEl) badgeEl.textContent = proj.badge;
-    if (imgEl) {
-      imgEl.src = proj.image;
-      imgEl.alt = proj.title;
+    if (e.key === 'Escape') {
+      dropdown?.classList.remove('open');
+      if (modal?.classList.contains('open')) closeCvModal();
     }
-    if (descEl) descEl.textContent = currentLang === 'id' ? proj.descId : proj.descEn;
-    if (caseEl) {
-      const cs = currentLang === 'id' ? proj.caseStudyId : proj.caseStudyEn;
-      const dict = liveData.translations[currentLang];
-      if (cs) {
-        caseEl.innerHTML = `
-          <div class="project-case-item">
-            <span class="project-case-label">${dict.caseProblemLabel || 'Challenge'}</span>
-            <p>${cs.problem}</p>
-          </div>
-          <div class="project-case-item">
-            <span class="project-case-label">${dict.caseSolutionLabel || 'Architecture'}</span>
-            <p>${cs.solution}</p>
-          </div>
-          <div class="project-case-item">
-            <span class="project-case-label">${dict.caseImpactLabel || 'Impact'}</span>
-            <p>${cs.impact}</p>
-          </div>
-        `;
-      } else {
-        caseEl.innerHTML = '';
-      }
-    }
-    if (techEl) techEl.textContent = proj.techSubtitle;
-    if (ghEl) ghEl.href = proj.githubUrl;
-    if (liveEl) liveEl.href = proj.liveUrl;
-
-    if (featEl) {
-      const features = (currentLang === 'id' ? proj.featuresId : proj.featuresEn) || [
-        proj.techSubtitle,
-        proj.badge
-      ];
-      featEl.innerHTML = features.map(item => `<li>${item}</li>`).join('');
-    }
-
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden', 'false');
-  };
-
-  closeBtn?.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
 }
 
@@ -751,16 +794,11 @@ function showToast(message) {
   if (!toast) return;
   toast.textContent = message;
   toast.classList.add('show');
-  setTimeout(() => {
-    toast.classList.remove('show');
-  }, 2600);
+  setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
 function setupCopyEmail() {
-  const btn = document.getElementById('copy-email-btn');
-  if (!btn) return;
-
-  btn.addEventListener('click', async () => {
+  document.getElementById('copy-email-btn')?.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(liveData.personalInfo.email);
       showToast(liveData.translations[currentLang].toastCopied);
@@ -780,8 +818,7 @@ function setupQuickInquiry() {
   if (!toggleBtn || !form) return;
 
   toggleBtn.addEventListener('click', () => {
-    const isHidden = form.hasAttribute('hidden');
-    if (isHidden) {
+    if (form.hasAttribute('hidden')) {
       form.removeAttribute('hidden');
       nameInput?.focus();
     } else {
@@ -820,7 +857,7 @@ function setupQuickInquiry() {
         }
       }
     } catch {
-      // Static hosting without /api/contact falls back to mailto: below
+      // Fallback to mailto:
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
@@ -849,23 +886,5 @@ function setupQuickInquiry() {
     } catch (err) {
       console.error('Failed to copy inquiry:', err);
     }
-  });
-}
-
-let revealObserver;
-function setupRevealObserver() {
-  if (!revealObserver) {
-    revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-  }
-
-  document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
-    revealObserver.observe(el);
   });
 }
