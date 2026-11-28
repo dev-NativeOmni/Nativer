@@ -2140,18 +2140,19 @@ body,
 .intro-brand-lockup {
   display: flex;
   align-items: center;
-  gap: 1.15rem;
+  gap: clamp(1rem, 2.4vw, 2rem);
+  padding: 0 1.5rem;
 }
 
 .intro-logo-mark {
   opacity: 0;
   transform: scale(0.65) rotate(-10deg);
   transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
-  filter: drop-shadow(0 0 28px rgba(0, 132, 255, 0.5));
+  filter: drop-shadow(0 0 36px rgba(0, 132, 255, 0.55));
 }
 
 .intro-logo-img {
-  height: 52px;
+  height: clamp(68px, 11vw, 116px);
   width: auto;
   display: block;
 }
@@ -2166,12 +2167,12 @@ body,
   align-items: center;
   opacity: 0;
   filter: blur(12px);
-  transform: translateX(-14px);
+  transform: translateX(-18px);
   transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.42s, filter 0.85s ease 0.42s, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.42s;
 }
 
 .intro-wordmark-img {
-  height: 28px;
+  height: clamp(36px, 6vw, 64px);
   width: auto;
   display: block;
 }
